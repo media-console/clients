@@ -897,7 +897,7 @@
         </div>
 
         <div id="adsOriginNotice" style="display:none;margin-top:14px;padding:10px 12px;border:1px solid #eee9ff;background:#fbfaff;border-radius:10px;color:#71689b;font-size:11px;line-height:1.45">
-          Local file preview detected. XPO may treat <code>file://</code> requests differently from a hosted HTTPS page. The dashboard will still try to load the API, but the final test should be done on GitHub Pages.
+          XPO cross-origin compatibility test: this version sends the same JSON payload as a simple POST to avoid the browser's CORS preflight. Test this version on GitHub Pages.
         </div>
         <div class="ads-footnote">Live data from XPO / Knorex public report API</div>
       </section>
@@ -1604,6 +1604,12 @@
     const url=`${XPO_BASE}/${path}`;
     const payload=xpoPayload();
 
+    // Important:
+    // application/json triggers a CORS preflight from GitHub Pages.
+    // XPO's public report API appears to work same-origin on dsp.knorex.com
+    // but the preflight can be blocked cross-origin. Sending the JSON string
+    // as a "simple" text/plain POST avoids the preflight and lets us test
+    // whether the endpoint accepts the same raw JSON body cross-origin.
     const res=await fetch(url,{
       method:'POST',
       mode:'cors',
@@ -1611,7 +1617,7 @@
       cache:'no-store',
       headers:{
         'accept':'application/json, text/plain, */*',
-        'content-type':'application/json;charset=UTF-8'
+        'content-type':'text/plain;charset=UTF-8'
       },
       body:JSON.stringify(payload)
     });
@@ -1620,13 +1626,11 @@
     if(!res.ok){
       throw new Error(`XPO API ${res.status}${rawText ? ` · ${rawText.slice(0,180)}` : ''}`);
     }
-
     if(!rawText.trim()) return null;
 
     try{
       return JSON.parse(rawText);
     }catch(e){
-      // Defensive fallback in case the endpoint ever adds a wrapper.
       const cleaned=rawText.replace(/^[^{\[]+/,'').replace(/[^\]}\s]+$/,'');
       try{return JSON.parse(cleaned);}
       catch(_){throw new Error(`XPO returned non-JSON response: ${rawText.slice(0,160)}`);}
