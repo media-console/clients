@@ -605,6 +605,62 @@
   }
 
 
+  /* v8: embedded XPO live report */
+  .xpo-embed-card{
+    padding:0;
+    overflow:hidden;
+    border-radius:18px;
+    background:#fff;
+  }
+  .xpo-embed-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:16px 18px;
+    border-bottom:1px solid #eeeaf8;
+  }
+  .xpo-live-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-size:12px;
+    font-weight:700;
+    color:#5f51bd;
+    background:#f4f1ff;
+    border:1px solid #e8e1ff;
+    border-radius:999px;
+    padding:7px 10px;
+    white-space:nowrap;
+  }
+  .xpo-live-dot{
+    width:7px;height:7px;border-radius:50%;
+    background:#6d5ee8;
+    box-shadow:0 0 0 4px rgba(109,94,232,.10);
+  }
+  .xpo-frame-wrap{
+    width:100%;
+    min-height:1050px;
+    background:#fff;
+  }
+  .xpo-frame{
+    width:100%;
+    height:1050px;
+    border:0;
+    display:block;
+    background:#fff;
+  }
+  .xpo-embed-note{
+    padding:10px 18px 14px;
+    font-size:11px;
+    line-height:1.5;
+    color:#817a9f;
+    border-top:1px solid #f1eef8;
+  }
+  @media(max-width:900px){
+    .xpo-frame-wrap,.xpo-frame{min-height:900px;height:900px}
+  }
+
   /* v5: two-tab dashboard */
   .tabs{
     display:flex;
@@ -785,7 +841,7 @@
 
     <div class="top-controls">
       <div class="chip">Client: <b>Diamond Cliff Resort &amp; Spa</b></div>
-      <div class="chip period-chip">
+      <div class="chip period-chip" id="topPeriodChip">
         <span>Period:</span>
         <select id="periodPreset" aria-label="Period preset">
           <option value="today">Today</option>
@@ -810,7 +866,7 @@
           <input type="date" id="periodEnd" aria-label="Custom period end date">
         </span>
       </div>
-      <div class="chip">Updated: <b id="lastUpdated">Loading...</b></div>
+      <div class="chip" id="topUpdatedChip">Updated: <b id="lastUpdated">Loading...</b></div>
     </div>
 
 
@@ -825,81 +881,31 @@
           <div>
             <h2 class="section-title">Ads <span class="accent">Report</span></h2>
           </div>
+          <div class="subchip">Live XPO report</div>
         </div>
 
-        <div class="ads-kpis">
-          <div class="card ads-kpi">
-            <div class="klabel">Spend</div>
-            <div class="kvalue" id="adsSpend">—</div>
-            <div class="trend">XPO media spend</div>
+        <div class="card xpo-embed-card">
+          <div class="xpo-embed-head">
+            <div>
+              <div class="ititle">XPO Campaign Insights</div>
+              <div class="idesc">Use the filters inside the report for live date-range changes.</div>
+            </div>
+            <div class="xpo-live-pill"><span class="xpo-live-dot"></span>Live from XPO</div>
           </div>
-          <div class="card ads-kpi">
-            <div class="klabel">Impressions</div>
-            <div class="kvalue" id="adsImpressions">—</div>
-            <div class="trend">Delivered impressions</div>
+          <div class="xpo-frame-wrap">
+            <iframe
+              id="xpoFrame"
+              class="xpo-frame"
+              src="https://dsp.knorex.com/public/reports/v2/insights/campaign?token=9tCmkOy6m6eBaKhmh1r9kebvTDdsWPg5GKlirLev"
+              title="XPO Campaign Insights"
+              loading="eager"
+              allowfullscreen>
+            </iframe>
           </div>
-          <div class="card ads-kpi">
-            <div class="klabel">Clicks</div>
-            <div class="kvalue" id="adsClicks">—</div>
-            <div class="trend">Click throughs</div>
-          </div>
-          <div class="card ads-kpi">
-            <div class="klabel">CTR</div>
-            <div class="kvalue" id="adsCTR">—</div>
-            <div class="trend">Click-through rate</div>
-          </div>
-          <div class="card ads-kpi">
-            <div class="klabel">CPC</div>
-            <div class="kvalue" id="adsCPC">—</div>
-            <div class="trend">Cost per click</div>
-          </div>
-          <div class="card ads-kpi">
-            <div class="klabel">CPM</div>
-            <div class="kvalue" id="adsCPM">—</div>
-            <div class="trend">Cost per 1,000 impressions</div>
+          <div class="xpo-embed-note">
+            Test version: if XPO allows embedding, the full live public report will appear above. If XPO blocks iframe embedding, the browser will show an XPO/browser refusal message inside this area.
           </div>
         </div>
-
-        <div class="ads-grid">
-          <div class="card ads-card">
-            <div class="ads-card-head">
-              <div>
-                <div class="ititle">Daily Performance</div>
-                <div class="idesc" id="adsDailyDesc">By spend</div>
-              </div>
-              <div class="metric-toggle" id="adsDailyToggle" aria-label="Daily Performance metric">
-                <button type="button" class="active" data-metric="spend">Spend</button>
-                <button type="button" data-metric="impressions">Impressions</button>
-                <button type="button" data-metric="clicks">Clicks</button>
-              </div>
-            </div>
-            <div class="ads-chart-wrap" id="adsDailyWrap">
-              <div class="ads-loading">Loading XPO data...</div>
-            </div>
-          </div>
-
-          <div class="card ads-card">
-            <div class="ads-card-head">
-              <div>
-                <div class="ititle">Channel Performance</div>
-                <div class="idesc" id="adsChannelDesc">By spend</div>
-              </div>
-              <div class="metric-toggle" id="adsChannelToggle" aria-label="Ads Channel Performance metric">
-                <button type="button" class="active" data-metric="spend">Spend</button>
-                <button type="button" data-metric="impressions">Impressions</button>
-                <button type="button" data-metric="clicks">Clicks</button>
-              </div>
-            </div>
-            <div id="adsChannelRows">
-              <div class="ads-loading">Loading XPO data...</div>
-            </div>
-          </div>
-        </div>
-
-        <div id="adsOriginNotice" style="display:none;margin-top:14px;padding:10px 12px;border:1px solid #eee9ff;background:#fbfaff;border-radius:10px;color:#71689b;font-size:11px;line-height:1.45">
-          XPO cross-origin compatibility test: this version sends the same JSON payload as a simple POST to avoid the browser's CORS preflight. Test this version on GitHub Pages.
-        </div>
-        <div class="ads-footnote">Live data from XPO / Knorex public report API</div>
       </section>
     </div>
 
@@ -1604,12 +1610,6 @@
     const url=`${XPO_BASE}/${path}`;
     const payload=xpoPayload();
 
-    // Important:
-    // application/json triggers a CORS preflight from GitHub Pages.
-    // XPO's public report API appears to work same-origin on dsp.knorex.com
-    // but the preflight can be blocked cross-origin. Sending the JSON string
-    // as a "simple" text/plain POST avoids the preflight and lets us test
-    // whether the endpoint accepts the same raw JSON body cross-origin.
     const res=await fetch(url,{
       method:'POST',
       mode:'cors',
@@ -1617,7 +1617,7 @@
       cache:'no-store',
       headers:{
         'accept':'application/json, text/plain, */*',
-        'content-type':'text/plain;charset=UTF-8'
+        'content-type':'application/json;charset=UTF-8'
       },
       body:JSON.stringify(payload)
     });
@@ -1626,11 +1626,13 @@
     if(!res.ok){
       throw new Error(`XPO API ${res.status}${rawText ? ` · ${rawText.slice(0,180)}` : ''}`);
     }
+
     if(!rawText.trim()) return null;
 
     try{
       return JSON.parse(rawText);
     }catch(e){
+      // Defensive fallback in case the endpoint ever adds a wrapper.
       const cleaned=rawText.replace(/^[^{\[]+/,'').replace(/[^\]}\s]+$/,'');
       try{return JSON.parse(cleaned);}
       catch(_){throw new Error(`XPO returned non-JSON response: ${rawText.slice(0,160)}`);}
@@ -2027,6 +2029,14 @@
     document.getElementById('bookingsTabBtn').classList.toggle('active',!ads);
     document.getElementById('adsTabBtn').setAttribute('aria-selected',String(ads));
     document.getElementById('bookingsTabBtn').setAttribute('aria-selected',String(!ads));
+
+    // XPO iframe has its own live period filter and refresh state.
+    // Keep the shared controls only for the Bookings tab to avoid implying
+    // that the outer filter controls the embedded report.
+    const periodChip=document.getElementById('topPeriodChip');
+    const updatedChip=document.getElementById('topUpdatedChip');
+    if(periodChip)periodChip.style.display=ads?'none':'';
+    if(updatedChip)updatedChip.style.display=ads?'none':'';
   }
 
   document.getElementById('adsTabBtn').addEventListener('click',()=>activateTab('ads'));
@@ -2129,12 +2139,8 @@
     }
   }
 
-  if(location.protocol==='file:'){
-    const notice=document.getElementById('adsOriginNotice');
-    if(notice)notice.style.display='block';
-  }
   loadData();
-  loadAdsData();
+  activateTab('ads');
 })();
 </script>
 
