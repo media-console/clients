@@ -1,0 +1,2138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Client Campaign Dashboard</title>
+<style>
+  :root{
+    --purple:#6447e8;
+    --purple-2:#8d78ef;
+    --purple-soft:#f0edff;
+    --purple-pale:#f8f6ff;
+    --ink:#171717;
+    --muted:#7b7b84;
+    --line:#ececf3;
+    --card:#ffffff;
+    --bg:#f6f6fa;
+    --green:#78bd74;
+    --red:#ea6d83;
+  }
+  *{box-sizing:border-box}
+  html,body{
+    margin:0;
+    background:linear-gradient(180deg,#f8f8fc 0%, #f5f5fa 100%);
+    color:var(--ink);
+    font-family:"Poppins","Avenir Next","Segoe UI",Arial,sans-serif;
+  }
+  body{padding:28px}
+  .shell{
+    width:min(1440px,100%);
+    margin:0 auto;
+    background:#fff;
+    border:1px solid #ececf3;
+    border-radius:28px;
+    box-shadow:0 16px 42px rgba(37,31,81,.08);
+    overflow:hidden;
+  }
+  .page{padding:34px 40px 42px}
+  .hero{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:24px;
+    padding-bottom:24px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 12px;
+    border:1px solid #ece8ff;
+    background:#fbfaff;
+    color:var(--purple);
+    border-radius:999px;
+    font-size:12px;
+    font-weight:600;
+    margin-bottom:14px;
+  }
+  .hero h1{
+    margin:0;
+    font-size:34px;
+    line-height:1.1;
+    font-weight:650;
+    letter-spacing:-1px;
+  }
+  .hero p{
+    margin:12px 0 0;
+    color:var(--muted);
+    font-size:14px;
+    max-width:760px;
+  }
+  .hero-right{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+    gap:10px;
+    min-width:280px;
+  }
+  .chip{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:#fff;
+    border:1px solid #ececf2;
+    border-radius:12px;
+    padding:11px 13px;
+    font-size:12px;
+    color:#666670;
+    box-shadow:0 4px 10px rgba(49,45,83,.04);
+    white-space:nowrap;
+  }
+  .chip b{color:#1e1e22;font-weight:600}
+  .section{
+    padding-top:28px;
+  }
+  .section-head{
+    display:flex;
+    align-items:end;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:18px;
+  }
+  .section-title{
+    font-size:32px;
+    line-height:1.1;
+    font-weight:650;
+    margin:0;
+    letter-spacing:-1px;
+  }
+  .section-title .accent{color:var(--purple)}
+  .section-sub{
+    margin:10px 0 0;
+    color:var(--muted);
+    font-size:14px;
+  }
+  .subchip{
+    display:inline-flex;
+    align-items:center;
+    padding:8px 11px;
+    border-radius:999px;
+    background:#faf9ff;
+    border:1px solid #ede8ff;
+    color:#7467c9;
+    font-size:11px;
+    font-weight:600;
+  }
+
+  .kpis{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:22px;
+    margin-top:20px;
+    margin-bottom:22px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid #e9e9f0;
+    border-radius:18px;
+    box-shadow:0 8px 18px rgba(53,48,96,.07);
+  }
+  .kpi{
+    padding:20px 22px;
+    min-height:124px;
+    display:flex;
+    align-items:flex-start;
+    gap:16px;
+  }
+  .iconbox{
+    width:48px;height:48px;
+    border-radius:12px;
+    background:var(--purple-soft);
+    display:grid;place-items:center;
+    flex:0 0 auto;
+  }
+  .iconbox svg{width:24px;height:24px;stroke:#6d6d77;stroke-width:1.8;fill:none}
+  .klabel{font-size:13px;font-weight:600;margin-bottom:4px}
+  .kvalue{font-size:28px;color:var(--purple);font-weight:550;line-height:1.1}
+  .trend{font-size:10px;color:#9a9aa3;margin-top:9px}
+  .trend.up:before{content:"↗";color:#8fc56f;font-size:13px;margin-right:3px}
+
+  .table-card{
+    padding:10px 22px 18px;
+    overflow:auto;
+  }
+  table{width:100%;border-collapse:collapse;font-size:13px;min-width:1180px}
+  th{
+    text-align:left;
+    padding:14px 12px 12px;
+    font-weight:600;
+    border-bottom:1px solid var(--line);
+    white-space:nowrap;
+  }
+  td{
+    padding:12px;
+    border-bottom:1px solid var(--line);
+    vertical-align:middle;
+  }
+  tbody tr{transition:.15s ease}
+  tbody tr:hover{background:#faf9ff}
+  tr:last-child td{border-bottom:0}
+  .pill{
+    display:inline-block;
+    background:#f7f7fb;
+    border-radius:6px;
+    padding:6px 12px;
+    min-width:90px;
+    text-align:center;
+  }
+  .country{display:flex;align-items:center;gap:10px}
+  .flag{font-size:18px}
+  .channel{min-width:74px}
+
+  .insights-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+    margin-top:22px;
+  }
+  .insight{
+    padding:22px 24px 20px;
+    min-height:220px;
+    position:relative;
+    overflow:visible;
+  }
+  .ititle{
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:2px;
+  }
+  .idesc{
+    font-size:10px;
+    color:#8f8f95;
+    margin-bottom:16px;
+  }
+
+  .market-row{
+    display:grid;
+    grid-template-columns:110px 1fr 40px;
+    gap:10px;
+    align-items:center;
+    margin:9px 0;
+    font-size:9px;
+    border-radius:6px;
+    padding:2px 4px;
+    cursor:pointer;
+  }
+  .market-row:hover,.market-row.is-selected{background:#f8f6ff}
+  .bar{
+    height:9px;
+    background:#f0eefb;
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .bar>span{
+    display:block;
+    height:100%;
+    background:var(--purple);
+    transition:.2s ease;
+  }
+
+  .donut-wrap{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:22px;
+    margin-top:8px;
+  }
+  .donut-svg{width:124px;height:124px;flex:0 0 auto;overflow:visible}
+  .donut-seg{fill:none;stroke-width:18;cursor:pointer;transition:.15s ease;transform-origin:60px 60px}
+  .donut-seg:hover,.donut-seg.is-selected{stroke-width:21}
+  .donut-center-text{font-size:8px;fill:#555;text-anchor:middle}
+  .donut-center-big{font-size:18px;font-weight:600;fill:var(--purple)}
+  .legend{font-size:9px;line-height:1.9}
+  .legend-item{cursor:pointer;border-radius:5px;padding:1px 4px}
+  .legend-item:hover,.legend-item.is-selected{background:#f8f6ff}
+  .legend span{display:inline-block;width:8px;height:8px;border-radius:1px;margin-right:7px}
+
+  .bigvalue{font-size:29px;color:var(--purple);margin:18px 0 6px}
+  .mini-note{font-size:8px;color:#999}
+  svg.chart{width:100%;height:104px;overflow:visible}
+  .axis{stroke:#e8e8ef;stroke-width:1}
+  .line{fill:none;stroke:var(--purple);stroke-width:2}
+  .area{fill:url(#grad)}
+  .dot{fill:#fff;stroke:var(--purple);stroke-width:1.7;transition:.15s ease}
+  .hit-dot{fill:transparent;cursor:pointer}
+  .chart-x-label{font-size:7px;fill:#929299;text-anchor:middle}
+
+  .bars{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    height:122px;
+    padding:8px 8px 20px;
+    border-bottom:1px solid #ececf2;
+  }
+  .vbar{
+    width:11%;
+    background:var(--purple);
+    border-radius:2px 2px 0 0;
+    position:relative;
+    cursor:pointer;
+    transition:.15s ease;
+    min-height:3px;
+  }
+  .vbar:hover,.vbar.is-selected{filter:brightness(.88);transform:translateY(-2px)}
+  .vbar label{
+    position:absolute;
+    bottom:-18px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:7px;
+    color:#888;
+    white-space:nowrap;
+    pointer-events:none;
+  }
+
+  .campaign-row{
+    display:grid;
+    grid-template-columns:110px 1fr 42px;
+    gap:8px;
+    align-items:center;
+    font-size:9px;
+    margin:13px 0;
+    border-radius:6px;
+    padding:3px 4px;
+    cursor:pointer;
+  }
+  .campaign-row:hover,.campaign-row.is-selected{background:#f8f6ff}
+  .cbar{height:9px;background:#efedfa}
+  .cbar span{display:block;height:100%;background:var(--purple)}
+  .delta{
+    font-size:8px;
+    border-radius:8px;
+    padding:3px 5px;
+    text-align:center;
+    background:#f4fff3;
+    color:#6ea76b;
+  }
+  .delta.neg{background:#fff2f5;color:#c47084}
+
+  .tooltip{
+    position:fixed;
+    z-index:9999;
+    pointer-events:none;
+    opacity:0;
+    background:#22212a;
+    color:#fff;
+    border-radius:9px;
+    padding:9px 11px;
+    font-size:11px;
+    line-height:1.35;
+    box-shadow:0 8px 24px rgba(0,0,0,.16);
+    transform:translate(10px,-110%);
+    transition:opacity .12s ease;
+    max-width:220px;
+  }
+  .tooltip.show{opacity:1}
+  .tooltip small{display:block;color:#cfcdd8;margin-top:2px}
+
+  .footnote{
+    margin-top:18px;
+    text-align:right;
+    font-size:10px;
+    color:#b0b0b5;
+  }
+
+  @media(max-width:1100px){
+    .kpis,.insights-grid{grid-template-columns:repeat(2,1fr)}
+    .hero{flex-direction:column}
+    .hero-right{justify-content:flex-start}
+  }
+  @media(max-width:720px){
+    body{padding:12px}
+    .shell{border-radius:20px}
+    .page{padding:24px 18px 28px}
+    .hero h1{font-size:28px}
+    .section-title{font-size:28px}
+    .kpis,.insights-grid{grid-template-columns:1fr}
+  }
+
+  .top-controls{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:10px;
+    flex-wrap:wrap;
+    padding-bottom:22px;
+    border-bottom:1px solid var(--line);
+  }
+  .period-chip{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    flex-wrap:wrap;
+  }
+  .period-chip input[type="date"]{
+    border:0;
+    outline:0;
+    background:transparent;
+    color:#1e1e22;
+    font:inherit;
+    font-weight:600;
+    padding:0;
+    min-width:118px;
+    cursor:pointer;
+  }
+  .period-sep{color:#aaa;font-weight:400}
+  .mini-btn{
+    border:1px solid #e8e5f6;
+    background:#faf9ff;
+    color:#6b5cc5;
+    border-radius:8px;
+    padding:6px 9px;
+    font:inherit;
+    font-size:10px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .mini-btn:hover{background:#f1edff}
+  .section-head{align-items:center}
+  .section-head .subchip{display:none}
+  .table-footer{
+    display:flex;
+    justify-content:center;
+    padding-top:14px;
+    border-top:1px solid #f2f2f6;
+    margin-top:4px;
+  }
+  .view-all-btn{
+    border:1px solid #e5e2f5;
+    background:#faf9ff;
+    color:#6254bd;
+    border-radius:10px;
+    padding:9px 16px;
+    font-family:inherit;
+    font-size:11px;
+    font-weight:650;
+    cursor:pointer;
+  }
+  .view-all-btn:hover{background:#f2efff}
+  .card-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:12px;
+  }
+  .card-head .idesc{margin-bottom:0}
+  .metric-toggle{
+    display:inline-flex;
+    align-items:center;
+    gap:2px;
+    padding:3px;
+    border:1px solid #ebe8f7;
+    background:#faf9ff;
+    border-radius:9px;
+    flex:0 0 auto;
+  }
+  .metric-toggle button{
+    border:0;
+    background:transparent;
+    color:#9996aa;
+    border-radius:7px;
+    padding:5px 8px;
+    font-family:inherit;
+    font-size:9px;
+    font-weight:650;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .metric-toggle button.active{
+    background:#fff;
+    color:var(--purple);
+    box-shadow:0 1px 4px rgba(64,54,120,.10);
+  }
+  .metric-toggle button:focus-visible,
+  .view-all-btn:focus-visible,
+  .mini-btn:focus-visible{
+    outline:2px solid var(--purple);
+    outline-offset:2px;
+  }
+  .metric-label{
+    font-size:8px;
+    color:#aaa;
+    margin-top:4px;
+  }
+  @media(max-width:720px){
+    .top-controls{justify-content:flex-start}
+    .period-chip input[type="date"]{min-width:110px}
+    .card-head{flex-direction:column;align-items:flex-start}
+  }
+
+
+  /* v4 refinements */
+  .period-chip select{
+    border:0;
+    outline:0;
+    background:transparent;
+    color:#1e1e22;
+    font:inherit;
+    font-weight:600;
+    cursor:pointer;
+    padding:0 18px 0 0;
+  }
+  .custom-range{
+    display:none;
+    align-items:center;
+    gap:7px;
+  }
+  .custom-range.show{display:flex}
+  .insight{min-height:238px}
+  .ititle{font-size:14px}
+  .idesc{font-size:11px}
+  .market-row{font-size:11px;grid-template-columns:128px 1fr 62px;margin:10px 0}
+  .legend{font-size:11px;line-height:1.95}
+  .donut-center-text{font-size:10px}
+  .donut-center-big{font-size:18px}
+  .mini-note{font-size:10px}
+  .chart-x-label{font-size:9px}
+  .vbar label{font-size:9px}
+  .metric-toggle button{font-size:10px;padding:6px 9px}
+  .geo-section{margin-top:26px}
+  .geo-section-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    margin:0 0 14px;
+  }
+  .geo-title{
+    font-size:16px;
+    font-weight:700;
+    color:#24242b;
+  }
+  .geo-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+  }
+  .geo-card{padding:22px 24px 20px;min-height:240px}
+  .pipeline-card{
+    margin-top:22px;
+    padding:22px 24px 20px;
+  }
+  .pipeline-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:14px;
+    margin-bottom:16px;
+  }
+  .pipeline-wrap{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    border:1px solid #efeff4;
+    border-radius:12px;
+  }
+  .pipeline-table{
+    width:100%;
+    min-width:1050px;
+    border-collapse:collapse;
+    font-size:11px;
+  }
+  .pipeline-table th{
+    background:#fafafa;
+    color:#686870;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    padding:11px 10px;
+    text-align:center;
+    border-bottom:1px solid #e9e9ef;
+    white-space:nowrap;
+  }
+  .pipeline-table th:first-child{text-align:left;position:sticky;left:0;z-index:2;background:#fafafa}
+  .pipeline-table td{
+    padding:11px 10px;
+    text-align:center;
+    border-bottom:1px solid #efeff4;
+    white-space:nowrap;
+    font-weight:600;
+    color:#293046;
+  }
+  .pipeline-table td:first-child{
+    text-align:left;
+    position:sticky;
+    left:0;
+    z-index:1;
+    background:#fff;
+    min-width:175px;
+    font-weight:700;
+  }
+  .pipeline-table td.total-col,
+  .pipeline-table th.total-col{
+    border-left:1px solid #e8e8ef;
+    font-weight:750;
+    background:#fafafa;
+  }
+  .pipeline-table tr.grand-total td{
+    background:#f7f8fb;
+    font-weight:750;
+    border-top:2px solid #e1e5ef;
+    border-bottom:0;
+  }
+  .pipeline-table tr.grand-total td:first-child{background:#f7f8fb}
+  .pipeline-share{
+    display:block;
+    margin-top:3px;
+    font-size:9px;
+    color:#8c94aa;
+    font-weight:550;
+  }
+  .heat-cell{transition:filter .15s ease}
+  .heat-cell:hover{filter:brightness(.96)}
+  .empty-state{color:#aaa;font-size:11px;padding:28px 0;text-align:center}
+  @media(max-width:1100px){
+    .geo-grid{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:720px){
+    .geo-grid{grid-template-columns:1fr}
+    .geo-section-head,.pipeline-head{flex-direction:column;align-items:flex-start}
+    .period-chip select{font-size:12px}
+    .custom-range{width:100%}
+  }
+
+
+  /* v5: two-tab dashboard */
+  .tabs{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-top:20px;
+    padding:5px;
+    width:max-content;
+    max-width:100%;
+    background:#f6f5fb;
+    border:1px solid #ebe9f4;
+    border-radius:13px;
+  }
+  .tab-btn{
+    border:0;
+    background:transparent;
+    color:#8a8798;
+    border-radius:10px;
+    padding:10px 18px;
+    font-family:inherit;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.15s ease;
+  }
+  .tab-btn:hover{color:#5f51bd}
+  .tab-btn.active{
+    color:var(--purple);
+    background:#fff;
+    box-shadow:0 3px 10px rgba(63,51,125,.10);
+  }
+  .tab-panel{display:none}
+  .tab-panel.active{display:block}
+
+  .ads-kpis{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:16px;
+    margin-top:20px;
+  }
+  .ads-kpi{
+    min-height:114px;
+    padding:18px 18px 16px;
+  }
+  .ads-kpi .kvalue{font-size:24px}
+  .ads-kpi .klabel{font-size:12px}
+  .ads-kpi .trend{white-space:normal;line-height:1.35}
+
+  .ads-grid{
+    display:grid;
+    grid-template-columns:minmax(0,1.55fr) minmax(320px,.8fr);
+    gap:22px;
+    margin-top:22px;
+  }
+  .ads-card{
+    padding:22px 24px 20px;
+    min-height:330px;
+  }
+  .ads-card-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:14px;
+  }
+  .ads-chart-wrap{
+    position:relative;
+    height:248px;
+    margin-top:8px;
+  }
+  .ads-chart-svg{
+    width:100%;
+    height:100%;
+    overflow:visible;
+  }
+  .ads-gridline{
+    stroke:#ededf3;
+    stroke-width:1;
+  }
+  .ads-axis-label{
+    font-size:10px;
+    fill:#92909c;
+  }
+  .ads-line{
+    fill:none;
+    stroke:var(--purple);
+    stroke-width:2.2;
+    vector-effect:non-scaling-stroke;
+  }
+  .ads-area{
+    fill:rgba(100,71,232,.10);
+  }
+  .ads-point{
+    fill:#fff;
+    stroke:var(--purple);
+    stroke-width:1.6;
+    vector-effect:non-scaling-stroke;
+  }
+  .ads-hit{
+    fill:transparent;
+    cursor:pointer;
+  }
+
+  .ads-channel-row{
+    display:grid;
+    grid-template-columns:118px 1fr 72px;
+    gap:10px;
+    align-items:center;
+    padding:9px 4px;
+    border-radius:7px;
+    font-size:11px;
+    cursor:pointer;
+  }
+  .ads-channel-row:hover,
+  .ads-channel-row.is-selected{background:#f8f6ff}
+  .ads-channel-name{
+    font-weight:650;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .ads-channel-bar{
+    height:10px;
+    border-radius:2px;
+    background:#efedfa;
+    overflow:hidden;
+  }
+  .ads-channel-bar span{
+    display:block;
+    height:100%;
+    background:var(--purple);
+  }
+  .ads-channel-value{
+    text-align:right;
+    font-weight:650;
+    color:#303040;
+  }
+  .ads-error{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:220px;
+    text-align:center;
+    color:#bd6774;
+    font-size:12px;
+    padding:24px;
+  }
+  .ads-loading{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:220px;
+    color:#aaa;
+    font-size:12px;
+  }
+  .ads-footnote{
+    margin-top:18px;
+    text-align:right;
+    color:#aaa;
+    font-size:10px;
+  }
+
+  @media(max-width:1200px){
+    .ads-kpis{grid-template-columns:repeat(3,1fr)}
+    .ads-grid{grid-template-columns:1fr}
+  }
+  @media(max-width:720px){
+    .tabs{width:100%}
+    .tab-btn{flex:1;padding:10px 8px}
+    .ads-kpis{grid-template-columns:1fr 1fr}
+  }
+
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="page">
+
+    <div class="top-controls">
+      <div class="chip">Client: <b>Diamond Cliff Resort &amp; Spa</b></div>
+      <div class="chip period-chip">
+        <span>Period:</span>
+        <select id="periodPreset" aria-label="Period preset">
+          <option value="today">Today</option>
+          <option value="yesterday">Yesterday</option>
+          <option value="last7">Last 7 days</option>
+          <option value="last14">Last 14 days</option>
+          <option value="last30">Last 30 days</option>
+          <option value="thisWeek">This week</option>
+          <option value="lastWeek">Last week</option>
+          <option value="thisMonth">This month</option>
+          <option value="lastMonth">Last month</option>
+          <option value="thisQuarter">This quarter</option>
+          <option value="lastQuarter">Last quarter</option>
+          <option value="thisYear">This year</option>
+          <option value="lastYear">Last year</option>
+          <option value="all" selected>All time</option>
+          <option value="custom">Custom</option>
+        </select>
+        <span class="custom-range" id="customRange">
+          <input type="date" id="periodStart" aria-label="Custom period start date">
+          <span class="period-sep">→</span>
+          <input type="date" id="periodEnd" aria-label="Custom period end date">
+        </span>
+      </div>
+      <div class="chip">Updated: <b id="lastUpdated">Loading...</b></div>
+    </div>
+
+
+    <div class="tabs" role="tablist" aria-label="Dashboard reports">
+      <button class="tab-btn active" id="adsTabBtn" type="button" role="tab" aria-selected="true" aria-controls="adsTab">Ads Report</button>
+      <button class="tab-btn" id="bookingsTabBtn" type="button" role="tab" aria-selected="false" aria-controls="bookingsTab">Bookings Report</button>
+    </div>
+
+    <div id="adsTab" class="tab-panel active" role="tabpanel" aria-labelledby="adsTabBtn">
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Ads <span class="accent">Report</span></h2>
+          </div>
+        </div>
+
+        <div class="ads-kpis">
+          <div class="card ads-kpi">
+            <div class="klabel">Spend</div>
+            <div class="kvalue" id="adsSpend">—</div>
+            <div class="trend">XPO media spend</div>
+          </div>
+          <div class="card ads-kpi">
+            <div class="klabel">Impressions</div>
+            <div class="kvalue" id="adsImpressions">—</div>
+            <div class="trend">Delivered impressions</div>
+          </div>
+          <div class="card ads-kpi">
+            <div class="klabel">Clicks</div>
+            <div class="kvalue" id="adsClicks">—</div>
+            <div class="trend">Click throughs</div>
+          </div>
+          <div class="card ads-kpi">
+            <div class="klabel">CTR</div>
+            <div class="kvalue" id="adsCTR">—</div>
+            <div class="trend">Click-through rate</div>
+          </div>
+          <div class="card ads-kpi">
+            <div class="klabel">CPC</div>
+            <div class="kvalue" id="adsCPC">—</div>
+            <div class="trend">Cost per click</div>
+          </div>
+          <div class="card ads-kpi">
+            <div class="klabel">CPM</div>
+            <div class="kvalue" id="adsCPM">—</div>
+            <div class="trend">Cost per 1,000 impressions</div>
+          </div>
+        </div>
+
+        <div class="ads-grid">
+          <div class="card ads-card">
+            <div class="ads-card-head">
+              <div>
+                <div class="ititle">Daily Performance</div>
+                <div class="idesc" id="adsDailyDesc">By spend</div>
+              </div>
+              <div class="metric-toggle" id="adsDailyToggle" aria-label="Daily Performance metric">
+                <button type="button" class="active" data-metric="spend">Spend</button>
+                <button type="button" data-metric="impressions">Impressions</button>
+                <button type="button" data-metric="clicks">Clicks</button>
+              </div>
+            </div>
+            <div class="ads-chart-wrap" id="adsDailyWrap">
+              <div class="ads-loading">Loading XPO data...</div>
+            </div>
+          </div>
+
+          <div class="card ads-card">
+            <div class="ads-card-head">
+              <div>
+                <div class="ititle">Channel Performance</div>
+                <div class="idesc" id="adsChannelDesc">By spend</div>
+              </div>
+              <div class="metric-toggle" id="adsChannelToggle" aria-label="Ads Channel Performance metric">
+                <button type="button" class="active" data-metric="spend">Spend</button>
+                <button type="button" data-metric="impressions">Impressions</button>
+                <button type="button" data-metric="clicks">Clicks</button>
+              </div>
+            </div>
+            <div id="adsChannelRows">
+              <div class="ads-loading">Loading XPO data...</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="adsOriginNotice" style="display:none;margin-top:14px;padding:10px 12px;border:1px solid #eee9ff;background:#fbfaff;border-radius:10px;color:#71689b;font-size:11px;line-height:1.45">
+          Local file preview detected. XPO may treat <code>file://</code> requests differently from a hosted HTTPS page. The dashboard will still try to load the API, but the final test should be done on GitHub Pages.
+        </div>
+        <div class="ads-footnote">Live data from XPO / Knorex public report API</div>
+      </section>
+    </div>
+
+    <div id="bookingsTab" class="tab-panel" role="tabpanel" aria-labelledby="bookingsTabBtn">
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Bookings <span class="accent">Report</span></h2>
+        </div>
+        <div class="subchip">Booking-level performance</div>
+      </div>
+
+      <div class="kpis">
+        <div class="card kpi">
+          <div class="iconbox"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 9h16"/><path d="M8 14l2 2 5-5"/></svg></div>
+          <div><div class="klabel">Bookings</div><div class="kvalue" id="kBookings">—</div><div class="trend" id="kBookingsNote">Total bookings</div></div>
+        </div>
+        <div class="card kpi">
+          <div class="iconbox"><svg viewBox="0 0 24 24"><path d="M12 3v18M16 7.5c0-1.8-1.8-3-4-3s-4 1.2-4 3 1.7 2.6 4 3.2 4 1.4 4 3.5-1.8 3.3-4 3.3-4-1.2-4-3"/></svg></div>
+          <div><div class="klabel">Revenue</div><div class="kvalue" id="kRevenue">—</div><div class="trend" id="kRevenueNote">Total transaction value</div></div>
+        </div>
+        <div class="card kpi">
+          <div class="iconbox"><svg viewBox="0 0 24 24"><rect x="3.5" y="7" width="17" height="12" rx="2"/><path d="M6 7V5.5A1.5 1.5 0 0 1 7.5 4h9A1.5 1.5 0 0 1 18 5.5V7"/><circle cx="16.5" cy="13" r="1.5"/></svg></div>
+          <div><div class="klabel">Avg. Booking Value</div><div class="kvalue" id="kABV">—</div><div class="trend" id="kABVNote">Average per booking</div></div>
+        </div>
+        <div class="card kpi">
+          <div class="iconbox"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9S14.5 18.3 12 21c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></div>
+          <div><div class="klabel">Top Source Market</div><div class="kvalue" id="kTopMarket">—</div><div class="trend" id="kTopMarketNote">By booking count</div></div>
+        </div>
+      </div>
+
+      <div class="card table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Booking Date</th>
+              <th>Booking ID</th>
+              <th>Transaction Value</th>
+              <th>City</th>
+              <th>Region</th>
+              <th>Country</th>
+              <th>Check in date</th>
+              <th>Check out date</th>
+              <th>Nights</th>
+              <th>BLT</th>
+              <th>Channel</th>
+            </tr>
+          </thead>
+          <tbody id="bookingTbody">
+            <tr><td colspan="11" style="text-align:center;color:#aaa;padding:28px">Loading booking data...</td></tr>
+          </tbody>
+        </table>
+        <div class="table-footer">
+          <button class="view-all-btn" id="viewAllBtn" type="button" style="display:none">View all</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Bookings <span class="accent">Insights</span></h2>
+        </div>
+        <div class="subchip">Interactive charts</div>
+      </div>
+
+      <div class="insights-grid">
+        <div class="card insight">
+          <div class="card-head">
+            <div>
+              <div class="ititle">Top Source Markets</div>
+              <div class="idesc" id="marketDesc">By bookings</div>
+            </div>
+            <div class="metric-toggle" id="marketToggle" aria-label="Top Source Markets metric">
+              <button type="button" class="active" data-metric="bookings">Bookings</button>
+              <button type="button" data-metric="revenue">Revenue</button>
+            </div>
+          </div>
+          <div id="marketRows"><div style="color:#aaa;font-size:11px;padding-top:24px">Loading...</div></div>
+        </div>
+
+        <div class="card insight">
+          <div class="ititle">Booking Window</div>
+          <div class="idesc">Days between booking and check-in</div>
+          <div class="donut-wrap">
+            <svg id="bookingWindowDonut" class="donut-svg" viewBox="0 0 120 120" role="img" aria-label="Booking window distribution"></svg>
+            <div class="legend" id="bookingWindowLegend"><div style="color:#aaa">Loading...</div></div>
+          </div>
+        </div>
+
+        <div class="card insight">
+          <div class="ititle">Average Booking Value</div>
+          <div class="idesc">Average transaction value by booking date</div>
+          <div class="bigvalue" id="abvInsight">—</div>
+          <div class="mini-note" id="abvInsightNote">Loading...</div>
+          <svg id="abvChart" class="chart" viewBox="0 0 300 110" preserveAspectRatio="none" role="img" aria-label="Average booking value trend"></svg>
+        </div>
+
+        <div class="card insight">
+          <div class="card-head">
+            <div>
+              <div class="ititle">Stay Period Demand</div>
+              <div class="idesc" id="stayDesc">By room nights</div>
+            </div>
+            <div class="metric-toggle" id="stayToggle" aria-label="Stay Period Demand metric">
+              <button type="button" class="active" data-metric="nights">Room Nights</button>
+              <button type="button" data-metric="revenue">Revenue</button>
+            </div>
+          </div>
+          <div class="bars" id="stayDemandBars"><div style="color:#aaa;font-size:11px;align-self:center">Loading...</div></div>
+        </div>
+
+        <div class="card insight">
+          <div class="ititle">Average Length of Stay</div>
+          <div class="idesc">Nights per booking</div>
+          <div class="bigvalue" id="losInsight">—</div>
+          <div class="mini-note" id="losInsightNote">Loading...</div>
+          <svg id="losChart" class="chart" viewBox="0 0 300 110" preserveAspectRatio="none" role="img" aria-label="Average length of stay trend"></svg>
+        </div>
+
+        <div class="card insight">
+          <div class="card-head">
+            <div>
+              <div class="ititle">Channel Performance</div>
+              <div class="idesc" id="channelDesc">By bookings</div>
+            </div>
+            <div class="metric-toggle" id="channelToggle" aria-label="Channel Performance metric">
+              <button type="button" class="active" data-metric="bookings">Bookings</button>
+              <button type="button" data-metric="revenue">Revenue</button>
+            </div>
+          </div>
+          <div id="channelRows"><div style="color:#aaa;font-size:11px;padding-top:24px">Loading...</div></div>
+        </div>
+      </div>
+
+      <div class="geo-section">
+        <div class="geo-section-head">
+          <div class="geo-title">Geo Performance</div>
+          <div class="metric-toggle" id="geoToggle" aria-label="Geo Performance metric">
+            <button type="button" class="active" data-metric="bookings">Bookings</button>
+            <button type="button" data-metric="revenue">Revenue</button>
+            <button type="button" data-metric="abv">ABV</button>
+          </div>
+        </div>
+
+        <div class="geo-grid">
+          <div class="card geo-card">
+            <div class="ititle">Country Performance</div>
+            <div class="idesc" id="geoCountryDesc">By bookings</div>
+            <div id="geoCountryRows"><div class="empty-state">Loading...</div></div>
+          </div>
+
+          <div class="card geo-card">
+            <div class="ititle">Region Performance</div>
+            <div class="idesc" id="geoRegionDesc">By bookings</div>
+            <div id="geoRegionRows"><div class="empty-state">Loading...</div></div>
+          </div>
+
+          <div class="card geo-card">
+            <div class="ititle">City Performance</div>
+            <div class="idesc" id="geoCityDesc">By bookings</div>
+            <div id="geoCityRows"><div class="empty-state">Loading...</div></div>
+          </div>
+        </div>
+
+        <div class="card pipeline-card">
+          <div class="pipeline-head">
+            <div>
+              <div class="ititle">Market Future Pipeline</div>
+              <div class="idesc" id="pipelineDesc">Future check-ins by room nights</div>
+            </div>
+            <div class="metric-toggle" id="pipelineToggle" aria-label="Market Future Pipeline metric">
+              <button type="button" class="active" data-metric="nights">Room Nights</button>
+              <button type="button" data-metric="revenue">Revenue</button>
+            </div>
+          </div>
+          <div class="pipeline-wrap" id="pipelineWrap">
+            <div class="empty-state">Loading...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footnote">Live data from Google Sheet</div>
+    </section>
+
+    </div>
+
+  </div>
+</div>
+
+<div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
+
+
+
+<script>
+(function(){
+  const SHEET_ID = "1wDcmYtUK2zJaaqEXYLvN__xkev2edNk9YooP6CVn47I";
+  const SHEET_GID = "0";
+  const DATA_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SHEET_GID}`;
+
+  const XPO_TOKEN = "9tCmkOy6m6eBaKhmh1r9kebvTDdsWPg5GKlirLev";
+  const XPO_BASE = "https://dsp.knorex.com/api/public/reports/insights/campaign/v3";
+  const XPO_TIMEZONE = "Asia/Bangkok";
+  const XPO_FLIGHT_START = new Date(Date.UTC(2025,9,1)); // 01 Oct 2025
+  const XPO_FLIGHT_END = new Date(Date.UTC(2026,8,30));  // 30 Sep 2026
+
+
+  const tooltip = document.getElementById('tooltip');
+  let selected = null;
+
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const num = v => {
+    if (typeof v === 'number') return Number.isFinite(v) ? v : 0;
+    const n = parseFloat(String(v ?? '').replace(/[$฿,\s]/g,''));
+    return Number.isFinite(n) ? n : 0;
+  };
+  const money = v => '฿' + Math.round(v).toLocaleString('en-US');
+  const shortMoney = v => {
+    const n=Number(v||0), a=Math.abs(n);
+    if(a>=1000000)return '฿'+(n/1000000).toFixed(a>=10000000?1:2).replace(/\.0+$|(\.\d*[1-9])0+$/,'$1')+'M';
+    if(a>=1000)return '฿'+(n/1000).toFixed(a>=100000?0:1).replace(/\.0$/,'')+'K';
+    return '฿'+Math.round(n).toLocaleString('en-US');
+  };
+  const fmtDate = d => d ? `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}` : '—';
+
+  function parseDate(v){
+    if (v instanceof Date && !isNaN(v)) return new Date(Date.UTC(v.getFullYear(),v.getMonth(),v.getDate()));
+    if (typeof v === 'number') {
+      // Google Sheets serial date
+      const ms = Math.round((v - 25569) * 86400 * 1000);
+      const d = new Date(ms);
+      return isNaN(d) ? null : new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()));
+    }
+    const s = String(v ?? '').trim();
+    if (!s) return null;
+
+    let m = s.match(/^Date\((\d{4}),(\d{1,2}),(\d{1,2})/);
+    if(m) return new Date(Date.UTC(+m[1], +m[2], +m[3]));
+
+    m = s.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
+    if(m) return new Date(Date.UTC(+m[1], +m[2]-1, +m[3]));
+
+    m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+    if(m) return new Date(Date.UTC(+m[3], +m[2]-1, +m[1]));
+
+    const d = new Date(s);
+    return isNaN(d) ? null : new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
+  }
+
+  function diffDays(a,b){
+    if(!a || !b) return null;
+    return Math.round((b-a)/86400000);
+  }
+
+  function normalizeHeader(s){
+    return String(s || '').trim().toLowerCase().replace(/[_\-]+/g,' ').replace(/\s+/g,' ');
+  }
+
+  function getField(obj, aliases){
+    for(const a of aliases){
+      const key = Object.keys(obj).find(k => normalizeHeader(k) === normalizeHeader(a));
+      if(key !== undefined) return obj[key];
+    }
+    return '';
+  }
+
+  function parseGviz(input){
+    const json = typeof input === 'string'
+      ? JSON.parse(input.replace(/^[^{]+/,'').replace(/\);?\s*$/,''))
+      : input;
+    const cols = json.table.cols.map((c,i) => String(c.label || c.id || `Column ${i+1}`).trim());
+    return json.table.rows.map(row => {
+      const out = {};
+      (row.c || []).forEach((cell,i) => {
+        if(!cell){ out[cols[i]]=''; return; }
+        // Use raw value when possible; formatted string is useful fallback.
+        out[cols[i]] = cell.v !== null && cell.v !== undefined ? cell.v : (cell.f ?? '');
+        if(cell.f && typeof cell.v !== 'number' && !String(cell.v ?? '').trim()) out[cols[i]] = cell.f;
+      });
+      return out;
+    }).filter(r => Object.values(r).some(v => String(v ?? '').trim() !== ''));
+  }
+
+  function normalizeRows(raw){
+    return raw.map(r => {
+      const bookingDate = parseDate(getField(r,['Booking Date','Booking date']));
+      const bookingId = getField(r,['Booking ID','Booking Id','Order ID','Order Id']);
+      const value = num(getField(r,['Transaction Value','Transaction value','Revenue','Booking Value']));
+      const city = getField(r,['City']);
+      const region = getField(r,['Region','State','Province']);
+      const country = getField(r,['Country','Source Market','Market']);
+      const checkIn = parseDate(getField(r,['Check in date','Check-in date','Check In Date','Checkin Date','Check-in']));
+      const checkOut = parseDate(getField(r,['Check out date','Check-out date','Check Out Date','Checkout Date','Check-out']));
+      const rawNights = getField(r,['Nights','Room Nights','Room Night']);
+      const rawBlt = getField(r,['BLT','Booking Lead Time','Booking Lead Time (days)','Lead Time']);
+      const nightsParsed = num(rawNights);
+      const bltParsed = num(rawBlt);
+      const nights = String(rawNights ?? '').trim() !== '' ? nightsParsed : diffDays(checkIn,checkOut);
+      const blt = String(rawBlt ?? '').trim() !== '' ? bltParsed : diffDays(bookingDate,checkIn);
+      const channel = getField(r,['Channel','Platform']);
+
+      return {
+        bookingDate,
+        bookingId:String(bookingId ?? ''),
+        value,
+        city:String(city??''),
+        region:String(region??''),
+        country:String(country??''),
+        checkIn,
+        checkOut,
+        nights:Number.isFinite(nights) ? nights : null,
+        blt:Number.isFinite(blt) ? blt : null,
+        channel:String(channel??'')
+      };
+    }).filter(r => r.bookingId || r.bookingDate || r.value || r.country || r.checkIn);
+  }
+
+  let tableExpanded = false;
+  let currentFilteredRows = [];
+
+  function renderTable(rows){
+    currentFilteredRows = rows;
+    const tb = document.getElementById('bookingTbody');
+    const btn = document.getElementById('viewAllBtn');
+    if(!rows.length){
+      tb.innerHTML = '<tr><td colspan="11" style="text-align:center;color:#aaa;padding:28px">No booking data found</td></tr>';
+      btn.style.display='none';
+      return;
+    }
+
+    const ordered = [...rows].sort((a,b)=>(b.bookingDate?.getTime()||0)-(a.bookingDate?.getTime()||0));
+    const visible = tableExpanded ? ordered : ordered.slice(0,10);
+
+    tb.innerHTML = visible.map(r => `
+      <tr>
+        <td>${fmtDate(r.bookingDate)}</td>
+        <td><span class="pill">${esc(r.bookingId || '—')}</span></td>
+        <td><span class="pill">${r.value || r.value===0 ? money(r.value) : '—'}</span></td>
+        <td>${esc(r.city || '—')}</td>
+        <td>${esc(r.region || '—')}</td>
+        <td><div class="country">${esc(r.country || '—')}</div></td>
+        <td>${fmtDate(r.checkIn)}</td>
+        <td>${fmtDate(r.checkOut)}</td>
+        <td>${r.nights!==null ? Number(r.nights).toLocaleString('en-US',{maximumFractionDigits:1}) : '—'}</td>
+        <td>${r.blt!==null ? Number(r.blt).toLocaleString('en-US',{maximumFractionDigits:0}) : '—'}</td>
+        <td>${esc(r.channel || '—')}</td>
+      </tr>`).join('');
+
+    if(ordered.length > 10){
+      btn.style.display='';
+      btn.textContent = tableExpanded ? 'Show less' : `View all (${ordered.length.toLocaleString('en-US')})`;
+    }else{
+      btn.style.display='none';
+    }
+  }
+
+  function renderKPIs(rows){
+    const bookings = rows.length;
+    const revenue = rows.reduce((a,r)=>a+r.value,0);
+    const abv = bookings ? revenue/bookings : 0;
+    const counts = {};
+    rows.forEach(r=>{if(r.country) counts[r.country]=(counts[r.country]||0)+1;});
+    const top = Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
+
+    document.getElementById('kBookings').textContent = bookings.toLocaleString('en-US');
+    document.getElementById('kRevenue').textContent = money(revenue);
+    document.getElementById('kABV').textContent = money(abv);
+    document.getElementById('kABVNote').textContent = 'Transaction Value ÷ Bookings';
+    document.getElementById('kTopMarket').textContent = top ? top[0] : '—';
+    document.getElementById('kTopMarketNote').textContent = top && bookings ? `${((top[1]/bookings)*100).toFixed(1)}% of total bookings` : 'By booking count';
+
+    document.getElementById('abvInsight').textContent = money(abv);
+
+    const losVals = rows.map(r=>r.nights).filter(v=>v!==null && Number.isFinite(v) && v>=0);
+    const los = losVals.length ? losVals.reduce((a,b)=>a+b,0)/losVals.length : 0;
+    document.getElementById('losInsight').textContent = losVals.length ? los.toFixed(1) : '—';
+    document.getElementById('losInsightNote').textContent = losVals.length ? `Average across ${losVals.length.toLocaleString()} bookings` : 'No valid Nights data';
+  }
+
+  function aggregateBy(rows,key,metric='bookings',limit=5){
+    const m={};
+    rows.forEach(r=>{
+      const label=(r[key]||'').trim();
+      if(!label)return;
+      if(!m[label])m[label]={bookings:0,revenue:0};
+      m[label].bookings += 1;
+      m[label].revenue += r.value;
+    });
+    const entries=Object.entries(m).map(([label,v])=>({
+      label,
+      bookings:v.bookings,
+      revenue:v.revenue,
+      abv:v.bookings ? v.revenue/v.bookings : 0,
+      value: metric==='revenue' ? v.revenue : metric==='abv' ? (v.bookings?v.revenue/v.bookings:0) : v.bookings
+    }));
+    return entries.sort((a,b)=>b.value-a.value).slice(0,limit);
+  }
+
+  function renderRankedRows(containerId, entries, total, metric='bookings'){
+    const el=document.getElementById(containerId);
+    if(!entries.length){el.innerHTML='<div class="empty-state">No data</div>';return;}
+    const max=entries[0].value||1;
+    el.innerHTML=entries.map(item=>{
+      const label=item.label, val=item.value;
+      const pct=metric==='abv' ? null : (total ? (val/total*100) : 0);
+      const shown=metric==='revenue' ? shortMoney(val) : metric==='abv' ? money(val) : Math.round(val).toLocaleString('en-US');
+      const detail=metric==='revenue'
+        ? `${money(val)} revenue${pct!==null?' · '+pct.toFixed(1)+'% share':''}`
+        : metric==='abv'
+          ? `${money(val)} average booking value · ${item.bookings} bookings`
+          : `${Math.round(val).toLocaleString('en-US')} bookings${pct!==null?' · '+pct.toFixed(1)+'% share':''}`;
+      return `<div class="market-row interactive" tabindex="0" data-tip="<strong>${esc(label)}</strong><small>${detail}</small>">
+        <div>${esc(label)}</div>
+        <div class="bar"><span style="width:${Math.max(3,val/max*100)}%"></span></div>
+        <div>${shown}</div>
+      </div>`;
+    }).join('');
+  }
+
+  let marketMetric='bookings';
+  let stayMetric='nights';
+  let channelMetric='bookings';
+
+  function renderMarkets(rows){
+    const total = marketMetric==='revenue' ? rows.reduce((a,r)=>a+r.value,0) : rows.length;
+    const entries = aggregateBy(rows,'country',marketMetric,5);
+    document.getElementById('marketDesc').textContent = marketMetric==='revenue' ? 'By revenue' : 'By bookings';
+    renderRankedRows('marketRows',entries,total,marketMetric);
+  }
+
+  function renderBookingWindow(rows){
+    const bins=[
+      {l:'0–7 days',min:0,max:7,c:'#6447e8',n:0},
+      {l:'8–14 days',min:8,max:14,c:'#8c77ee',n:0},
+      {l:'15–30 days',min:15,max:30,c:'#b19ff5',n:0},
+      {l:'31–60 days',min:31,max:60,c:'#d0c5fa',n:0},
+      {l:'60+ days',min:61,max:1e9,c:'#e8e3fd',n:0}
+    ];
+    rows.forEach(r=>{
+      const d=r.blt;
+      if(d===null || !Number.isFinite(d) || d<0)return;
+      const b=bins.find(x=>d>=x.min&&d<=x.max); if(b)b.n++;
+    });
+    const total=bins.reduce((a,b)=>a+b.n,0);
+    const svg=document.getElementById('bookingWindowDonut');
+    const legend=document.getElementById('bookingWindowLegend');
+    if(!total){
+      svg.innerHTML='<text x="60" y="62" class="donut-center-text">No data</text>';
+      legend.innerHTML='<div style="color:#aaa">No valid BLT data</div>'; return;
+    }
+    let offset=0;
+    const segs=bins.map((b,i)=>{
+      const pct=b.n/total*100;
+      const s=`<circle cx="60" cy="60" r="42" pathLength="100" class="donut-seg interactive" tabindex="0" stroke="${b.c}" stroke-dasharray="${pct} ${100-pct}" stroke-dashoffset="${-offset}" data-group="bw${i}" data-tip="<strong>${b.l}</strong><small>${b.n} bookings · ${pct.toFixed(1)}%</small>"/>`;
+      offset+=pct; return s;
+    }).join('');
+    const top=[...bins].sort((a,b)=>b.n-a.n)[0];
+    svg.innerHTML=`<g transform="rotate(-90 60 60)">${segs}</g>
+      <text x="60" y="55" class="donut-center-text donut-center-big">${(top.n/total*100).toFixed(0)}%</text>
+      <text x="60" y="69" class="donut-center-text">${top.l}</text>`;
+    legend.innerHTML=bins.map((b,i)=>`<div class="legend-item interactive" tabindex="0" data-group="bw${i}" data-tip="<strong>${b.l}</strong><small>${b.n} bookings · ${(b.n/total*100).toFixed(1)}%</small>"><span style="background:${b.c}"></span>${b.l} <b>${(b.n/total*100).toFixed(0)}%</b></div>`).join('');
+  }
+
+  function monthKey(d){return d ? `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}` : '';}
+  function monthLabel(k){if(!k)return'';const[y,m]=k.split('-').map(Number);return new Date(Date.UTC(y,m-1,1)).toLocaleDateString('en-US',{month:'short',year:'2-digit',timeZone:'UTC'});}
+
+  function groupAvgByMonth(rows,dateKey,valueFn){
+    const m={};
+    rows.forEach(r=>{
+      const d=r[dateKey]; if(!d)return;
+      const k=monthKey(d); const v=valueFn(r);
+      if(v===null || !Number.isFinite(v))return;
+      if(!m[k])m[k]={sum:0,n:0}; m[k].sum+=v; m[k].n++;
+    });
+    return Object.entries(m).sort((a,b)=>a[0].localeCompare(b[0])).map(([k,v])=>({k,label:monthLabel(k),value:v.n?v.sum/v.n:0,n:v.n}));
+  }
+
+  function renderLineChart(id, points, formatter){
+    const svg=document.getElementById(id);
+    if(!points.length){svg.innerHTML='<text x="150" y="60" class="chart-x-label">No data</text>';return;}
+    const W=300,H=110,L=7,R=7,T=16,B=30;
+    const vals=points.map(p=>p.value), min=Math.min(...vals), max=Math.max(...vals);
+    const span=(max-min)||1;
+    const x=i=>L+(W-L-R)*(points.length===1?.5:i/(points.length-1));
+    const y=v=>T+(H-T-B)*(1-(v-min)/span);
+    const coords=points.map((p,i)=>`${x(i).toFixed(1)},${y(p.value).toFixed(1)}`).join(' ');
+    const area=`M ${x(0)} ${H-B} L `+points.map((p,i)=>`${x(i)} ${y(p.value)}`).join(' L ')+` L ${x(points.length-1)} ${H-B} Z`;
+    const dots=points.map((p,i)=>`<circle class="hit-dot interactive" tabindex="0" cx="${x(i)}" cy="${y(p.value)}" r="10" data-tip="<strong>${p.label}</strong><small>${formatter(p.value)} · ${p.n} bookings</small>"/><circle class="dot" cx="${x(i)}" cy="${y(p.value)}" r="2.8"/>`).join('');
+    const labels=points.map((p,i)=> (points.length<=6 || i===0 || i===points.length-1 || i%Math.ceil(points.length/5)===0) ? `<text class="chart-x-label" x="${x(i)}" y="${H-5}">${p.label}</text>` : '').join('');
+    svg.innerHTML=`<line class="axis" x1="${L}" y1="${H-B}" x2="${W-R}" y2="${H-B}"/>
+      <path class="area" d="${area}"/><polyline class="line" points="${coords}"/><g>${dots}</g>${labels}`;
+  }
+
+  function renderABV(rows){
+    const m={};
+    rows.forEach(r=>{
+      if(!r.bookingDate)return;
+      const k=monthKey(r.bookingDate);
+      if(!m[k])m[k]={revenue:0,bookings:0};
+      m[k].revenue += r.value;
+      m[k].bookings += 1;
+    });
+    const pts=Object.entries(m).sort((a,b)=>a[0].localeCompare(b[0])).map(([k,v])=>({
+      k,label:monthLabel(k),value:v.bookings ? v.revenue/v.bookings : 0,n:v.bookings
+    })).filter(p=>p.n>0);
+    renderLineChart('abvChart',pts,v=>money(v));
+    document.getElementById('abvInsightNote').textContent = pts.length ? 'Transaction Value ÷ Bookings' : 'No valid booking dates';
+  }
+
+  function renderStayDemand(rows){
+    const m={};
+    rows.forEach(r=>{
+      if(!r.checkIn)return;
+      const k=monthKey(r.checkIn);
+      if(!m[k])m[k]=0;
+      if(stayMetric==='revenue') m[k]+=r.value;
+      else m[k]+=Number.isFinite(r.nights) && r.nights!==null ? r.nights : 0;
+    });
+    const entries=Object.entries(m).sort((a,b)=>a[0].localeCompare(b[0])).slice(-8);
+    const el=document.getElementById('stayDemandBars');
+    document.getElementById('stayDesc').textContent = stayMetric==='revenue' ? 'By revenue' : 'By room nights';
+    if(!entries.length || entries.every(([,v])=>v===0)){el.innerHTML='<div style="color:#aaa;font-size:11px;align-self:center">No data</div>';return;}
+    const max=Math.max(...entries.map(([,v])=>v),1);
+    el.innerHTML=entries.map(([k,v])=>{
+      const shown=stayMetric==='revenue'?money(v):`${Number(v).toLocaleString('en-US',{maximumFractionDigits:1})} room nights`;
+      return `<div class="vbar interactive" tabindex="0" style="height:${Math.max(5,v/max*90)}%" data-tip="<strong>${monthLabel(k)}</strong><small>${shown}</small>"><label>${monthLabel(k)}</label></div>`;
+    }).join('');
+  }
+
+  function renderLOS(rows){
+    const pts=groupAvgByMonth(rows,'checkIn',r=>{
+      return r.nights!==null && Number.isFinite(r.nights) && r.nights>=0 ? r.nights : null;
+    });
+    renderLineChart('losChart',pts,v=>`${v.toFixed(1)} nights`);
+  }
+
+  function renderChannelPerformance(rows){
+    const total = channelMetric==='revenue' ? rows.reduce((a,r)=>a+r.value,0) : rows.length;
+    const entries = aggregateBy(rows,'channel',channelMetric,5);
+    document.getElementById('channelDesc').textContent = channelMetric==='revenue' ? 'By revenue' : 'By bookings';
+    renderRankedRows('channelRows',entries,total,channelMetric);
+  }
+
+
+  let geoMetric='bookings';
+  let pipelineMetric='nights';
+
+  function renderGeoPerformance(rows){
+    const metricLabel=geoMetric==='revenue'?'revenue':geoMetric==='abv'?'ABV':'bookings';
+    ['Country','Region','City'].forEach(level=>{
+      const key=level.toLowerCase();
+      const entries=aggregateBy(rows,key,geoMetric,6);
+      const total=geoMetric==='revenue' ? rows.reduce((a,r)=>a+r.value,0) : geoMetric==='bookings' ? rows.length : 0;
+      document.getElementById(`geo${level}Desc`).textContent=`By ${metricLabel}`;
+      renderRankedRows(`geo${level}Rows`,entries,total,geoMetric);
+    });
+  }
+
+  function monthStartUTC(d){
+    return new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),1));
+  }
+
+  function addMonthsUTC(d,n){
+    return new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+n,1));
+  }
+
+  function compactMetric(v,metric){
+    if(!v)return '—';
+    return metric==='revenue'
+      ? shortMoney(v)
+      : Number(v).toLocaleString('en-US',{maximumFractionDigits:1});
+  }
+
+  function renderFuturePipeline(rows){
+    const wrap=document.getElementById('pipelineWrap');
+    document.getElementById('pipelineDesc').textContent =
+      pipelineMetric==='revenue' ? 'Future check-ins by revenue' : 'Future check-ins by room nights';
+
+    // Future pipeline is based on check-in date; the global period still filters by Booking Date.
+    const now=new Date();
+    const todayUTC=new Date(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()));
+    const future=rows.filter(r=>r.checkIn && r.checkIn>=todayUTC);
+
+    if(!future.length){
+      wrap.innerHTML='<div class="empty-state">No future check-ins for the selected booking period</div>';
+      return;
+    }
+
+    const monthKeys=[...new Set(future.map(r=>monthKey(r.checkIn)))].sort().slice(0,12);
+    const markets={};
+
+    future.forEach(r=>{
+      const market=(r.country||'Unknown').trim()||'Unknown';
+      const mk=monthKey(r.checkIn);
+      if(!monthKeys.includes(mk))return;
+      if(!markets[market])markets[market]={months:{},total:0};
+      const v=pipelineMetric==='revenue' ? r.value : (Number.isFinite(r.nights)&&r.nights!==null?r.nights:0);
+      markets[market].months[mk]=(markets[market].months[mk]||0)+v;
+      markets[market].total+=v;
+    });
+
+    const ranked=Object.entries(markets).sort((a,b)=>b[1].total-a[1].total).slice(0,12);
+    if(!ranked.length || ranked.every(([,v])=>v.total===0)){
+      wrap.innerHTML='<div class="empty-state">No future pipeline values available</div>';
+      return;
+    }
+
+    const grandByMonth={};
+    monthKeys.forEach(k=>grandByMonth[k]=0);
+    ranked.forEach(([,v])=>monthKeys.forEach(k=>grandByMonth[k]+=v.months[k]||0));
+    const grandTotal=ranked.reduce((a,[,v])=>a+v.total,0);
+    const maxCell=Math.max(1,...ranked.flatMap(([,v])=>monthKeys.map(k=>v.months[k]||0)));
+
+    const heatStyle=(v)=>{
+      if(!v)return '';
+      const ratio=Math.max(0,Math.min(1,v/maxCell));
+      const alpha=.08 + ratio*.54;
+      return `background:rgba(100,71,232,${alpha.toFixed(3)});${ratio>.72?'color:#fff;':''}`;
+    };
+
+    const head=`<thead><tr><th>Source Market</th>${monthKeys.map(k=>`<th>${monthLabel(k)}</th>`).join('')}<th class="total-col">Total</th></tr></thead>`;
+    const body=ranked.map(([market,v])=>{
+      const cells=monthKeys.map(k=>{
+        const val=v.months[k]||0;
+        return `<td class="heat-cell" style="${heatStyle(val)}" title="${esc(market)} · ${monthLabel(k)} · ${pipelineMetric==='revenue'?money(val):Number(val).toLocaleString('en-US',{maximumFractionDigits:1})+' room nights'}">${compactMetric(val,pipelineMetric)}</td>`;
+      }).join('');
+      return `<tr><td>${esc(market)}</td>${cells}<td class="total-col">${compactMetric(v.total,pipelineMetric)}</td></tr>`;
+    }).join('');
+
+    const grandCells=monthKeys.map(k=>{
+      const v=grandByMonth[k]||0;
+      const share=grandTotal ? v/grandTotal*100 : 0;
+      return `<td>${compactMetric(v,pipelineMetric)}<span class="pipeline-share">${share.toFixed(1)}%</span></td>`;
+    }).join('');
+
+    const foot=`<tr class="grand-total"><td>Grand Total</td>${grandCells}<td class="total-col">${compactMetric(grandTotal,pipelineMetric)}<span class="pipeline-share">100%</span></td></tr>`;
+    wrap.innerHTML=`<table class="pipeline-table">${head}<tbody>${body}${foot}</tbody></table>`;
+  }
+
+  function renderSixth(rows){ renderChannelPerformance(rows); }
+
+
+
+  let ADS_STATS = null;
+  let ADS_DAILY = [];
+  let ADS_CHANNELS = [];
+  let adsDailyMetric = 'spend';
+  let adsChannelMetric = 'spend';
+  let adsRequestSeq = 0;
+
+  function compactNumber(v){
+    const n=Number(v||0), a=Math.abs(n);
+    if(a>=1000000000)return (n/1000000000).toFixed(1).replace(/\.0$/,'')+'B';
+    if(a>=1000000)return (n/1000000).toFixed(a>=10000000?1:2).replace(/\.0+$|(\.\d*[1-9])0+$/,'$1')+'M';
+    if(a>=1000)return (n/1000).toFixed(a>=100000?0:1).replace(/\.0$/,'')+'K';
+    return Math.round(n).toLocaleString('en-US');
+  }
+
+  function pct(v){
+    const n=Number(v);
+    return Number.isFinite(n) ? `${n.toFixed(2)}%` : '—';
+  }
+
+  function xpoField(obj,names,def=0){
+    for(const name of names){
+      if(obj && obj[name]!==undefined && obj[name]!==null){
+        const n=Number(obj[name]);
+        return Number.isFinite(n) ? n : obj[name];
+      }
+    }
+    return def;
+  }
+
+  function xpoRange(){
+    const preset=document.getElementById('periodPreset').value;
+    if(preset==='all'){
+      const today=browserTodayUTC();
+      return {
+        s:XPO_FLIGHT_START,
+        e:today<XPO_FLIGHT_END?today:XPO_FLIGHT_END
+      };
+    }
+    const r=presetRange(preset);
+    return {s:r.s,e:r.e};
+  }
+
+  function xpoPayload(){
+    const {s,e}=xpoRange();
+    return {
+      token:XPO_TOKEN,
+      start:dateInputValue(s||XPO_FLIGHT_START),
+      end:dateInputValue(e||browserTodayUTC()),
+      timeZone:XPO_TIMEZONE,
+      types:[],
+      campaignIds:[],
+      adgroupIds:[],
+      widgetName:"Public Insights Overview"
+    };
+  }
+
+  async function postXpo(path){
+    const url=`${XPO_BASE}/${path}`;
+    const payload=xpoPayload();
+
+    const res=await fetch(url,{
+      method:'POST',
+      mode:'cors',
+      credentials:'omit',
+      cache:'no-store',
+      headers:{
+        'accept':'application/json, text/plain, */*',
+        'content-type':'application/json;charset=UTF-8'
+      },
+      body:JSON.stringify(payload)
+    });
+
+    const rawText=await res.text();
+    if(!res.ok){
+      throw new Error(`XPO API ${res.status}${rawText ? ` · ${rawText.slice(0,180)}` : ''}`);
+    }
+
+    if(!rawText.trim()) return null;
+
+    try{
+      return JSON.parse(rawText);
+    }catch(e){
+      // Defensive fallback in case the endpoint ever adds a wrapper.
+      const cleaned=rawText.replace(/^[^{\[]+/,'').replace(/[^\]}\s]+$/,'');
+      try{return JSON.parse(cleaned);}
+      catch(_){throw new Error(`XPO returned non-JSON response: ${rawText.slice(0,160)}`);}
+    }
+  }
+
+  function unwrapXpo(raw){
+    if(raw==null)return raw;
+    if(raw.data!==undefined)return raw.data;
+    if(raw.result!==undefined)return raw.result;
+    return raw;
+  }
+
+  function normalizeAdsDaily(raw){
+    raw=unwrapXpo(raw);
+    const arr=Array.isArray(raw) ? raw :
+      Array.isArray(raw?.content) ? raw.content :
+      Array.isArray(raw?.items) ? raw.items :
+      Array.isArray(raw?.rows) ? raw.rows : [];
+    return arr.map(r=>{
+      const stamp=Number(r.periodStart||r.date||0);
+      const d=stamp ? new Date(stamp) : null;
+      return {
+        date:d,
+        spend:xpoField(r,['budgetSpentPartnerCurrency','budgetSpentAdvertiserCurrency','budgetSpent'],0),
+        impressions:xpoField(r,['impressions','servedImpressions','viewableImpressions'],0),
+        clicks:xpoField(r,['clickThroughs','clicks'],0)
+      };
+    }).filter(r=>r.date && !isNaN(r.date));
+  }
+
+  function normalizeAdsChannels(raw){
+    raw=unwrapXpo(raw);
+    const arr=Array.isArray(raw) ? raw :
+      Array.isArray(raw?.content) ? raw.content :
+      Array.isArray(raw?.items) ? raw.items :
+      Array.isArray(raw?.rows) ? raw.rows : [];
+    return arr.map(r=>({
+      name:String(r.groupValue||r.channel||r.name||'Unknown'),
+      spend:xpoField(r,['budgetSpentPartnerCurrency','budgetSpentAdvertiserCurrency','budgetSpent'],0),
+      impressions:xpoField(r,['impressions','servedImpressions','viewableImpressions'],0),
+      clicks:xpoField(r,['clickThroughs','clicks'],0),
+      ctr:xpoField(r,['clickThroughRate','ctr'],0),
+      cpc:xpoField(r,['cpcPartnerCurrency','cpcAdvertiserCurrency','cpc'],0),
+      cpm:xpoField(r,['cpmPartnerCurrency','cpmAdvertiserCurrency','cpm'],0)
+    })).filter(r=>r.name);
+  }
+
+  function renderAdsKPIs(stats){
+    stats=unwrapXpo(stats)||{};
+    const spend=xpoField(stats,['budgetSpentPartnerCurrency','budgetSpentAdvertiserCurrency','budgetSpent'],0);
+    const impressions=xpoField(stats,['impressions','servedImpressions','viewableImpressions','totalImpressions'],0);
+    const clicks=xpoField(stats,['clickThroughs','clicks'],0);
+    const ctr=xpoField(stats,['clickThroughRate','ctr'],0);
+    const cpc=xpoField(stats,['cpcPartnerCurrency','cpcAdvertiserCurrency','cpc'],0);
+    const cpm=xpoField(stats,['cpmPartnerCurrency','cpmAdvertiserCurrency','cpm'],0);
+
+    document.getElementById('adsSpend').textContent=money(spend);
+    document.getElementById('adsImpressions').textContent=compactNumber(impressions);
+    document.getElementById('adsClicks').textContent=compactNumber(clicks);
+    document.getElementById('adsCTR').textContent=pct(ctr);
+    document.getElementById('adsCPC').textContent=money(cpc);
+    document.getElementById('adsCPM').textContent=money(cpm);
+  }
+
+  function adsMetricValue(row,metric){
+    if(metric==='impressions')return row.impressions||0;
+    if(metric==='clicks')return row.clicks||0;
+    return row.spend||0;
+  }
+
+  function adsMetricFormat(v,metric){
+    if(metric==='spend')return money(v);
+    return compactNumber(v);
+  }
+
+  function renderAdsDaily(){
+    const wrap=document.getElementById('adsDailyWrap');
+    const rows=[...ADS_DAILY].sort((a,b)=>a.date-b.date);
+    document.getElementById('adsDailyDesc').textContent =
+      adsDailyMetric==='spend'?'By spend':adsDailyMetric==='impressions'?'By impressions':'By clicks';
+
+    if(!rows.length){
+      wrap.innerHTML='<div class="ads-error">No daily XPO data for the selected period</div>';
+      return;
+    }
+
+    const W=860,H=250,L=42,R=14,T=14,B=34;
+    const vals=rows.map(r=>adsMetricValue(r,adsDailyMetric));
+    const max=Math.max(...vals,1);
+    const min=Math.min(...vals,0);
+    const span=Math.max(1,max-min);
+    const x=i=>L+(W-L-R)*(rows.length===1?.5:i/(rows.length-1));
+    const y=v=>T+(H-T-B)*(1-(v-min)/span);
+    const pts=rows.map((r,i)=>`${x(i).toFixed(1)},${y(vals[i]).toFixed(1)}`).join(' ');
+    const area=`M ${x(0)} ${H-B} L `+rows.map((r,i)=>`${x(i)} ${y(vals[i])}`).join(' L ')+` L ${x(rows.length-1)} ${H-B} Z`;
+
+    let grids='';
+    for(let i=0;i<4;i++){
+      const gy=T+(H-T-B)*(i/3);
+      const gv=max-(max-min)*(i/3);
+      grids+=`<line class="ads-gridline" x1="${L}" x2="${W-R}" y1="${gy}" y2="${gy}"/>
+              <text class="ads-axis-label" x="${L-7}" y="${gy+4}" text-anchor="end">${adsDailyMetric==='spend'?shortMoney(gv):compactNumber(gv)}</text>`;
+    }
+
+    const step=Math.max(1,Math.ceil(rows.length/6));
+    const labels=rows.map((r,i)=>{
+      if(i!==0 && i!==rows.length-1 && i%step!==0)return '';
+      const lab=r.date.toLocaleDateString('en-US',{day:'2-digit',month:'short'});
+      return `<text class="ads-axis-label" x="${x(i)}" y="${H-8}" text-anchor="middle">${lab}</text>`;
+    }).join('');
+
+    const hits=rows.map((r,i)=>{
+      const lab=r.date.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+      const val=vals[i];
+      return `<circle class="ads-hit interactive" cx="${x(i)}" cy="${y(val)}" r="8"
+        data-tip="<strong>${lab}</strong><small>${adsMetricFormat(val,adsDailyMetric)}</small>"/>
+        <circle class="ads-point" cx="${x(i)}" cy="${y(val)}" r="2.2"/>`;
+    }).join('');
+
+    wrap.innerHTML=`<svg class="ads-chart-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+      ${grids}<path class="ads-area" d="${area}"/><polyline class="ads-line" points="${pts}"/>
+      ${hits}${labels}</svg>`;
+    bindInteractions();
+  }
+
+  function renderAdsChannels(){
+    const box=document.getElementById('adsChannelRows');
+    document.getElementById('adsChannelDesc').textContent =
+      adsChannelMetric==='spend'?'By spend':adsChannelMetric==='impressions'?'By impressions':'By clicks';
+
+    const rows=[...ADS_CHANNELS].sort((a,b)=>adsMetricValue(b,adsChannelMetric)-adsMetricValue(a,adsChannelMetric));
+    if(!rows.length){
+      box.innerHTML='<div class="ads-error">No channel XPO data for the selected period</div>';
+      return;
+    }
+    const max=Math.max(...rows.map(r=>adsMetricValue(r,adsChannelMetric)),1);
+    box.innerHTML=rows.map(r=>{
+      const v=adsMetricValue(r,adsChannelMetric);
+      return `<div class="ads-channel-row interactive" tabindex="0"
+        data-tip="<strong>${esc(r.name)}</strong><small>Spend ${money(r.spend)} · Impressions ${compactNumber(r.impressions)} · Clicks ${compactNumber(r.clicks)} · CTR ${pct(r.ctr)}</small>">
+        <div class="ads-channel-name">${esc(r.name)}</div>
+        <div class="ads-channel-bar"><span style="width:${Math.max(3,v/max*100)}%"></span></div>
+        <div class="ads-channel-value">${adsMetricFormat(v,adsChannelMetric)}</div>
+      </div>`;
+    }).join('');
+    bindInteractions();
+  }
+
+  function renderAdsError(err){
+    console.error(err);
+    ['adsSpend','adsImpressions','adsClicks','adsCTR','adsCPC','adsCPM'].forEach(id=>{
+      const el=document.getElementById(id); if(el)el.textContent='—';
+    });
+    document.getElementById('adsDailyWrap').innerHTML=
+      `<div class="ads-error">Failed to load XPO Ads data.<br>${esc(err.message||err)}</div>`;
+    document.getElementById('adsChannelRows').innerHTML=
+      `<div class="ads-error">Failed to load XPO channel data.</div>`;
+  }
+
+  async function loadAdsData(){
+    const seq=++adsRequestSeq;
+    document.getElementById('adsDailyWrap').innerHTML='<div class="ads-loading">Loading XPO data...</div>';
+    document.getElementById('adsChannelRows').innerHTML='<div class="ads-loading">Loading XPO data...</div>';
+
+    try{
+      const [stats,daily,channels]=await Promise.all([
+        postXpo('statistics'),
+        postXpo('daily?breakdown=daily'),
+        postXpo('channel?group=channel')
+      ]);
+      if(seq!==adsRequestSeq)return;
+
+      ADS_STATS=unwrapXpo(stats)||{};
+      ADS_DAILY=normalizeAdsDaily(daily);
+      ADS_CHANNELS=normalizeAdsChannels(channels);
+
+      renderAdsKPIs(ADS_STATS);
+      renderAdsDaily();
+      renderAdsChannels();
+
+      if(!ADS_DAILY.length && !ADS_CHANNELS.length){
+        const notice=document.getElementById('adsOriginNotice');
+        if(notice && location.protocol==='file:'){
+          notice.style.display='block';
+        }
+      }
+
+      document.getElementById('lastUpdated').textContent =
+        new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    }catch(err){
+      if(seq!==adsRequestSeq)return;
+      renderAdsError(err);
+    }
+  }
+
+  let ALL_ROWS = [];
+  let DATA_MIN_DATE=null;
+  let DATA_MAX_DATE=null;
+
+  function utcDateFromInput(value){
+    if(!value)return null;
+    const m=value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    return m ? new Date(Date.UTC(+m[1],+m[2]-1,+m[3])) : null;
+  }
+
+  function dateInputValue(d){
+    return d ? `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}` : '';
+  }
+
+  function browserTodayUTC(){
+    const d=new Date();
+    return new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
+  }
+
+  function addDaysUTC(d,n){
+    return new Date(d.getTime()+n*86400000);
+  }
+
+  function mondayOfWeekUTC(d){
+    const day=d.getUTCDay();
+    const diff=day===0?-6:1-day;
+    return addDaysUTC(d,diff);
+  }
+
+  function quarterStartUTC(d){
+    const q=Math.floor(d.getUTCMonth()/3)*3;
+    return new Date(Date.UTC(d.getUTCFullYear(),q,1));
+  }
+
+  function presetRange(preset){
+    const t=browserTodayUTC();
+    let s=null,e=null;
+
+    if(preset==='today')s=e=t;
+    else if(preset==='yesterday')s=e=addDaysUTC(t,-1);
+    else if(preset==='last7'){s=addDaysUTC(t,-6);e=t;}
+    else if(preset==='last14'){s=addDaysUTC(t,-13);e=t;}
+    else if(preset==='last30'){s=addDaysUTC(t,-29);e=t;}
+    else if(preset==='thisWeek'){s=mondayOfWeekUTC(t);e=t;}
+    else if(preset==='lastWeek'){
+      const thisMon=mondayOfWeekUTC(t);
+      s=addDaysUTC(thisMon,-7);e=addDaysUTC(thisMon,-1);
+    }
+    else if(preset==='thisMonth'){s=new Date(Date.UTC(t.getUTCFullYear(),t.getUTCMonth(),1));e=t;}
+    else if(preset==='lastMonth'){
+      s=new Date(Date.UTC(t.getUTCFullYear(),t.getUTCMonth()-1,1));
+      e=new Date(Date.UTC(t.getUTCFullYear(),t.getUTCMonth(),0));
+    }
+    else if(preset==='thisQuarter'){s=quarterStartUTC(t);e=t;}
+    else if(preset==='lastQuarter'){
+      const qs=quarterStartUTC(t);
+      s=new Date(Date.UTC(qs.getUTCFullYear(),qs.getUTCMonth()-3,1));
+      e=new Date(Date.UTC(qs.getUTCFullYear(),qs.getUTCMonth(),0));
+    }
+    else if(preset==='thisYear'){s=new Date(Date.UTC(t.getUTCFullYear(),0,1));e=t;}
+    else if(preset==='lastYear'){
+      s=new Date(Date.UTC(t.getUTCFullYear()-1,0,1));
+      e=new Date(Date.UTC(t.getUTCFullYear()-1,11,31));
+    }
+    else if(preset==='all'){s=DATA_MIN_DATE;e=DATA_MAX_DATE;}
+    else if(preset==='custom'){
+      s=utcDateFromInput(document.getElementById('periodStart').value);
+      e=utcDateFromInput(document.getElementById('periodEnd').value);
+    }
+    return {s,e};
+  }
+
+  function filteredByPeriod(){
+    const preset=document.getElementById('periodPreset').value;
+    const {s:start,e:end}=presetRange(preset);
+    return ALL_ROWS.filter(r=>{
+      if(!r.bookingDate)return false;
+      if(start && r.bookingDate < start)return false;
+      if(end && r.bookingDate > end)return false;
+      return true;
+    });
+  }
+
+  function renderDashboard(){
+    const rows=filteredByPeriod();
+    tableExpanded=false;
+    renderTable(rows);
+    renderKPIs(rows);
+    renderMarkets(rows);
+    renderBookingWindow(rows);
+    renderABV(rows);
+    renderStayDemand(rows);
+    renderLOS(rows);
+    renderChannelPerformance(rows);
+    renderGeoPerformance(rows);
+    renderFuturePipeline(rows);
+    bindInteractions();
+  }
+
+  function setupPeriodFilter(rows){
+    const dates=rows.map(r=>r.bookingDate).filter(Boolean).sort((a,b)=>a-b);
+    if(!dates.length)return;
+    DATA_MIN_DATE=dates[0];
+    DATA_MAX_DATE=dates[dates.length-1];
+
+    const startEl=document.getElementById('periodStart');
+    const endEl=document.getElementById('periodEnd');
+    startEl.min=endEl.min=dateInputValue(DATA_MIN_DATE);
+    startEl.max=endEl.max=dateInputValue(DATA_MAX_DATE);
+    startEl.value=dateInputValue(DATA_MIN_DATE);
+    endEl.value=dateInputValue(DATA_MAX_DATE);
+  }
+
+  function setToggleState(containerId,metric){
+    document.querySelectorAll(`#${containerId} button`).forEach(btn=>{
+      btn.classList.toggle('active',btn.dataset.metric===metric);
+    });
+  }
+
+  function updateCustomVisibility(){
+    const custom=document.getElementById('periodPreset').value==='custom';
+    document.getElementById('customRange').classList.toggle('show',custom);
+  }
+
+  document.getElementById('periodPreset').addEventListener('change',()=>{
+    updateCustomVisibility();
+    renderDashboard();
+    loadAdsData();
+  });
+  document.getElementById('periodStart').addEventListener('change',()=>{
+    const s=document.getElementById('periodStart'),e=document.getElementById('periodEnd');
+    if(s.value && e.value && s.value>e.value)e.value=s.value;
+    if(document.getElementById('periodPreset').value==='custom'){
+      renderDashboard();
+      loadAdsData();
+    }
+  });
+  document.getElementById('periodEnd').addEventListener('change',()=>{
+    const s=document.getElementById('periodStart'),e=document.getElementById('periodEnd');
+    if(s.value && e.value && e.value<s.value)s.value=e.value;
+    if(document.getElementById('periodPreset').value==='custom'){
+      renderDashboard();
+      loadAdsData();
+    }
+  });
+  document.getElementById('viewAllBtn').addEventListener('click',()=>{
+    tableExpanded=!tableExpanded;
+    renderTable(currentFilteredRows);
+  });
+
+  document.querySelectorAll('#marketToggle button').forEach(btn=>btn.addEventListener('click',()=>{
+    marketMetric=btn.dataset.metric;
+    setToggleState('marketToggle',marketMetric);
+    renderMarkets(filteredByPeriod());
+    bindInteractions();
+  }));
+  document.querySelectorAll('#stayToggle button').forEach(btn=>btn.addEventListener('click',()=>{
+    stayMetric=btn.dataset.metric;
+    setToggleState('stayToggle',stayMetric);
+    renderStayDemand(filteredByPeriod());
+    bindInteractions();
+  }));
+  document.querySelectorAll('#channelToggle button').forEach(btn=>btn.addEventListener('click',()=>{
+    channelMetric=btn.dataset.metric;
+    setToggleState('channelToggle',channelMetric);
+    renderChannelPerformance(filteredByPeriod());
+    bindInteractions();
+  }));
+
+  document.querySelectorAll('#geoToggle button').forEach(btn=>btn.addEventListener('click',()=>{
+    geoMetric=btn.dataset.metric;
+    setToggleState('geoToggle',geoMetric);
+    renderGeoPerformance(filteredByPeriod());
+    bindInteractions();
+  }));
+  document.querySelectorAll('#pipelineToggle button').forEach(btn=>btn.addEventListener('click',()=>{
+    pipelineMetric=btn.dataset.metric;
+    setToggleState('pipelineToggle',pipelineMetric);
+    renderFuturePipeline(filteredByPeriod());
+  }));
+
+  document.querySelectorAll('#adsDailyToggle button').forEach(btn=>btn.addEventListener('click',()=>{
+    adsDailyMetric=btn.dataset.metric;
+    setToggleState('adsDailyToggle',adsDailyMetric);
+    renderAdsDaily();
+  }));
+  document.querySelectorAll('#adsChannelToggle button').forEach(btn=>btn.addEventListener('click',()=>{
+    adsChannelMetric=btn.dataset.metric;
+    setToggleState('adsChannelToggle',adsChannelMetric);
+    renderAdsChannels();
+  }));
+
+  function activateTab(name){
+    const ads=name==='ads';
+    document.getElementById('adsTab').classList.toggle('active',ads);
+    document.getElementById('bookingsTab').classList.toggle('active',!ads);
+    document.getElementById('adsTabBtn').classList.toggle('active',ads);
+    document.getElementById('bookingsTabBtn').classList.toggle('active',!ads);
+    document.getElementById('adsTabBtn').setAttribute('aria-selected',String(ads));
+    document.getElementById('bookingsTabBtn').setAttribute('aria-selected',String(!ads));
+  }
+
+  document.getElementById('adsTabBtn').addEventListener('click',()=>activateTab('ads'));
+  document.getElementById('bookingsTabBtn').addEventListener('click',()=>activateTab('bookings'));
+
+  function bindInteractions(){
+    const items=Array.from(document.querySelectorAll('.interactive'));
+    items.forEach(el=>{
+      if(el.dataset.bound==='1')return;
+      el.dataset.bound='1';
+      el.addEventListener('mouseenter',e=>showTip(el,e.clientX,e.clientY));
+      el.addEventListener('mousemove',e=>showTip(el,e.clientX,e.clientY));
+      el.addEventListener('mouseleave',()=>{if(!selected)tooltip.classList.remove('show');});
+      el.addEventListener('click',e=>{
+        e.stopPropagation();
+        document.querySelectorAll('.is-selected').forEach(n=>n.classList.remove('is-selected'));
+        if(selected===el){selected=null;tooltip.classList.remove('show');return;}
+        selected=el;
+        const g=el.dataset.group;
+        (g?document.querySelectorAll(`[data-group="${g}"]`):[el]).forEach(n=>n.classList.add('is-selected'));
+        const r=el.getBoundingClientRect();showTip(el,Math.min(r.right,window.innerWidth-20),r.top+r.height/2);
+      });
+    });
+  }
+
+  function showTip(el,x,y){
+    if(!el.dataset.tip)return;
+    tooltip.innerHTML=el.dataset.tip;
+    tooltip.classList.add('show');
+    const pad=12, tw=tooltip.offsetWidth||180, th=tooltip.offsetHeight||56;
+    let left=x+12, top=y-10;
+    if(left+tw>window.innerWidth-pad)left=x-tw-14;
+    if(top-th<pad)top=y+th+8;
+    tooltip.style.left=Math.max(pad,left)+'px';
+    tooltip.style.top=Math.max(pad+th,top)+'px';
+  }
+
+  document.addEventListener('click',()=>{
+    selected=null;
+    document.querySelectorAll('.is-selected').forEach(n=>n.classList.remove('is-selected'));
+    tooltip.classList.remove('show');
+  });
+
+  function loadGvizJsonp(){
+    return new Promise((resolve,reject)=>{
+      const callbackName = `gvizCallback_${Date.now()}_${Math.floor(Math.random()*100000)}`;
+      const script = document.createElement('script');
+      let timer;
+
+      function cleanup(){
+        clearTimeout(timer);
+        if(script.parentNode) script.parentNode.removeChild(script);
+        try{ delete window[callbackName]; }catch(e){ window[callbackName]=undefined; }
+      }
+
+      window[callbackName] = function(response){
+        cleanup();
+        if(!response || !response.table){
+          reject(new Error('Google Sheet returned no table data'));
+          return;
+        }
+        resolve(response);
+      };
+
+      script.onerror = function(){
+        cleanup();
+        reject(new Error('Could not load Google Sheet. Check sharing permission and Sheet URL.'));
+      };
+
+      script.src = `${DATA_URL}&tqx=responseHandler:${callbackName}&_=${Date.now()}`;
+      document.head.appendChild(script);
+
+      timer = setTimeout(()=>{
+        cleanup();
+        reject(new Error('Google Sheet request timed out'));
+      },15000);
+    });
+  }
+
+  async function loadData(){
+    try{
+      const gvizResponse = await loadGvizJsonp();
+      const raw = parseGviz(gvizResponse);
+      const rows = normalizeRows(raw);
+      ALL_ROWS = rows;
+      setupPeriodFilter(rows);
+      updateCustomVisibility();
+      renderDashboard();
+
+      document.getElementById('lastUpdated').textContent =
+        new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    }catch(err){
+      console.error(err);
+      document.getElementById('bookingTbody').innerHTML =
+        `<tr><td colspan="11" style="text-align:center;color:#c66;padding:28px">Failed to load Google Sheet data: ${esc(err.message)}</td></tr>`;
+      ['marketRows','bookingWindowLegend','channelRows','geoCountryRows','geoRegionRows','geoCityRows','pipelineWrap'].forEach(id=>{
+        const el=document.getElementById(id); if(el)el.innerHTML='<div style="color:#c66;font-size:11px;padding-top:18px">Unable to load data</div>';
+      });
+      document.getElementById('lastUpdated').textContent='Load failed';
+    }
+  }
+
+  if(location.protocol==='file:'){
+    const notice=document.getElementById('adsOriginNotice');
+    if(notice)notice.style.display='block';
+  }
+  loadData();
+  loadAdsData();
+})();
+</script>
+
+</body>
+</html>
