@@ -605,6 +605,160 @@
   }
 
 
+
+  /* v10: integrated market performance */
+  .integrated-market-card{
+    margin-top:18px;
+    overflow:hidden;
+  }
+  .integrated-market-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:16px;
+    padding:18px 20px 14px;
+    border-bottom:1px solid #f0edf7;
+  }
+  .integrated-market-title{
+    font-size:16px;
+    font-weight:800;
+    color:#17141f;
+    letter-spacing:-.2px;
+  }
+  .integrated-market-desc{
+    margin-top:4px;
+    font-size:12px;
+    color:#8b849c;
+    line-height:1.45;
+  }
+  .integrated-live-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:7px 10px;
+    border-radius:999px;
+    border:1px solid #e8e1ff;
+    background:#f7f4ff;
+    color:#6555d9;
+    font-size:11px;
+    font-weight:800;
+    white-space:nowrap;
+  }
+  .integrated-live-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#6b5ce7;
+    box-shadow:0 0 0 4px rgba(107,92,231,.10);
+  }
+  .integrated-market-summary{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:10px;
+    padding:14px 20px 4px;
+  }
+  .integrated-summary-card{
+    border:1px solid #eeeaf5;
+    border-radius:13px;
+    padding:12px 14px;
+    background:#fff;
+  }
+  .integrated-summary-label{
+    font-size:10px;
+    color:#9992a8;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.35px;
+  }
+  .integrated-summary-value{
+    margin-top:5px;
+    font-size:20px;
+    line-height:1.1;
+    font-weight:850;
+    color:#1d1925;
+  }
+  .integrated-market-wrap{
+    overflow:auto;
+    padding:10px 20px 2px;
+  }
+  .integrated-market-table{
+    width:100%;
+    border-collapse:separate;
+    border-spacing:0;
+    min-width:620px;
+  }
+  .integrated-market-table th{
+    font-size:10px;
+    color:#938ca2;
+    text-transform:uppercase;
+    letter-spacing:.35px;
+    font-weight:800;
+    padding:10px 12px;
+    border-bottom:1px solid #ece8f3;
+    text-align:right;
+    background:#fbfaff;
+  }
+  .integrated-market-table th:first-child{
+    text-align:left;
+    border-radius:10px 0 0 0;
+  }
+  .integrated-market-table th:last-child{
+    border-radius:0 10px 0 0;
+  }
+  .integrated-market-table td{
+    font-size:12px;
+    padding:11px 12px;
+    border-bottom:1px solid #f1eef6;
+    text-align:right;
+    color:#2b2733;
+    white-space:nowrap;
+  }
+  .integrated-market-table td:first-child{
+    text-align:left;
+    font-weight:700;
+    color:#211d2a;
+  }
+  .integrated-market-table tbody tr:hover td{
+    background:#fbfaff;
+  }
+  .integrated-market-table tfoot td{
+    font-weight:850;
+    background:#faf8ff;
+    border-bottom:0;
+  }
+  .integrated-source-note{
+    padding:10px 20px 16px;
+    font-size:10px;
+    color:#9a93a7;
+    line-height:1.45;
+  }
+  .integrated-status{
+    padding:28px 20px 30px;
+    text-align:center;
+    color:#9b94a7;
+    font-size:12px;
+  }
+  .integrated-status.error{color:#d45d6c}
+  .integrated-market-actions{
+    display:flex;
+    justify-content:center;
+    padding:12px 20px 16px;
+  }
+  .integrated-view-btn{
+    border:1px solid #e8e2f3;
+    background:#fff;
+    color:#6457c8;
+    border-radius:10px;
+    font-size:11px;
+    font-weight:800;
+    padding:8px 12px;
+    cursor:pointer;
+  }
+  @media(max-width:800px){
+    .integrated-market-summary{grid-template-columns:1fr}
+    .integrated-market-head{flex-direction:column}
+  }
+
   /* v8: embedded XPO live report */
   .xpo-embed-card{
     padding:0;
@@ -1052,6 +1206,25 @@
           </div>
         </div>
 
+        <div class="card integrated-market-card">
+          <div class="integrated-market-head">
+            <div>
+              <div class="integrated-market-title">Integrated Market Performance</div>
+              <div class="integrated-market-desc">
+                Live ad spend by country matched with validated bookings and revenue for the selected booking period.
+              </div>
+            </div>
+            <div class="integrated-live-pill">
+              <span class="integrated-live-dot"></span>
+              <span>Live Ad Spend</span>
+            </div>
+          </div>
+
+          <div id="integratedMarketContent">
+            <div class="integrated-status">Loading integrated market data...</div>
+          </div>
+        </div>
+
         <div class="geo-grid">
           <div class="card geo-card">
             <div class="ititle">Country Performance</div>
@@ -1118,15 +1291,14 @@
     },
 
     ads: {
-      // Keep the dashboard independent from one specific ad platform.
-      // Today: XPO embedded public report.
-      // Future platform that supports embed:
-      //   provider: "Platform Name",
-      //   mode: "embed",
-      //   reportUrl: "https://..."
+      // Client-specific values
       provider: "XPO",
       mode: "embed",
-      reportUrl: "https://dsp.knorex.com/public/reports/v2/insights/campaign?token=9tCmkOy6m6eBaKhmh1r9kebvTDdsWPg5GKlirLev"
+      reportUrl: "https://dsp.knorex.com/public/reports/v2/insights/campaign?token=9tCmkOy6m6eBaKhmh1r9kebvTDdsWPg5GKlirLev",
+
+      // Shared Media Console GAS GAS.
+      // Deploy the GAS web app ONCE, then keep the SAME URL for every client dashboard.
+      gasBridgeUrl: "https://script.google.com/macros/s/AKfycbxC_bO8oIC7PhuBFROi8Ck3AmCRK0v5BGL_ENa6N8BJs7qpMmdyWLbF6fuqaZbkMlId/exec"
     }
   };
   /* ====================== END CONFIG ====================== */
@@ -1574,6 +1746,9 @@
 
 
   let ALL_ROWS = [];
+  let integratedMarketExpanded = false;
+  let integratedMarketRequestSeq = 0;
+
   let DATA_MIN_DATE=null;
   let DATA_MAX_DATE=null;
 
@@ -1645,6 +1820,294 @@
     return {s,e};
   }
 
+
+
+  function loadJsonp(url, timeoutMs=20000){
+    return new Promise((resolve,reject)=>{
+      const cb='mcGasCb_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+      const sep=url.includes('?')?'&':'?';
+      const script=document.createElement('script');
+      let done=false;
+
+      const cleanup=()=>{
+        if(done)return;
+        done=true;
+        clearTimeout(timer);
+        try{delete window[cb];}catch(_){window[cb]=undefined;}
+        script.remove();
+      };
+
+      window[cb]=(payload)=>{
+        cleanup();
+        resolve(payload);
+      };
+
+      script.onerror=()=>{
+        cleanup();
+        reject(new Error('Failed to load shared GAS GAS'));
+      };
+
+      const timer=setTimeout(()=>{
+        cleanup();
+        reject(new Error('Shared GAS GAS timed out'));
+      },timeoutMs);
+
+      script.src=`${url}${sep}callback=${encodeURIComponent(cb)}`;
+      document.head.appendChild(script);
+    });
+  }
+
+  function canonicalCountryName(name){
+    let s=String(name||'').trim();
+    if(!s)return 'Unknown';
+
+    const aliases={
+      'united states of america':'United States',
+      'usa':'United States',
+      'us':'United States',
+      'u.s.':'United States',
+      'united kingdom of great britain and northern ireland':'United Kingdom',
+      'great britain':'United Kingdom',
+      'uk':'United Kingdom',
+      'korea, republic of':'South Korea',
+      'republic of korea':'South Korea',
+      'korea republic':'South Korea',
+      'south korea':'South Korea',
+      'viet nam':'Vietnam',
+      'russian federation':'Russia',
+      'taiwan, province of china':'Taiwan',
+      'hong kong sar china':'Hong Kong',
+      'hong kong s.a.r.':'Hong Kong',
+      'macao':'Macau',
+      'macao sar china':'Macau',
+      'czechia':'Czech Republic',
+      'lao people\'s democratic republic':'Laos',
+      'brunei darussalam':'Brunei',
+      'bolivia, plurinational state of':'Bolivia',
+      'venezuela, bolivarian republic of':'Venezuela',
+      'iran, islamic republic of':'Iran',
+      'moldova, republic of':'Moldova',
+      'tanzania, united republic of':'Tanzania',
+      'syrian arab republic':'Syria'
+    };
+
+    const key=s.toLowerCase().replace(/\s+/g,' ').trim();
+    return aliases[key] || s;
+  }
+
+  function normalizedCountryKey(name){
+    return canonicalCountryName(name)
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .replace(/&/g,'and')
+      .replace(/[^a-z0-9]+/g,' ')
+      .trim();
+  }
+
+  function extractXpoToken(){
+    try{
+      const u=new URL(DASHBOARD_CONFIG.ads.reportUrl);
+      return u.searchParams.get('token')||'';
+    }catch(_){
+      const m=String(DASHBOARD_CONFIG.ads.reportUrl||'').match(/[?&]token=([^&]+)/);
+      return m ? decodeURIComponent(m[1]) : '';
+    }
+  }
+
+  function integratedPeriodRange(){
+    const preset=document.getElementById('periodPreset').value;
+    const {s,e}=presetRange(preset);
+    return {start:s,end:e};
+  }
+
+  function integratedSummaryMoney(v){
+    return shortMoney(v||0);
+  }
+
+  function integratedSummaryNumber(v){
+    return Math.round(v||0).toLocaleString('en-US');
+  }
+
+  function renderIntegratedMarketTable(mergedRows, totals, meta={}){
+    const el=document.getElementById('integratedMarketContent');
+    if(!el)return;
+
+    const rowsToShow=integratedMarketExpanded ? mergedRows : mergedRows.slice(0,20);
+
+    const body=rowsToShow.map(r=>`
+      <tr>
+        <td>${esc(r.country)}</td>
+        <td>${money(r.spend)}</td>
+        <td>${Math.round(r.bookings).toLocaleString('en-US')}</td>
+        <td>${money(r.revenue)}</td>
+      </tr>
+    `).join('');
+
+    const more=mergedRows.length>20 ? `
+      <div class="integrated-market-actions">
+        <button type="button" class="integrated-view-btn" id="integratedViewBtn">
+          ${integratedMarketExpanded ? 'Show top 20' : `View all (${mergedRows.length})`}
+        </button>
+      </div>` : '';
+
+    el.innerHTML=`
+      <div class="integrated-market-summary">
+        <div class="integrated-summary-card">
+          <div class="integrated-summary-label">Ad Spend</div>
+          <div class="integrated-summary-value">${integratedSummaryMoney(totals.spend)}</div>
+        </div>
+        <div class="integrated-summary-card">
+          <div class="integrated-summary-label">Bookings</div>
+          <div class="integrated-summary-value">${integratedSummaryNumber(totals.bookings)}</div>
+        </div>
+        <div class="integrated-summary-card">
+          <div class="integrated-summary-label">Revenue</div>
+          <div class="integrated-summary-value">${integratedSummaryMoney(totals.revenue)}</div>
+        </div>
+      </div>
+
+      <div class="integrated-market-wrap">
+        <table class="integrated-market-table">
+          <thead>
+            <tr>
+              <th>Country</th>
+              <th>Ad Spend</th>
+              <th>Bookings</th>
+              <th>Revenue</th>
+            </tr>
+          </thead>
+          <tbody>${body || '<tr><td colspan="4" style="text-align:center;color:#999">No market data for this period</td></tr>'}</tbody>
+          <tfoot>
+            <tr>
+              <td>Total</td>
+              <td>${money(totals.spend)}</td>
+              <td>${Math.round(totals.bookings).toLocaleString('en-US')}</td>
+              <td>${money(totals.revenue)}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      ${more}
+      <div class="integrated-source-note">
+        Ad Spend: live from ${esc(DASHBOARD_CONFIG.ads.provider || 'ad platform')} ·
+        Bookings & Revenue: validated booking data ·
+        Period basis: Booking Date / same selected reporting period
+      </div>
+    `;
+
+    const btn=document.getElementById('integratedViewBtn');
+    if(btn)btn.addEventListener('click',()=>{
+      integratedMarketExpanded=!integratedMarketExpanded;
+      renderIntegratedMarketTable(mergedRows,totals,meta);
+    });
+  }
+
+  async function renderIntegratedMarketPerformance(bookingRows){
+    const el=document.getElementById('integratedMarketContent');
+    if(!el)return;
+
+    const gasUrl=String(DASHBOARD_CONFIG.ads.gasBridgeUrl||'').trim();
+    const token=extractXpoToken();
+    const {start,end}=integratedPeriodRange();
+
+    if(!gasUrl || gasUrl.includes('PASTE_SHARED_MC_XPO_GAS_WEB_APP_URL_HERE')){
+      el.innerHTML=`
+        <div class="integrated-status">
+          Integrated Market Performance is ready.<br>
+          Deploy the shared MC XPO GAS web app once and paste its <b>/exec</b> URL in
+          <b>DASHBOARD_CONFIG.ads.gasBridgeUrl</b>.
+        </div>`;
+      return;
+    }
+
+    if(!token || !start || !end){
+      el.innerHTML='<div class="integrated-status error">Missing XPO token or reporting period.</div>';
+      return;
+    }
+
+    const seq=++integratedMarketRequestSeq;
+    el.innerHTML='<div class="integrated-status">Loading live ad spend and matching booking data...</div>';
+
+    // Booking side: validated source of truth
+    const bookingsMap=new Map();
+    for(const r of bookingRows){
+      const country=canonicalCountryName(r.country||'Unknown');
+      const key=normalizedCountryKey(country);
+      if(!bookingsMap.has(key)){
+        bookingsMap.set(key,{country,bookings:0,revenue:0});
+      }
+      const x=bookingsMap.get(key);
+      x.bookings+=1;
+      x.revenue+=Number(r.value||0);
+    }
+
+    try{
+      const base=gasUrl.replace(/\?+$/,'');
+      const qs=new URLSearchParams({
+        action:'geo',
+        token,
+        start:fmtDate(start),
+        end:fmtDate(end)
+      });
+
+      const data=await loadJsonp(`${base}${base.includes('?')?'&':'?'}${qs.toString()}`);
+
+      if(seq!==integratedMarketRequestSeq)return;
+
+      if(!data || data.ok===false){
+        throw new Error(data?.error || 'Shared GAS GAS returned an error');
+      }
+
+      const adRows=Array.isArray(data?.rows) ? data.rows : [];
+      const merged=new Map();
+
+      // Start with booking markets so countries with bookings but no spend remain visible.
+      for(const [key,b] of bookingsMap.entries()){
+        merged.set(key,{
+          country:b.country,
+          spend:0,
+          bookings:b.bookings,
+          revenue:b.revenue
+        });
+      }
+
+      // Merge live XPO spend.
+      for(const a of adRows){
+        const country=canonicalCountryName(a.countryName||a.country||a.countryCode||'Unknown');
+        const key=normalizedCountryKey(country);
+        if(!merged.has(key)){
+          merged.set(key,{country,spend:0,bookings:0,revenue:0});
+        }
+        const x=merged.get(key);
+        x.spend+=Number(a.spend||0);
+        if((x.country==='Unknown' || !bookingsMap.has(key)) && country!=='Unknown'){
+          x.country=country;
+        }
+      }
+
+      const mergedRows=[...merged.values()]
+        .filter(r=>r.spend>0 || r.bookings>0 || r.revenue>0)
+        .sort((a,b)=>(b.spend-a.spend) || (b.revenue-a.revenue) || (b.bookings-a.bookings));
+
+      const totals=mergedRows.reduce((acc,r)=>{
+        acc.spend+=r.spend;
+        acc.bookings+=r.bookings;
+        acc.revenue+=r.revenue;
+        return acc;
+      },{spend:0,bookings:0,revenue:0});
+
+      integratedMarketExpanded=false;
+      renderIntegratedMarketTable(mergedRows,totals,{start,end});
+    }catch(err){
+      if(seq!==integratedMarketRequestSeq)return;
+      el.innerHTML=`
+        <div class="integrated-status error">
+          Failed to load live ad spend.<br>
+          ${esc(err?.message||'Unknown error')}
+        </div>`;
+    }
+  }
+
   function filteredByPeriod(){
     const preset=document.getElementById('periodPreset').value;
     const {s:start,e:end}=presetRange(preset);
@@ -1669,6 +2132,7 @@
     renderChannelPerformance(rows);
     renderGeoPerformance(rows);
     renderFuturePipeline(rows);
+    renderIntegratedMarketPerformance(rows);
     bindInteractions();
   }
 
