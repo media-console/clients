@@ -840,7 +840,7 @@
   <div class="page">
 
     <div class="top-controls">
-      <div class="chip">Client: <b>Diamond Cliff Resort &amp; Spa</b></div>
+      <div class="chip">Client: <b id="clientName">—</b></div>
       <div class="chip period-chip" id="topPeriodChip">
         <span>Period:</span>
         <select id="periodPreset" aria-label="Period preset">
@@ -870,6 +870,7 @@
     </div>
 
 
+    <!-- New client setup is controlled only by DASHBOARD_CONFIG in the script below. -->
     <div class="tabs" role="tablist" aria-label="Dashboard reports">
       <button class="tab-btn active" id="adsTabBtn" type="button" role="tab" aria-selected="true" aria-controls="adsTab">Ads Report</button>
       <button class="tab-btn" id="bookingsTabBtn" type="button" role="tab" aria-selected="false" aria-controls="bookingsTab">Bookings Report</button>
@@ -881,29 +882,29 @@
           <div>
             <h2 class="section-title">Ads <span class="accent">Report</span></h2>
           </div>
-          <div class="subchip">Live XPO report</div>
+          <div class="subchip" id="adsProviderSubchip">Live Ads report</div>
         </div>
 
         <div class="card xpo-embed-card">
           <div class="xpo-embed-head">
             <div>
-              <div class="ititle">XPO Campaign Insights</div>
-              <div class="idesc">Use the filters inside the report for live date-range changes.</div>
+              <div class="ititle" id="adsProviderTitle">Ads Campaign Insights</div>
+              <div class="idesc" id="adsProviderDesc">Use the filters inside the report for live date-range changes.</div>
             </div>
-            <div class="xpo-live-pill"><span class="xpo-live-dot"></span>Live from XPO</div>
+            <div class="xpo-live-pill"><span class="xpo-live-dot"></span><span id="adsProviderPill">Live Ads</span></div>
           </div>
           <div class="xpo-frame-wrap">
             <iframe
               id="xpoFrame"
               class="xpo-frame"
-              src="https://dsp.knorex.com/public/reports/v2/insights/campaign?token=9tCmkOy6m6eBaKhmh1r9kebvTDdsWPg5GKlirLev"
-              title="XPO Campaign Insights"
+              src="about:blank"
+              title="Live Ads Campaign Insights"
               loading="eager"
               allowfullscreen>
             </iframe>
           </div>
-          <div class="xpo-embed-note">
-            Test version: if XPO allows embedding, the full live public report will appear above. If XPO blocks iframe embedding, the browser will show an XPO/browser refusal message inside this area.
+          <div class="xpo-embed-note" id="adsProviderNote">
+            Live report is embedded from the configured advertising platform. Date, channel and platform filters inside the report are controlled by that platform.
           </div>
         </div>
       </section>
@@ -1102,15 +1103,37 @@
 
 <script>
 (function(){
-  const SHEET_ID = "1wDcmYtUK2zJaaqEXYLvN__xkev2edNk9YooP6CVn47I";
-  const SHEET_GID = "0";
-  const DATA_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SHEET_GID}`;
+  /* ============================================================
+     CLIENT DASHBOARD CONFIG
+     TEAM SETUP: EDIT ONLY THIS BLOCK FOR A NEW CLIENT
+     ============================================================ */
+  const DASHBOARD_CONFIG = {
+    clientName: "Diamond Cliff Resort & Spa",
 
-  const XPO_TOKEN = "9tCmkOy6m6eBaKhmh1r9kebvTDdsWPg5GKlirLev";
-  const XPO_BASE = "https://dsp.knorex.com/api/public/reports/insights/campaign/v3";
-  const XPO_TIMEZONE = "Asia/Bangkok";
-  const XPO_FLIGHT_START = new Date(Date.UTC(2025,9,1)); // 01 Oct 2025
-  const XPO_FLIGHT_END = new Date(Date.UTC(2026,8,30));  // 30 Sep 2026
+    bookings: {
+      sheetId: "1wDcmYtUK2zJaaqEXYLvN__xkev2edNk9YooP6CVn47I",
+      gid: "0",
+      currencyCode: "THB",
+      currencySymbol: "฿"
+    },
+
+    ads: {
+      // Keep the dashboard independent from one specific ad platform.
+      // Today: XPO embedded public report.
+      // Future platform that supports embed:
+      //   provider: "Platform Name",
+      //   mode: "embed",
+      //   reportUrl: "https://..."
+      provider: "XPO",
+      mode: "embed",
+      reportUrl: "https://dsp.knorex.com/public/reports/v2/insights/campaign?token=9tCmkOy6m6eBaKhmh1r9kebvTDdsWPg5GKlirLev"
+    }
+  };
+  /* ====================== END CONFIG ====================== */
+
+  const SHEET_ID = DASHBOARD_CONFIG.bookings.sheetId;
+  const SHEET_GID = DASHBOARD_CONFIG.bookings.gid;
+  const DATA_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SHEET_GID}`;
 
 
   const tooltip = document.getElementById('tooltip');
@@ -1122,12 +1145,13 @@
     const n = parseFloat(String(v ?? '').replace(/[$฿,\s]/g,''));
     return Number.isFinite(n) ? n : 0;
   };
-  const money = v => '฿' + Math.round(v).toLocaleString('en-US');
+  const money = v => DASHBOARD_CONFIG.bookings.currencySymbol + Math.round(v).toLocaleString('en-US');
   const shortMoney = v => {
     const n=Number(v||0), a=Math.abs(n);
-    if(a>=1000000)return '฿'+(n/1000000).toFixed(a>=10000000?1:2).replace(/\.0+$|(\.\d*[1-9])0+$/,'$1')+'M';
-    if(a>=1000)return '฿'+(n/1000).toFixed(a>=100000?0:1).replace(/\.0$/,'')+'K';
-    return '฿'+Math.round(n).toLocaleString('en-US');
+    const s=DASHBOARD_CONFIG.bookings.currencySymbol;
+    if(a>=1000000)return s+(n/1000000).toFixed(a>=10000000?1:2).replace(/\.0+$|(\.\d*[1-9])0+$/,'$1')+'M';
+    if(a>=1000)return s+(n/1000).toFixed(a>=100000?0:1).replace(/\.0$/,'')+'K';
+    return s+Math.round(n).toLocaleString('en-US');
   };
   const fmtDate = d => d ? `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}` : '—';
 
@@ -1549,286 +1573,6 @@
 
 
 
-  let ADS_STATS = null;
-  let ADS_DAILY = [];
-  let ADS_CHANNELS = [];
-  let adsDailyMetric = 'spend';
-  let adsChannelMetric = 'spend';
-  let adsRequestSeq = 0;
-
-  function compactNumber(v){
-    const n=Number(v||0), a=Math.abs(n);
-    if(a>=1000000000)return (n/1000000000).toFixed(1).replace(/\.0$/,'')+'B';
-    if(a>=1000000)return (n/1000000).toFixed(a>=10000000?1:2).replace(/\.0+$|(\.\d*[1-9])0+$/,'$1')+'M';
-    if(a>=1000)return (n/1000).toFixed(a>=100000?0:1).replace(/\.0$/,'')+'K';
-    return Math.round(n).toLocaleString('en-US');
-  }
-
-  function pct(v){
-    const n=Number(v);
-    return Number.isFinite(n) ? `${n.toFixed(2)}%` : '—';
-  }
-
-  function xpoField(obj,names,def=0){
-    for(const name of names){
-      if(obj && obj[name]!==undefined && obj[name]!==null){
-        const n=Number(obj[name]);
-        return Number.isFinite(n) ? n : obj[name];
-      }
-    }
-    return def;
-  }
-
-  function xpoRange(){
-    const preset=document.getElementById('periodPreset').value;
-    if(preset==='all'){
-      const today=browserTodayUTC();
-      return {
-        s:XPO_FLIGHT_START,
-        e:today<XPO_FLIGHT_END?today:XPO_FLIGHT_END
-      };
-    }
-    const r=presetRange(preset);
-    return {s:r.s,e:r.e};
-  }
-
-  function xpoPayload(){
-    const {s,e}=xpoRange();
-    return {
-      token:XPO_TOKEN,
-      start:dateInputValue(s||XPO_FLIGHT_START),
-      end:dateInputValue(e||browserTodayUTC()),
-      timeZone:XPO_TIMEZONE,
-      types:[],
-      campaignIds:[],
-      adgroupIds:[],
-      widgetName:"Public Insights Overview"
-    };
-  }
-
-  async function postXpo(path){
-    const url=`${XPO_BASE}/${path}`;
-    const payload=xpoPayload();
-
-    const res=await fetch(url,{
-      method:'POST',
-      mode:'cors',
-      credentials:'omit',
-      cache:'no-store',
-      headers:{
-        'accept':'application/json, text/plain, */*',
-        'content-type':'application/json;charset=UTF-8'
-      },
-      body:JSON.stringify(payload)
-    });
-
-    const rawText=await res.text();
-    if(!res.ok){
-      throw new Error(`XPO API ${res.status}${rawText ? ` · ${rawText.slice(0,180)}` : ''}`);
-    }
-
-    if(!rawText.trim()) return null;
-
-    try{
-      return JSON.parse(rawText);
-    }catch(e){
-      // Defensive fallback in case the endpoint ever adds a wrapper.
-      const cleaned=rawText.replace(/^[^{\[]+/,'').replace(/[^\]}\s]+$/,'');
-      try{return JSON.parse(cleaned);}
-      catch(_){throw new Error(`XPO returned non-JSON response: ${rawText.slice(0,160)}`);}
-    }
-  }
-
-  function unwrapXpo(raw){
-    if(raw==null)return raw;
-    if(raw.data!==undefined)return raw.data;
-    if(raw.result!==undefined)return raw.result;
-    return raw;
-  }
-
-  function normalizeAdsDaily(raw){
-    raw=unwrapXpo(raw);
-    const arr=Array.isArray(raw) ? raw :
-      Array.isArray(raw?.content) ? raw.content :
-      Array.isArray(raw?.items) ? raw.items :
-      Array.isArray(raw?.rows) ? raw.rows : [];
-    return arr.map(r=>{
-      const stamp=Number(r.periodStart||r.date||0);
-      const d=stamp ? new Date(stamp) : null;
-      return {
-        date:d,
-        spend:xpoField(r,['budgetSpentPartnerCurrency','budgetSpentAdvertiserCurrency','budgetSpent'],0),
-        impressions:xpoField(r,['impressions','servedImpressions','viewableImpressions'],0),
-        clicks:xpoField(r,['clickThroughs','clicks'],0)
-      };
-    }).filter(r=>r.date && !isNaN(r.date));
-  }
-
-  function normalizeAdsChannels(raw){
-    raw=unwrapXpo(raw);
-    const arr=Array.isArray(raw) ? raw :
-      Array.isArray(raw?.content) ? raw.content :
-      Array.isArray(raw?.items) ? raw.items :
-      Array.isArray(raw?.rows) ? raw.rows : [];
-    return arr.map(r=>({
-      name:String(r.groupValue||r.channel||r.name||'Unknown'),
-      spend:xpoField(r,['budgetSpentPartnerCurrency','budgetSpentAdvertiserCurrency','budgetSpent'],0),
-      impressions:xpoField(r,['impressions','servedImpressions','viewableImpressions'],0),
-      clicks:xpoField(r,['clickThroughs','clicks'],0),
-      ctr:xpoField(r,['clickThroughRate','ctr'],0),
-      cpc:xpoField(r,['cpcPartnerCurrency','cpcAdvertiserCurrency','cpc'],0),
-      cpm:xpoField(r,['cpmPartnerCurrency','cpmAdvertiserCurrency','cpm'],0)
-    })).filter(r=>r.name);
-  }
-
-  function renderAdsKPIs(stats){
-    stats=unwrapXpo(stats)||{};
-    const spend=xpoField(stats,['budgetSpentPartnerCurrency','budgetSpentAdvertiserCurrency','budgetSpent'],0);
-    const impressions=xpoField(stats,['impressions','servedImpressions','viewableImpressions','totalImpressions'],0);
-    const clicks=xpoField(stats,['clickThroughs','clicks'],0);
-    const ctr=xpoField(stats,['clickThroughRate','ctr'],0);
-    const cpc=xpoField(stats,['cpcPartnerCurrency','cpcAdvertiserCurrency','cpc'],0);
-    const cpm=xpoField(stats,['cpmPartnerCurrency','cpmAdvertiserCurrency','cpm'],0);
-
-    document.getElementById('adsSpend').textContent=money(spend);
-    document.getElementById('adsImpressions').textContent=compactNumber(impressions);
-    document.getElementById('adsClicks').textContent=compactNumber(clicks);
-    document.getElementById('adsCTR').textContent=pct(ctr);
-    document.getElementById('adsCPC').textContent=money(cpc);
-    document.getElementById('adsCPM').textContent=money(cpm);
-  }
-
-  function adsMetricValue(row,metric){
-    if(metric==='impressions')return row.impressions||0;
-    if(metric==='clicks')return row.clicks||0;
-    return row.spend||0;
-  }
-
-  function adsMetricFormat(v,metric){
-    if(metric==='spend')return money(v);
-    return compactNumber(v);
-  }
-
-  function renderAdsDaily(){
-    const wrap=document.getElementById('adsDailyWrap');
-    const rows=[...ADS_DAILY].sort((a,b)=>a.date-b.date);
-    document.getElementById('adsDailyDesc').textContent =
-      adsDailyMetric==='spend'?'By spend':adsDailyMetric==='impressions'?'By impressions':'By clicks';
-
-    if(!rows.length){
-      wrap.innerHTML='<div class="ads-error">No daily XPO data for the selected period</div>';
-      return;
-    }
-
-    const W=860,H=250,L=42,R=14,T=14,B=34;
-    const vals=rows.map(r=>adsMetricValue(r,adsDailyMetric));
-    const max=Math.max(...vals,1);
-    const min=Math.min(...vals,0);
-    const span=Math.max(1,max-min);
-    const x=i=>L+(W-L-R)*(rows.length===1?.5:i/(rows.length-1));
-    const y=v=>T+(H-T-B)*(1-(v-min)/span);
-    const pts=rows.map((r,i)=>`${x(i).toFixed(1)},${y(vals[i]).toFixed(1)}`).join(' ');
-    const area=`M ${x(0)} ${H-B} L `+rows.map((r,i)=>`${x(i)} ${y(vals[i])}`).join(' L ')+` L ${x(rows.length-1)} ${H-B} Z`;
-
-    let grids='';
-    for(let i=0;i<4;i++){
-      const gy=T+(H-T-B)*(i/3);
-      const gv=max-(max-min)*(i/3);
-      grids+=`<line class="ads-gridline" x1="${L}" x2="${W-R}" y1="${gy}" y2="${gy}"/>
-              <text class="ads-axis-label" x="${L-7}" y="${gy+4}" text-anchor="end">${adsDailyMetric==='spend'?shortMoney(gv):compactNumber(gv)}</text>`;
-    }
-
-    const step=Math.max(1,Math.ceil(rows.length/6));
-    const labels=rows.map((r,i)=>{
-      if(i!==0 && i!==rows.length-1 && i%step!==0)return '';
-      const lab=r.date.toLocaleDateString('en-US',{day:'2-digit',month:'short'});
-      return `<text class="ads-axis-label" x="${x(i)}" y="${H-8}" text-anchor="middle">${lab}</text>`;
-    }).join('');
-
-    const hits=rows.map((r,i)=>{
-      const lab=r.date.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
-      const val=vals[i];
-      return `<circle class="ads-hit interactive" cx="${x(i)}" cy="${y(val)}" r="8"
-        data-tip="<strong>${lab}</strong><small>${adsMetricFormat(val,adsDailyMetric)}</small>"/>
-        <circle class="ads-point" cx="${x(i)}" cy="${y(val)}" r="2.2"/>`;
-    }).join('');
-
-    wrap.innerHTML=`<svg class="ads-chart-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
-      ${grids}<path class="ads-area" d="${area}"/><polyline class="ads-line" points="${pts}"/>
-      ${hits}${labels}</svg>`;
-    bindInteractions();
-  }
-
-  function renderAdsChannels(){
-    const box=document.getElementById('adsChannelRows');
-    document.getElementById('adsChannelDesc').textContent =
-      adsChannelMetric==='spend'?'By spend':adsChannelMetric==='impressions'?'By impressions':'By clicks';
-
-    const rows=[...ADS_CHANNELS].sort((a,b)=>adsMetricValue(b,adsChannelMetric)-adsMetricValue(a,adsChannelMetric));
-    if(!rows.length){
-      box.innerHTML='<div class="ads-error">No channel XPO data for the selected period</div>';
-      return;
-    }
-    const max=Math.max(...rows.map(r=>adsMetricValue(r,adsChannelMetric)),1);
-    box.innerHTML=rows.map(r=>{
-      const v=adsMetricValue(r,adsChannelMetric);
-      return `<div class="ads-channel-row interactive" tabindex="0"
-        data-tip="<strong>${esc(r.name)}</strong><small>Spend ${money(r.spend)} · Impressions ${compactNumber(r.impressions)} · Clicks ${compactNumber(r.clicks)} · CTR ${pct(r.ctr)}</small>">
-        <div class="ads-channel-name">${esc(r.name)}</div>
-        <div class="ads-channel-bar"><span style="width:${Math.max(3,v/max*100)}%"></span></div>
-        <div class="ads-channel-value">${adsMetricFormat(v,adsChannelMetric)}</div>
-      </div>`;
-    }).join('');
-    bindInteractions();
-  }
-
-  function renderAdsError(err){
-    console.error(err);
-    ['adsSpend','adsImpressions','adsClicks','adsCTR','adsCPC','adsCPM'].forEach(id=>{
-      const el=document.getElementById(id); if(el)el.textContent='—';
-    });
-    document.getElementById('adsDailyWrap').innerHTML=
-      `<div class="ads-error">Failed to load XPO Ads data.<br>${esc(err.message||err)}</div>`;
-    document.getElementById('adsChannelRows').innerHTML=
-      `<div class="ads-error">Failed to load XPO channel data.</div>`;
-  }
-
-  async function loadAdsData(){
-    const seq=++adsRequestSeq;
-    document.getElementById('adsDailyWrap').innerHTML='<div class="ads-loading">Loading XPO data...</div>';
-    document.getElementById('adsChannelRows').innerHTML='<div class="ads-loading">Loading XPO data...</div>';
-
-    try{
-      const [stats,daily,channels]=await Promise.all([
-        postXpo('statistics'),
-        postXpo('daily?breakdown=daily'),
-        postXpo('channel?group=channel')
-      ]);
-      if(seq!==adsRequestSeq)return;
-
-      ADS_STATS=unwrapXpo(stats)||{};
-      ADS_DAILY=normalizeAdsDaily(daily);
-      ADS_CHANNELS=normalizeAdsChannels(channels);
-
-      renderAdsKPIs(ADS_STATS);
-      renderAdsDaily();
-      renderAdsChannels();
-
-      if(!ADS_DAILY.length && !ADS_CHANNELS.length){
-        const notice=document.getElementById('adsOriginNotice');
-        if(notice && location.protocol==='file:'){
-          notice.style.display='block';
-        }
-      }
-
-      document.getElementById('lastUpdated').textContent =
-        new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
-    }catch(err){
-      if(seq!==adsRequestSeq)return;
-      renderAdsError(err);
-    }
-  }
-
   let ALL_ROWS = [];
   let DATA_MIN_DATE=null;
   let DATA_MAX_DATE=null;
@@ -1956,14 +1700,12 @@
   document.getElementById('periodPreset').addEventListener('change',()=>{
     updateCustomVisibility();
     renderDashboard();
-    loadAdsData();
   });
   document.getElementById('periodStart').addEventListener('change',()=>{
     const s=document.getElementById('periodStart'),e=document.getElementById('periodEnd');
     if(s.value && e.value && s.value>e.value)e.value=s.value;
     if(document.getElementById('periodPreset').value==='custom'){
       renderDashboard();
-      loadAdsData();
     }
   });
   document.getElementById('periodEnd').addEventListener('change',()=>{
@@ -1971,7 +1713,6 @@
     if(s.value && e.value && e.value<s.value)s.value=e.value;
     if(document.getElementById('periodPreset').value==='custom'){
       renderDashboard();
-      loadAdsData();
     }
   });
   document.getElementById('viewAllBtn').addEventListener('click',()=>{
@@ -2010,16 +1751,38 @@
     renderFuturePipeline(filteredByPeriod());
   }));
 
-  document.querySelectorAll('#adsDailyToggle button').forEach(btn=>btn.addEventListener('click',()=>{
-    adsDailyMetric=btn.dataset.metric;
-    setToggleState('adsDailyToggle',adsDailyMetric);
-    renderAdsDaily();
-  }));
-  document.querySelectorAll('#adsChannelToggle button').forEach(btn=>btn.addEventListener('click',()=>{
-    adsChannelMetric=btn.dataset.metric;
-    setToggleState('adsChannelToggle',adsChannelMetric);
-    renderAdsChannels();
-  }));
+
+  function initDashboardConfig(){
+    document.getElementById('clientName').textContent = DASHBOARD_CONFIG.clientName || 'Client';
+
+    const ads = DASHBOARD_CONFIG.ads || {};
+    const provider = ads.provider || 'Ads Platform';
+    const mode = ads.mode || 'embed';
+
+    document.getElementById('adsProviderSubchip').textContent = `Live ${provider} report`;
+    document.getElementById('adsProviderTitle').textContent = `${provider} Campaign Insights`;
+    document.getElementById('adsProviderPill').textContent = `Live from ${provider}`;
+
+    const frame = document.getElementById('xpoFrame');
+    const note = document.getElementById('adsProviderNote');
+
+    if(mode === 'embed' && ads.reportUrl){
+      frame.src = ads.reportUrl;
+      frame.title = `${provider} Campaign Insights`;
+      note.textContent =
+        `Live report embedded from ${provider}. Date, channel and platform filters inside the report are controlled by ${provider}.`;
+    }else{
+      frame.src = 'about:blank';
+      frame.srcdoc = `
+        <div style="font-family:Arial,sans-serif;padding:48px;color:#6d6584;text-align:center">
+          Ads provider is configured as <strong>${esc(provider)}</strong> with mode
+          <strong>${esc(mode)}</strong>.<br><br>
+          This dashboard template is ready for a future data adapter, but this provider mode has not been connected yet.
+        </div>`;
+      note.textContent =
+        `Provider "${provider}" is configured for "${mode}" mode. Connect a data adapter before using this Ads tab.`;
+    }
+  }
 
   function activateTab(name){
     const ads=name==='ads';
@@ -2139,6 +1902,7 @@
     }
   }
 
+  initDashboardConfig();
   loadData();
   activateTab('ads');
 })();
