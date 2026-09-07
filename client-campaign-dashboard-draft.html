@@ -3878,6 +3878,1081 @@
       width:145px!important;
     }
   }
+
+
+  /* ================= v25: TOGGLES + GEO ALIGNMENT + PIPELINE REDESIGN ================= */
+
+  /* Keep Bookings / Revenue / ABV in the same x positions for all geo levels.
+     The first 52% is reserved for geo descriptors; the last 48% is always
+     Bookings / Revenue / ABV at 16% each. */
+  #bookingsTab #marketPerformanceTable[data-level="country"] thead th:nth-child(1),
+  #bookingsTab #marketPerformanceTable[data-level="country"] tbody td:nth-child(1){
+    width:26%!important;
+  }
+  #bookingsTab #marketPerformanceTable[data-level="country"] thead th:nth-child(2),
+  #bookingsTab #marketPerformanceTable[data-level="country"] tbody td:nth-child(2){
+    width:26%!important;
+  }
+  #bookingsTab #marketPerformanceTable[data-level="country"] thead th:nth-child(n+3),
+  #bookingsTab #marketPerformanceTable[data-level="country"] tbody td:nth-child(n+3){
+    width:16%!important;
+  }
+
+  #bookingsTab #marketPerformanceTable[data-level="region"] thead th:nth-child(1),
+  #bookingsTab #marketPerformanceTable[data-level="region"] tbody td:nth-child(1),
+  #bookingsTab #marketPerformanceTable[data-level="region"] thead th:nth-child(2),
+  #bookingsTab #marketPerformanceTable[data-level="region"] tbody td:nth-child(2){
+    width:26%!important;
+  }
+  #bookingsTab #marketPerformanceTable[data-level="region"] thead th:nth-child(n+3),
+  #bookingsTab #marketPerformanceTable[data-level="region"] tbody td:nth-child(n+3){
+    width:16%!important;
+  }
+
+  #bookingsTab #marketPerformanceTable[data-level="city"] thead th:nth-child(1),
+  #bookingsTab #marketPerformanceTable[data-level="city"] tbody td:nth-child(1){
+    width:18%!important;
+  }
+  #bookingsTab #marketPerformanceTable[data-level="city"] thead th:nth-child(2),
+  #bookingsTab #marketPerformanceTable[data-level="city"] tbody td:nth-child(2){
+    width:17%!important;
+  }
+  #bookingsTab #marketPerformanceTable[data-level="city"] thead th:nth-child(3),
+  #bookingsTab #marketPerformanceTable[data-level="city"] tbody td:nth-child(3){
+    width:17%!important;
+  }
+  #bookingsTab #marketPerformanceTable[data-level="city"] thead th:nth-child(n+4),
+  #bookingsTab #marketPerformanceTable[data-level="city"] tbody td:nth-child(n+4){
+    width:16%!important;
+  }
+
+  /* Toggle controls: clearer active/click state */
+  #bookingsTab .metric-toggle{
+    position:relative;
+    z-index:2;
+  }
+
+  #bookingsTab .metric-toggle button{
+    pointer-events:auto!important;
+    cursor:pointer!important;
+    user-select:none;
+  }
+
+  #bookingsTab .metric-toggle button.active{
+    background:#fff!important;
+    color:#5b4cf5!important;
+    box-shadow:0 1px 4px rgba(52,42,130,.12)!important;
+  }
+
+  /* Future Pipeline: balanced card with summary rail and cleaner heatmap */
+  #bookingsTab .pipeline-card{
+    padding:0!important;
+    overflow:hidden;
+  }
+
+  #bookingsTab .pipeline-head{
+    min-height:62px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin:0!important;
+    padding:14px 18px;
+    border-bottom:1px solid #e4e1e7;
+    background:#fff;
+  }
+
+  #bookingsTab .pipeline-head .idesc{
+    margin:0!important;
+    font-size:14px!important;
+    color:#5f5a64!important;
+  }
+
+  #bookingsTab .pipeline-summary{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    border-bottom:1px solid #e4e1e7;
+    background:#fafafa;
+  }
+
+  #bookingsTab .pipeline-summary-item{
+    min-height:78px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:5px;
+    padding:13px 18px;
+    border-right:1px solid #e4e1e7;
+  }
+
+  #bookingsTab .pipeline-summary-item:last-child{
+    border-right:0;
+  }
+
+  #bookingsTab .pipeline-summary-item span{
+    color:#77717c;
+    font-size:12px!important;
+    font-weight:400;
+    text-transform:uppercase;
+  }
+
+  #bookingsTab .pipeline-summary-item strong{
+    color:#222027;
+    font-size:22px!important;
+    line-height:1.15;
+    font-weight:500;
+  }
+
+  #bookingsTab .pipeline-wrap{
+    overflow:auto!important;
+    max-width:100%;
+  }
+
+  #bookingsTab .pipeline-table{
+    width:100%;
+    min-width:1050px;
+    border-collapse:collapse;
+    table-layout:auto;
+  }
+
+  #bookingsTab .pipeline-table th{
+    height:50px;
+    padding:0 12px!important;
+    background:#fff!important;
+    color:#66616a!important;
+    font-size:12px!important;
+    font-weight:500!important;
+    letter-spacing:0!important;
+    text-transform:uppercase;
+    border-bottom:1px solid #dedbe2;
+  }
+
+  #bookingsTab .pipeline-table td{
+    min-height:62px;
+    padding:12px!important;
+    color:#2e2a33;
+    font-size:13px!important;
+    font-weight:400!important;
+    border-bottom:1px solid #e8e5ea;
+  }
+
+  #bookingsTab .pipeline-table th:first-child,
+  #bookingsTab .pipeline-table td:first-child{
+    min-width:190px;
+    width:190px;
+  }
+
+  #bookingsTab .pipeline-table td:first-child{
+    background:#fff!important;
+  }
+
+  #bookingsTab .pipeline-table tbody tr:nth-child(odd) td:first-child{
+    background:#fafafa!important;
+  }
+
+  #bookingsTab .pipeline-table tbody tr:nth-child(odd) td:not(.heat-cell){
+    background:#fafafa;
+  }
+
+  #bookingsTab .pipeline-market-cell{
+    text-align:left!important;
+  }
+
+  #bookingsTab .pipeline-market-name{
+    font-size:13px!important;
+    font-weight:500;
+    color:#28242d;
+    white-space:normal;
+  }
+
+  #bookingsTab .pipeline-market-share{
+    width:100%;
+    height:4px;
+    margin-top:7px;
+    border-radius:2px;
+    overflow:hidden;
+    background:#ece9f4;
+  }
+
+  #bookingsTab .pipeline-market-share span{
+    display:block;
+    height:100%;
+    border-radius:2px;
+    background:#6955e8;
+  }
+
+  #bookingsTab .pipeline-market-share-label{
+    margin-top:4px;
+    color:#928c98;
+    font-size:10px!important;
+    font-weight:400;
+  }
+
+  #bookingsTab .pipeline-table td.heat-cell{
+    text-align:center;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .pipeline-table .total-col{
+    min-width:100px;
+    border-left:1px solid #ddd9e1!important;
+    background:#fafafa!important;
+  }
+
+  #bookingsTab .pipeline-table .total-col strong{
+    display:block;
+    font-weight:500;
+  }
+
+  #bookingsTab .pipeline-share{
+    display:block;
+    margin-top:3px;
+    color:#928d97;
+    font-size:10px!important;
+    font-weight:400;
+  }
+
+  #bookingsTab .pipeline-table tr.grand-total td{
+    background:#f5f4f7!important;
+    border-top:1px solid #d9d5de!important;
+    font-weight:500!important;
+  }
+
+  @media(max-width:760px){
+    #bookingsTab .pipeline-summary{
+      grid-template-columns:1fr;
+    }
+
+    #bookingsTab .pipeline-summary-item{
+      border-right:0;
+      border-bottom:1px solid #e4e1e7;
+    }
+
+    #bookingsTab .pipeline-summary-item:last-child{
+      border-bottom:0;
+    }
+  }
+
+
+  /* ================= v26: YEAR-BASED JAN-DEC FUTURE PIPELINE ================= */
+
+  #bookingsTab .pipeline-controls{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+  }
+
+  #bookingsTab .pipeline-year-control{
+    min-height:36px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:0 11px;
+    border:1px solid #d8d4dc;
+    border-radius:18px;
+    background:#fff;
+    color:#5f5a64;
+    font-size:12px!important;
+    font-weight:400;
+  }
+
+  #bookingsTab .pipeline-year-control span{
+    white-space:nowrap;
+  }
+
+  #bookingsTab .pipeline-year-control select{
+    width:auto!important;
+    min-width:64px!important;
+    height:32px!important;
+    padding:0 22px 0 4px!important;
+    border:0!important;
+    background:transparent!important;
+    color:#29262d!important;
+    font-size:13px!important;
+    font-weight:500!important;
+    outline:0!important;
+  }
+
+  #bookingsTab .pipeline-table{
+    min-width:1280px!important;
+    table-layout:fixed!important;
+  }
+
+  #bookingsTab .pipeline-table th:first-child,
+  #bookingsTab .pipeline-table td:first-child{
+    width:176px!important;
+    min-width:176px!important;
+  }
+
+  #bookingsTab .pipeline-table .pipeline-month-col,
+  #bookingsTab .pipeline-table td.heat-cell,
+  #bookingsTab .pipeline-table tr.grand-total td:not(:first-child):not(.total-col){
+    width:78px!important;
+    min-width:78px!important;
+    max-width:78px!important;
+  }
+
+  #bookingsTab .pipeline-table .total-col{
+    width:82px!important;
+    min-width:82px!important;
+    max-width:82px!important;
+    padding-left:8px!important;
+    padding-right:8px!important;
+  }
+
+
+  #bookingsTab .pipeline-summary-item strong{
+    white-space:nowrap;
+  }
+
+  @media(max-width:760px){
+    #bookingsTab .pipeline-controls{
+      width:100%;
+      justify-content:flex-start;
+    }
+  }
+
+
+  /* ================= v28: FUTURE PIPELINE PAGINATION ================= */
+  #bookingsTab .pipeline-pager-wrap{
+    border-top:1px solid #e5e2e8;
+    background:#fff;
+  }
+
+  #bookingsTab .pipeline-pager-wrap .xpo-pager{
+    min-height:54px;
+  }
+
+  #bookingsTab .pipeline-pager-wrap .xpo-per-page select{
+    min-width:68px!important;
+    width:68px!important;
+  }
+
+
+  /* ================= v29: FIXED FUTURE PIPELINE DISPLAY HEIGHT ================= */
+
+  /* Future Pipeline reserves space for the selected rows-per-page count. */
+  #bookingsTab .pipeline-table tbody tr:not(.grand-total){
+    height:64px!important;
+  }
+
+  #bookingsTab .pipeline-table tbody tr:not(.grand-total) td{
+    height:64px!important;
+    box-sizing:border-box;
+  }
+
+  /* Blank filler rows preserve layout but do not look like data. */
+  #bookingsTab .pipeline-placeholder-row td{
+    background:#fff!important;
+    border-bottom:1px solid #f0edf2!important;
+    color:transparent!important;
+    pointer-events:none!important;
+  }
+
+  #bookingsTab .pipeline-placeholder-row:nth-child(odd) td{
+    background:#fafafa!important;
+  }
+
+  #bookingsTab .pipeline-placeholder-cell{
+    background:inherit!important;
+  }
+
+  #bookingsTab .pipeline-empty-message-row td{
+    height:64px!important;
+  }
+
+  /* Grand Total and pager positions stay fixed because body height is fixed. */
+  #bookingsTab .pipeline-table tr.grand-total{
+    height:64px!important;
+  }
+
+  #bookingsTab .pipeline-table tr.grand-total td{
+    height:64px!important;
+    box-sizing:border-box;
+  }
+
+  #bookingsTab .pipeline-pager-wrap{
+    min-height:64px;
+  }
+
+
+  /* ================= v30: FUTURE PIPELINE ROWS PER PAGE ================= */
+
+  #bookingsTab .pipeline-pager-wrap .xpo-per-page select{
+    min-width:76px!important;
+    width:76px!important;
+  }
+
+
+  /* ================= v31: PAGER FIX + EXCEL EXPORT ================= */
+
+  /* Ensure 2- and 3-digit page-size values are never clipped. */
+  #bookingsTab .xpo-per-page select,
+  #bookingsTab .pipeline-pager-wrap .xpo-per-page select{
+    min-width:92px!important;
+    width:92px!important;
+    height:38px!important;
+    padding:0 30px 0 14px!important;
+    box-sizing:border-box!important;
+    text-align:left!important;
+    font-size:13px!important;
+    line-height:38px!important;
+  }
+
+  /* No fake filler rows: show only real markets that exist. */
+  #bookingsTab .pipeline-placeholder-row{
+    display:none!important;
+  }
+
+  #bookingsTab .section-action-group{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  #bookingsTab .report-subsection-head-actions{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:18px;
+  }
+
+  #bookingsTab .export-excel-btn{
+    min-height:34px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    padding:0 12px;
+    border:1px solid #d8d4dc;
+    border-radius:17px;
+    background:#fff;
+    color:#4f4956;
+    font-size:12px!important;
+    font-weight:500!important;
+    line-height:1;
+    white-space:nowrap;
+    cursor:pointer;
+  }
+
+  #bookingsTab .export-excel-btn:hover{
+    border-color:#bfb7da;
+    background:#faf9ff;
+    color:#5b4cf5;
+  }
+
+  #bookingsTab .export-excel-btn svg{
+    width:15px;
+    height:15px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
+  @media(max-width:760px){
+    #bookingsTab .report-subsection-head-actions{
+      align-items:flex-start;
+      flex-direction:column;
+    }
+  }
+
+
+  /* ================= v32: MONTHLY % + COLLAPSE + UNIFIED XPO PAGERS ================= */
+
+  /* Monthly secondary percentage, matching XPO's primary/secondary metric rhythm. */
+  #bookingsTab .pipeline-cell-value{
+    display:block;
+    font-size:13px!important;
+    line-height:1.2;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .pipeline-cell-share{
+    display:block;
+    margin-top:3px;
+    color:#8f8994;
+    font-size:10px!important;
+    line-height:1.2;
+    font-weight:400!important;
+    white-space:nowrap;
+  }
+
+  #bookingsTab .heat-cell[style*="color:#fff"] .pipeline-cell-share{
+    color:rgba(255,255,255,.84)!important;
+  }
+
+  /* Market/Future heading actions match Booking Details action rhythm. */
+  #bookingsTab .report-subsection-head-actions .section-action-group{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:8px;
+    flex-shrink:0;
+  }
+
+  /* ---- One canonical XPO pager layout for ALL paginated Bookings sections ---- */
+  #bookingsTab #bookingPager,
+  #bookingsTab #marketPerformancePager,
+  #bookingsTab #pipelinePager{
+    width:100%;
+    height:66px!important;
+    min-height:66px!important;
+    padding:0 20px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:stretch!important;
+    box-sizing:border-box!important;
+    border-top:1px solid #e5e2e8!important;
+    background:#fff!important;
+  }
+
+  #bookingsTab #bookingPager .xpo-pager,
+  #bookingsTab #marketPerformancePager .xpo-pager,
+  #bookingsTab #pipelinePager .xpo-pager{
+    width:100%!important;
+    height:100%!important;
+    display:grid!important;
+    grid-template-columns:minmax(220px,1fr) auto!important;
+    align-items:center!important;
+    column-gap:24px!important;
+    flex-wrap:nowrap!important;
+  }
+
+  #bookingsTab #bookingPager .xpo-pager-display,
+  #bookingsTab #marketPerformancePager .xpo-pager-display,
+  #bookingsTab #pipelinePager .xpo-pager-display{
+    justify-self:start!important;
+    margin:0!important;
+    color:#96939d!important;
+    font-size:12px!important;
+    line-height:1!important;
+    font-weight:400!important;
+    white-space:nowrap!important;
+  }
+
+  #bookingsTab #bookingPager .xpo-pager-controls,
+  #bookingsTab #marketPerformancePager .xpo-pager-controls,
+  #bookingsTab #pipelinePager .xpo-pager-controls{
+    justify-self:end!important;
+    display:grid!important;
+    grid-template-columns:150px minmax(170px,max-content)!important;
+    align-items:center!important;
+    column-gap:18px!important;
+    margin:0!important;
+    flex-wrap:nowrap!important;
+  }
+
+  #bookingsTab #bookingPager .xpo-per-page,
+  #bookingsTab #marketPerformancePager .xpo-per-page,
+  #bookingsTab #pipelinePager .xpo-per-page{
+    width:150px!important;
+    display:grid!important;
+    grid-template-columns:80px 1fr!important;
+    align-items:center!important;
+    gap:8px!important;
+    margin:0!important;
+    color:#96939d!important;
+    font-size:12px!important;
+    font-weight:400!important;
+    white-space:nowrap!important;
+  }
+
+  #bookingsTab #bookingPager .xpo-per-page select,
+  #bookingsTab #marketPerformancePager .xpo-per-page select,
+  #bookingsTab #pipelinePager .xpo-per-page select{
+    width:80px!important;
+    min-width:80px!important;
+    height:36px!important;
+    padding:0 26px 0 12px!important;
+    border:1px solid #dedbe6!important;
+    border-radius:18px!important;
+    background:#fff!important;
+    color:#4f4b58!important;
+    font-size:12px!important;
+    line-height:36px!important;
+    font-weight:500!important;
+    text-align:left!important;
+    box-sizing:border-box!important;
+  }
+
+  #bookingsTab #bookingPager .xpo-pages,
+  #bookingsTab #marketPerformancePager .xpo-pages,
+  #bookingsTab #pipelinePager .xpo-pages{
+    justify-self:end!important;
+    min-height:36px!important;
+    display:flex!important;
+    align-items:center!important;
+    gap:2px!important;
+    padding:3px 6px!important;
+    border:1px solid #dedbe6!important;
+    border-radius:20px!important;
+    background:#fff!important;
+    box-sizing:border-box!important;
+    white-space:nowrap!important;
+  }
+
+  #bookingsTab #bookingPager .xpo-page-btn,
+  #bookingsTab #marketPerformancePager .xpo-page-btn,
+  #bookingsTab #pipelinePager .xpo-page-btn{
+    min-width:28px!important;
+    height:28px!important;
+    padding:0 7px!important;
+    border:0!important;
+    border-radius:14px!important;
+    background:transparent!important;
+    color:#27242d!important;
+    font-size:12px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab #bookingPager .xpo-page-btn.active,
+  #bookingsTab #marketPerformancePager .xpo-page-btn.active,
+  #bookingsTab #pipelinePager .xpo-page-btn.active{
+    color:#5b4cf5!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab #bookingPager .xpo-page-ellipsis,
+  #bookingsTab #marketPerformancePager .xpo-page-ellipsis,
+  #bookingsTab #pipelinePager .xpo-page-ellipsis{
+    font-size:12px!important;
+    padding:0 3px!important;
+    color:#77727f!important;
+  }
+
+  /* Prevent older Pipeline-only rules from moving its pager differently. */
+  #bookingsTab .pipeline-pager-wrap{
+    min-height:66px!important;
+  }
+
+  @media(max-width:900px){
+    #bookingsTab #bookingPager .xpo-pager,
+    #bookingsTab #marketPerformancePager .xpo-pager,
+    #bookingsTab #pipelinePager .xpo-pager{
+      grid-template-columns:1fr!important;
+      row-gap:8px!important;
+      padding:8px 0!important;
+    }
+
+    #bookingsTab #bookingPager,
+    #bookingsTab #marketPerformancePager,
+    #bookingsTab #pipelinePager{
+      height:auto!important;
+      min-height:84px!important;
+    }
+
+    #bookingsTab #bookingPager .xpo-pager-controls,
+    #bookingsTab #marketPerformancePager .xpo-pager-controls,
+    #bookingsTab #pipelinePager .xpo-pager-controls{
+      justify-self:start!important;
+    }
+  }
+
+
+  /* ================= v33: INTERACTIVE FUTURE PIPELINE MATRIX ================= */
+
+  /* Summary becomes a compact four-cell decision strip. */
+  #bookingsTab .pipeline-summary{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    background:#fff!important;
+  }
+
+  #bookingsTab .pipeline-summary-item{
+    min-height:72px!important;
+    padding:12px 16px!important;
+    background:#fff!important;
+  }
+
+  #bookingsTab .pipeline-summary-item span{
+    font-size:11px!important;
+    letter-spacing:.02em!important;
+  }
+
+  #bookingsTab .pipeline-summary-item strong{
+    font-size:19px!important;
+    line-height:1.15!important;
+  }
+
+  /* A subtle interaction strip above the matrix. */
+  #bookingsTab .pipeline-focus-bar{
+    min-height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:0 14px;
+    border-bottom:1px solid #e6e2e9;
+    background:#faf9fc;
+    color:#69636e;
+    font-size:12px!important;
+    font-weight:400;
+  }
+
+  #bookingsTab .pipeline-focus-bar strong{
+    color:#4f3fc5;
+    font-weight:600;
+  }
+
+  #bookingsTab .pipeline-focus-bar button{
+    height:28px;
+    padding:0 10px;
+    border:1px solid #d7d1e9;
+    border-radius:14px;
+    background:#fff;
+    color:#5b4cf5;
+    font:inherit;
+    font-size:11px!important;
+    font-weight:500;
+    cursor:pointer;
+  }
+
+  #bookingsTab .pipeline-focus-hint{
+    justify-content:flex-start;
+    color:#8c8790;
+  }
+
+  /* Matrix table: cleaner, closer to the Bookings BI behavior. */
+  #bookingsTab .pipeline-table{
+    min-width:1280px!important;
+    table-layout:fixed!important;
+  }
+
+  #bookingsTab .pipeline-table th{
+    background:#fff!important;
+  }
+
+  #bookingsTab .pipeline-market-head,
+  #bookingsTab .pipeline-table th:first-child{
+    text-align:left!important;
+  }
+
+  #bookingsTab .pipeline-month-th{
+    padding:0!important;
+    transition:opacity .15s ease, background .15s ease, color .15s ease;
+  }
+
+  #bookingsTab .pipeline-month-btn{
+    width:100%;
+    height:50px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    border:0;
+    background:transparent;
+    color:inherit;
+    font:inherit;
+    font-size:12px!important;
+    font-weight:500!important;
+    cursor:pointer;
+  }
+
+  #bookingsTab .pipeline-month-th:hover{
+    background:#f4f1ff!important;
+    color:#5745d4!important;
+  }
+
+  /* Selected month headers stand out; non-selected columns recede. */
+  #bookingsTab .pipeline-month-active{
+    background:#eeeaff!important;
+    color:#4e3acb!important;
+    box-shadow:inset 0 -3px 0 #6552ef;
+  }
+
+  #bookingsTab .pipeline-month-dim{
+    opacity:.34;
+  }
+
+  #bookingsTab .pipeline-col-dim{
+    opacity:.28;
+  }
+
+  #bookingsTab .pipeline-col-active{
+    box-shadow:inset 1px 0 0 rgba(101,82,239,.12), inset -1px 0 0 rgba(101,82,239,.12);
+  }
+
+  /* Source Market is intentionally clean — no contribution bar per row. */
+  #bookingsTab .pipeline-market-cell{
+    padding-left:14px!important;
+    text-align:left!important;
+  }
+
+  #bookingsTab .pipeline-market-name{
+    display:block;
+    color:#2c2930;
+    font-size:13px!important;
+    line-height:1.25;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .pipeline-data-cell{
+    position:relative;
+    text-align:center!important;
+    font-size:12px!important;
+    font-weight:500!important;
+    background:
+      rgba(91,76,245,var(--heat-alpha,0))!important;
+    transition:opacity .15s ease, box-shadow .15s ease;
+  }
+
+  /* No secondary % on individual market/month cells. */
+  #bookingsTab .pipeline-data-cell .pipeline-cell-share,
+  #bookingsTab .pipeline-data-cell span{
+    display:none!important;
+  }
+
+  /* Total column: narrower and visually separated from the heatmap. */
+  #bookingsTab .pipeline-table .total-col{
+    width:76px!important;
+    min-width:76px!important;
+    max-width:76px!important;
+    background:#fafafa!important;
+    border-left:1px solid #ddd9e1!important;
+  }
+
+  /* Grand Total is the only row with percentages. */
+  #bookingsTab .pipeline-table tr.grand-total td{
+    height:62px!important;
+    background:#f6f5f8!important;
+    border-top:1px solid #d8d4de!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .grand-month-cell{
+    text-align:center!important;
+  }
+
+  #bookingsTab .grand-month-cell strong{
+    display:block;
+    color:#29262d;
+    font-size:12px!important;
+    line-height:1.2;
+    font-weight:600!important;
+  }
+
+  #bookingsTab .grand-month-cell span,
+  #bookingsTab .grand-total-share{
+    display:block;
+    margin-top:3px;
+    color:#817a89;
+    font-size:10px!important;
+    line-height:1.1;
+    font-weight:500!important;
+  }
+
+  /* Keep heat intensity visible but calmer than the prior version. */
+  #bookingsTab .pipeline-data-cell[style*="--heat-alpha"]{
+    color:#29262d!important;
+  }
+
+  @media(max-width:900px){
+    #bookingsTab .pipeline-summary{
+      grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    }
+  }
+
+  @media(max-width:760px){
+    #bookingsTab .pipeline-summary{
+      grid-template-columns:1fr!important;
+    }
+  }
+
+
+  /* ================= v34: SOFTER FUTURE PIPELINE MATRIX ================= */
+
+  /* Remove the boxed/grid feeling. Keep only very soft horizontal rhythm. */
+  #bookingsTab .pipeline-table{
+    border-collapse:separate!important;
+    border-spacing:0!important;
+  }
+
+  #bookingsTab .pipeline-table th,
+  #bookingsTab .pipeline-table td{
+    border-left:0!important;
+    border-right:0!important;
+  }
+
+  #bookingsTab .pipeline-table thead th{
+    border-top:0!important;
+    border-bottom:1px solid #ece9ef!important;
+  }
+
+  #bookingsTab .pipeline-table tbody tr:not(.grand-total) td{
+    border-top:0!important;
+    border-bottom:1px solid #f1eff3!important;
+  }
+
+  /* Selected columns stay noticeable through fill/opacity only — no outline. */
+  #bookingsTab .pipeline-col-active{
+    box-shadow:none!important;
+  }
+
+  #bookingsTab .pipeline-month-active{
+    box-shadow:none!important;
+    background:#f0edff!important;
+    color:#4f3fca!important;
+  }
+
+  /* Heat cells should feel like a soft matrix, not bordered table cells. */
+  #bookingsTab .pipeline-data-cell{
+    border:0!important;
+  }
+
+  /* Source Market column remains neutral and clean. */
+  #bookingsTab .pipeline-market-cell{
+    background:#fff!important;
+    border-left:0!important;
+    border-right:0!important;
+  }
+
+  /* TOTAL column: always white, bold, and without a hard divider. */
+  #bookingsTab .pipeline-table .total-col{
+    background:#fff!important;
+    border-left:0!important;
+    border-right:0!important;
+    color:#242029!important;
+    font-weight:700!important;
+  }
+
+  #bookingsTab .pipeline-table tbody tr:not(.grand-total) .total-col strong{
+    font-weight:700!important;
+    color:#242029!important;
+  }
+
+  /* Grand Total now follows Geo Market Performance:
+     one white row, bold values, subtle separator only. */
+  #bookingsTab .pipeline-table tr.grand-total td{
+    height:62px!important;
+    background:#fff!important;
+    border-top:1px solid #d8d4dc!important;
+    border-bottom:0!important;
+    color:#17141b!important;
+    font-weight:800!important;
+    opacity:1!important;
+    box-shadow:none!important;
+  }
+
+  #bookingsTab .pipeline-table tr.grand-total td:first-child{
+    font-weight:800!important;
+    color:#17141b!important;
+  }
+
+  #bookingsTab .grand-month-cell strong{
+    color:#17141b!important;
+    font-size:12px!important;
+    font-weight:800!important;
+  }
+
+  #bookingsTab .grand-month-cell span{
+    color:#817a89!important;
+    font-size:10px!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .pipeline-table tr.grand-total .total-col{
+    background:#fff!important;
+    color:#17141b!important;
+    font-weight:800!important;
+  }
+
+  #bookingsTab .pipeline-table tr.grand-total .total-col strong{
+    font-weight:800!important;
+    color:#17141b!important;
+  }
+
+  #bookingsTab .grand-total-share{
+    color:#817a89!important;
+    font-weight:500!important;
+  }
+
+
+  /* ================= v35: PIPELINE POLISH ================= */
+  #bookingsTab .pipeline-head .idesc{
+    font-size:14px!important;
+    line-height:1.35!important;
+    color:#5b5464!important;
+    font-weight:500!important;
+    margin:0!important;
+  }
+
+  #bookingsTab .pipeline-month-th,
+  #bookingsTab .pipeline-table .total-col,
+  #bookingsTab .pipeline-table tr.grand-total td:first-child{
+    text-transform:uppercase!important;
+    letter-spacing:.02em!important;
+  }
+
+  #bookingsTab .pipeline-month-th{
+    background:#fff!important;
+    transition:background .15s ease, color .15s ease!important;
+  }
+
+  #bookingsTab .pipeline-month-btn{
+    width:100%!important;
+    padding:0!important;
+    text-transform:uppercase!important;
+    font-size:12px!important;
+    font-weight:600!important;
+    color:#6a6474!important;
+  }
+
+  #bookingsTab .pipeline-month-th.pipeline-month-active{
+    background:#f0ca00!important;
+    color:#201b26!important;
+  }
+
+  #bookingsTab .pipeline-month-th.pipeline-month-active .pipeline-month-btn{
+    color:#201b26!important;
+    font-weight:700!important;
+  }
+
+  #bookingsTab .pipeline-month-th.pipeline-month-dim .pipeline-month-btn{
+    opacity:.42!important;
+  }
+
+  #bookingsTab .pipeline-null{
+    display:inline-block!important;
+    color:#bdb7c7!important;
+    opacity:.5!important;
+    font-weight:400!important;
+    font-size:11px!important;
+    line-height:1!important;
+  }
+
+  #bookingsTab .pipeline-data-cell.pipeline-col-dim .pipeline-null,
+  #bookingsTab .grand-month-cell .pipeline-null{
+    opacity:.34!important;
+  }
+
+  #bookingsTab .pipeline-table tr.grand-total td{
+    font-size:13px!important;
+  }
+
+  #bookingsTab .pipeline-table tr.grand-total td:first-child{
+    font-size:13px!important;
+    font-weight:800!important;
+  }
+
+  #bookingsTab .grand-month-cell strong,
+  #bookingsTab .pipeline-table tr.grand-total .total-col strong,
+  #bookingsTab .pipeline-table tbody tr:not(.grand-total) .total-col strong{
+    font-size:13px!important;
+    line-height:1.1!important;
+    font-weight:800!important;
+  }
+
+  #bookingsTab .grand-month-cell span,
+  #bookingsTab .grand-total-share{
+    margin-top:3px!important;
+  }
+
+  #bookingsTab .pipeline-focus-hint{
+    display:none!important;
+  }
 </style>
 </head>
 <body>
@@ -4056,9 +5131,17 @@
             <div class="ititle">Booking Details</div>
             <div class="idesc" id="bookingDetailsCount">Latest bookings for the selected period</div>
           </div>
-          <button class="collapse-btn" id="bookingCollapseBtn" type="button" aria-expanded="true" aria-controls="bookingDetailsBody">
-            <span>Collapse</span><span class="collapse-chevron">⌃</span>
-          </button>
+          <div class="section-action-group">
+            <button class="export-excel-btn" id="exportBookingDetailsBtn" type="button" title="Export Booking Details to Excel">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/>
+              </svg>
+              <span>Export Excel</span>
+            </button>
+            <button class="collapse-btn" id="bookingCollapseBtn" type="button" aria-expanded="true" aria-controls="bookingDetailsBody">
+              <span>Collapse</span><span class="collapse-chevron">⌃</span>
+            </button>
+          </div>
         </div>
 
         <div class="collapsible-body" id="bookingDetailsBody">
@@ -4091,11 +5174,25 @@
 
     <!-- 2. MARKET PERFORMANCE -->
     <section class="section" id="marketPerformanceSection">
-      <div class="report-subsection-head">
-        <h2>Market Performance</h2>
-        <p>Compare market performance by country, region, or city for the selected period.</p>
+      <div class="report-subsection-head report-subsection-head-actions">
+        <div>
+          <h2>Market Performance</h2>
+          <p>Compare market performance by country, region, or city for the selected period.</p>
+        </div>
+        <div class="section-action-group">
+          <button class="export-excel-btn" id="exportMarketPerformanceBtn" type="button" title="Export Market Performance to Excel">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/>
+            </svg>
+            <span>Export Excel</span>
+          </button>
+          <button class="collapse-btn" id="marketPerformanceCollapseBtn" type="button" aria-expanded="true" aria-controls="marketPerformanceBody">
+            <span>Collapse</span><span class="collapse-chevron">⌃</span>
+          </button>
+        </div>
       </div>
 
+      <div class="collapsible-body" id="marketPerformanceBody">
       <div class="card market-xpo-card">
         <div class="market-xpo-toolbar">
           <div class="market-xpo-toolbar-left">
@@ -4123,7 +5220,7 @@
         <div class="market-xpo-note" id="marketPerformanceNote"></div>
 
         <div class="market-xpo-table-wrap">
-          <table class="market-xpo-table">
+          <table class="market-xpo-table" id="marketPerformanceTable" data-level="country">
             <thead id="marketPerformanceThead">
               <tr>
                 <th>GEO</th>
@@ -4142,6 +5239,7 @@
 
         <div class="pager-wrap" id="marketPerformancePager"></div>
       </div>
+      </div><!-- /marketPerformanceBody -->
     </section>
 
     <!-- 3. BOOKINGS INSIGHTS -->
@@ -4223,27 +5321,69 @@
 
     <!-- 4. MARKET FUTURE PIPELINE -->
     <section class="section" id="marketFuturePipelineSection">
-      <div class="report-subsection-head">
-        <h2>Future Pipeline</h2>
-        <p>Future check-ins from bookings captured in the selected booking period.</p>
+      <div class="report-subsection-head report-subsection-head-actions">
+        <div>
+          <h2>Future Pipeline</h2>
+          <p>Check-in distribution from bookings captured in the selected booking period.</p>
+        </div>
+        <div class="section-action-group">
+          <button class="export-excel-btn" id="exportFuturePipelineBtn" type="button" title="Export Future Pipeline to Excel">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/>
+            </svg>
+            <span>Export Excel</span>
+          </button>
+          <button class="collapse-btn" id="futurePipelineCollapseBtn" type="button" aria-expanded="true" aria-controls="futurePipelineBody">
+            <span>Collapse</span><span class="collapse-chevron">⌃</span>
+          </button>
+        </div>
       </div>
 
+      <div class="collapsible-body" id="futurePipelineBody">
       <div class="card pipeline-card">
         <div class="pipeline-head">
           <div>
             <div class="idesc" id="pipelineDesc">Future check-ins by room nights</div>
           </div>
-          <div class="metric-toggle" id="pipelineToggle" aria-label="Market Future Pipeline metric">
-            <button type="button" class="active" data-metric="nights">Room Nights</button>
-            <button type="button" data-metric="revenue">Revenue</button>
+
+          <div class="pipeline-controls">
+            <label class="pipeline-year-control">
+              <span>Stay Year</span>
+              <select id="pipelineYearSelect" aria-label="Future Pipeline stay year"></select>
+            </label>
+
+            <div class="metric-toggle" id="pipelineToggle" aria-label="Market Future Pipeline metric">
+              <button type="button" class="active" data-metric="nights">Room Nights</button>
+              <button type="button" data-metric="revenue">Revenue</button>
+            </div>
           </div>
         </div>
+        <div class="pipeline-summary" id="pipelineSummary">
+          <div class="pipeline-summary-item">
+            <span>Matrix Period</span>
+            <strong id="pipelineSummaryPeriod">Jan – Dec</strong>
+          </div>
+          <div class="pipeline-summary-item">
+            <span id="pipelineSummaryMetricLabel">Pipeline Total</span>
+            <strong id="pipelineSummaryTotal">—</strong>
+          </div>
+          <div class="pipeline-summary-item">
+            <span>Source Markets</span>
+            <strong id="pipelineSummaryMarkets">—</strong>
+          </div>
+          <div class="pipeline-summary-item">
+            <span>Stay Year</span>
+            <strong id="pipelineSummaryYear">—</strong>
+          </div>
+        </div>
+
         <div class="pipeline-wrap" id="pipelineWrap">
           <div class="empty-state">Loading...</div>
         </div>
+        <div class="pager-wrap pipeline-pager-wrap" id="pipelinePager"></div>
       </div>
+      </div><!-- /futurePipelineBody -->
 
-      <div class="footnote">Live data from Google Sheet</div>
     </section>
 
       </div><!-- /booking-report-scroll -->
@@ -4255,6 +5395,8 @@
 <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
 
 
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <script>
 (function(){
@@ -4489,6 +5631,243 @@
     }
   }
 
+
+  function safeExportPart(value){
+    return String(value||'')
+      .trim()
+      .replace(/[\\/:*?"<>|]+/g,'-')
+      .replace(/\s+/g,'_')
+      .replace(/_+/g,'_')
+      .replace(/^_+|_+$/g,'') || 'Export';
+  }
+
+  function currentPeriodExportLabel(){
+    const preset=document.getElementById('periodPreset')?.value || 'all';
+    const {s,e}=presetRange(preset);
+    if(s && e)return `${dateInputValue(s)}_to_${dateInputValue(e)}`;
+    return safeExportPart(preset);
+  }
+
+  function writeExcelWorkbook(filename,sheetName,aoa){
+    if(typeof XLSX==='undefined'){
+      alert('Excel export library is still loading. Please refresh the page and try again.');
+      return;
+    }
+
+    const ws=XLSX.utils.aoa_to_sheet(aoa);
+    const wb=XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,ws,String(sheetName||'Export').slice(0,31));
+    XLSX.writeFile(wb,filename,{compression:true});
+  }
+
+  function exportBookingDetails(){
+    const rows=[...currentPeriodRows()]
+      .sort((a,b)=>(b.bookingDate?.getTime()||0)-(a.bookingDate?.getTime()||0));
+
+    const aoa=[
+      ['Booking Date','Booking ID','Transaction Value','City','Region','Country','Check in date','Check out date','Nights','BLT','Channel'],
+      ...rows.map(r=>[
+        fmtDate(r.bookingDate),
+        r.bookingId || '',
+        Number.isFinite(r.value) ? r.value : '',
+        r.city || '',
+        r.region || '',
+        r.country || '',
+        fmtDate(r.checkIn),
+        fmtDate(r.checkOut),
+        r.nights ?? '',
+        r.blt ?? '',
+        r.channel || ''
+      ])
+    ];
+
+    const filename=[
+      safeExportPart(DASHBOARD_CONFIG.clientName),
+      'Booking_Details',
+      currentPeriodExportLabel()
+    ].join('_')+'.xlsx';
+
+    writeExcelWorkbook(filename,'Booking Details',aoa);
+  }
+
+  function currentMarketExportData(){
+    const level=MARKET_PERF_STATE.level;
+    let data=aggregateMarketPerformance(currentPeriodRows(),level);
+
+    const q=MARKET_PERF_STATE.search.trim().toLowerCase();
+    if(q){
+      data=data.filter(r=>{
+        const haystack=level==='city'
+          ? `${r.city||r.label} ${r.region||''} ${r.country||''}`
+          : level==='region'
+            ? `${r.label} ${r.country||''}`
+            : `${r.label}`;
+        return haystack.toLowerCase().includes(q);
+      });
+    }
+
+    const metric=MARKET_PERF_STATE.metric;
+    data.sort((a,b)=>{
+      const av=marketMetricValue(a,metric);
+      const bv=marketMetricValue(b,metric);
+      if(bv!==av)return bv-av;
+      return String(a.label||'').localeCompare(String(b.label||''));
+    });
+
+    return {level,data};
+  }
+
+  function exportMarketPerformance(){
+    const {level,data}=currentMarketExportData();
+
+    let aoa;
+    if(level==='city'){
+      aoa=[
+        ['City','Region','Country','Bookings','Revenue','ABV'],
+        ...data.map(r=>[
+          r.city || r.label || '',
+          r.region || '',
+          r.country || '',
+          r.bookings || 0,
+          r.revenue || 0,
+          r.abv || 0
+        ])
+      ];
+    }else if(level==='region'){
+      aoa=[
+        ['Region','Country','Bookings','Revenue','ABV'],
+        ...data.map(r=>[
+          r.label || '',
+          r.country || '',
+          r.bookings || 0,
+          r.revenue || 0,
+          r.abv || 0
+        ])
+      ];
+    }else{
+      aoa=[
+        ['Country','Spend','Bookings','Revenue','ABV'],
+        ...data.map(r=>[
+          r.label || '',
+          r.spend || 0,
+          r.bookings || 0,
+          r.revenue || 0,
+          r.abv || 0
+        ])
+      ];
+    }
+
+    const filename=[
+      safeExportPart(DASHBOARD_CONFIG.clientName),
+      'Market_Performance',
+      safeExportPart(level),
+      currentPeriodExportLabel()
+    ].join('_')+'.xlsx';
+
+    writeExcelWorkbook(filename,`Market ${level}`,aoa);
+  }
+
+  function buildPipelineExportRows(){
+    const stayRows=currentPeriodRows().filter(r=>
+      r.checkIn &&
+      pipelineYear &&
+      r.checkIn.getUTCFullYear()===pipelineYear
+    );
+
+    const monthKeys=Array.from(
+      {length:12},
+      (_,i)=>`${pipelineYear}-${String(i+1).padStart(2,'0')}`
+    );
+    const months=PIPELINE_MONTHS;
+    const activeMonths=pipelineSelectedMonths.length ? pipelineSelectedMonths : months;
+    const markets={};
+
+    stayRows.forEach(r=>{
+      const market=(r.country||'Unknown').trim()||'Unknown';
+      const mk=monthKey(r.checkIn);
+      const monthAbbr=months[Number(mk.slice(5,7))-1];
+
+      if(!markets[market])markets[market]={months:{},total:0,focusTotal:0};
+
+      const value=pipelineMetric==='revenue'
+        ? Number(r.value||0)
+        : (Number.isFinite(r.nights)&&r.nights!==null ? Number(r.nights) : 0);
+
+      markets[market].months[mk]=(markets[market].months[mk]||0)+value;
+      markets[market].total+=value;
+      if(activeMonths.includes(monthAbbr))markets[market].focusTotal+=value;
+    });
+
+    const ranked=Object.entries(markets).sort((a,b)=>{
+      const av=pipelineSelectedMonths.length ? a[1].focusTotal : a[1].total;
+      const bv=pipelineSelectedMonths.length ? b[1].focusTotal : b[1].total;
+      if(bv!==av)return bv-av;
+      return a[0].localeCompare(b[0]);
+    });
+
+    const grandTotal=ranked.reduce((sum,[,v])=>sum+v.total,0);
+    const grandByMonth={};
+    monthKeys.forEach(k=>grandByMonth[k]=0);
+    ranked.forEach(([,v])=>monthKeys.forEach(k=>grandByMonth[k]+=v.months[k]||0));
+
+    const rows=ranked.map(([market,v])=>[
+      market,
+      ...monthKeys.map(k=>v.months[k]||0),
+      v.total
+    ]);
+
+    rows.push([
+      'Grand Total',
+      ...monthKeys.map(k=>grandByMonth[k]||0),
+      grandTotal
+    ]);
+
+    rows.push([
+      'Grand Total %',
+      ...monthKeys.map(k=>{
+        const value=grandByMonth[k]||0;
+        return grandTotal ? value/grandTotal : 0;
+      }),
+      grandTotal ? 1 : 0
+    ]);
+
+    return {months,rows};
+  }
+
+  function exportFuturePipeline(){
+    const {months,rows}=buildPipelineExportRows();
+    const metricLabel=pipelineMetric==='revenue' ? 'Revenue' : 'Room Nights';
+
+    const aoa=[
+      ['Client',DASHBOARD_CONFIG.clientName],
+      ['Booking Period',currentPeriodExportLabel().replace(/_/g,' ')],
+      ['Stay Year',pipelineYear || ''],
+      ['Metric',metricLabel],
+      ['Focused Months',pipelinePeriodLabel(pipelineSelectedMonths)],
+      [],
+      ['Source Market',...months,'Total'],
+      ...rows
+    ];
+
+    const filename=[
+      safeExportPart(DASHBOARD_CONFIG.clientName),
+      'Future_Pipeline',
+      safeExportPart(pipelineYear),
+      safeExportPart(metricLabel),
+      currentPeriodExportLabel()
+    ].join('_')+'.xlsx';
+
+    writeExcelWorkbook(filename,'Future Pipeline',aoa);
+  }
+
+  function bindExcelExports(){
+    document.getElementById('exportBookingDetailsBtn')?.addEventListener('click',exportBookingDetails);
+    document.getElementById('exportMarketPerformanceBtn')?.addEventListener('click',exportMarketPerformance);
+    document.getElementById('exportFuturePipelineBtn')?.addEventListener('click',exportFuturePipeline);
+  }
+
+  bindExcelExports();
+
   function renderTable(rows){
     currentFilteredRows = rows;
     const tb = document.getElementById('bookingTbody');
@@ -4558,7 +5937,7 @@
     document.getElementById('kBookings').textContent = bookings.toLocaleString('en-US');
     document.getElementById('kRevenue').textContent = money(revenue);
     document.getElementById('kABV').textContent = money(abv);
-    document.getElementById('kABVNote').textContent = 'Transaction Value ÷ Bookings';
+    document.getElementById('kABVNote').textContent = 'Average per booking';
     document.getElementById('kTopMarket').textContent = top ? top[0] : '—';
     document.getElementById('kTopMarketNote').textContent = top && bookings ? `${((top[1]/bookings)*100).toFixed(1)}% of total bookings` : 'By booking count';
 
@@ -4697,7 +6076,7 @@
       k,label:monthLabel(k),value:v.bookings ? v.revenue/v.bookings : 0,n:v.bookings
     })).filter(p=>p.n>0);
     renderLineChart('abvChart',pts,v=>money(v));
-    document.getElementById('abvInsightNote').textContent = pts.length ? 'Transaction Value ÷ Bookings' : 'No valid booking dates';
+    document.getElementById('abvInsightNote').textContent = '';
   }
 
   function renderStayDemand(rows){
@@ -4736,6 +6115,108 @@
 
 
   let pipelineMetric='nights';
+  let pipelineYear=null;
+  let pipelinePage=1;
+  let pipelinePageSize=5;
+  let pipelineSelectedMonths=[];
+
+  const PIPELINE_MONTHS=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+
+  function pipelinePeriodLabel(selected){
+    if(!selected.length)return 'Jan – Dec';
+
+    const indices=selected
+      .map(m=>PIPELINE_MONTHS.indexOf(m))
+      .filter(i=>i>=0)
+      .sort((a,b)=>a-b);
+
+    let contiguous=true;
+    for(let i=1;i<indices.length;i++){
+      if(indices[i]!==indices[i-1]+1){
+        contiguous=false;
+        break;
+      }
+    }
+
+    if(contiguous && indices.length>1){
+      return `${PIPELINE_MONTHS[indices[0]]} – ${PIPELINE_MONTHS[indices[indices.length-1]]}`;
+    }
+
+    return indices.map(i=>PIPELINE_MONTHS[i]).join(', ');
+  }
+
+  function togglePipelineMonth(month){
+    const idx=pipelineSelectedMonths.indexOf(month);
+    if(idx>=0)pipelineSelectedMonths.splice(idx,1);
+    else pipelineSelectedMonths.push(month);
+
+    pipelineSelectedMonths.sort(
+      (a,b)=>PIPELINE_MONTHS.indexOf(a)-PIPELINE_MONTHS.indexOf(b)
+    );
+
+    pipelinePage=1;
+    renderFuturePipeline(currentPeriodRows());
+  }
+
+  function clearPipelineMonths(){
+    if(!pipelineSelectedMonths.length)return;
+    pipelineSelectedMonths=[];
+    pipelinePage=1;
+    renderFuturePipeline(currentPeriodRows());
+  }
+
+  function availablePipelineYears(){
+    if(!ALL_ROWS.length)return [];
+
+    const bookingYears=ALL_ROWS
+      .map(r=>r.bookingDate?.getUTCFullYear())
+      .filter(Number.isFinite);
+
+    const stayYears=ALL_ROWS
+      .map(r=>r.checkIn?.getUTCFullYear())
+      .filter(Number.isFinite);
+
+    if(!bookingYears.length && !stayYears.length)return [];
+
+    const startYear=bookingYears.length
+      ? Math.min(...bookingYears)
+      : Math.min(...stayYears);
+
+    const endYear=stayYears.length
+      ? Math.max(...stayYears)
+      : Math.max(...bookingYears);
+
+    const years=[];
+    for(let y=startYear;y<=endYear;y++)years.push(y);
+    return years;
+  }
+
+  function ensurePipelineYear(){
+    const years=availablePipelineYears();
+    if(!years.length){
+      pipelineYear=null;
+      return [];
+    }
+
+    if(!pipelineYear || !years.includes(pipelineYear)){
+      const preferred=DATA_AS_OF_DATE?.getUTCFullYear() || browserTodayUTC().getUTCFullYear();
+
+      pipelineYear=years.includes(preferred)
+        ? preferred
+        : (years.find(y=>y>preferred) || years[years.length-1]);
+    }
+
+    return years;
+  }
+
+  function renderPipelineYearOptions(){
+    const select=document.getElementById('pipelineYearSelect');
+    if(!select)return;
+
+    const years=ensurePipelineYear();
+    select.innerHTML=years.map(y=>`<option value="${y}" ${y===pipelineYear?'selected':''}>${y}</option>`).join('');
+    select.disabled=!years.length;
+  }
 
   const MARKET_PERF_STATE={
     level:'country',
@@ -4854,16 +6335,8 @@
     });
 
     if(note){
-      if(isCountry){
-        note.textContent='';
-        note.classList.remove('show');
-      }else if(MARKET_PERF_STATE.level==='region'){
-        note.textContent='Region is a booking-demand breakdown. Spend is intentionally kept at Country level to avoid implying media spend where XPO and booking geo may not map one-to-one.';
-        note.classList.add('show');
-      }else{
-        note.textContent='City is a booking-demand breakdown. Spend is intentionally kept at Country level to avoid implying media spend where XPO and booking geo may not map one-to-one.';
-        note.classList.add('show');
-      }
+      note.textContent='';
+      note.classList.remove('show');
     }
   }
 
@@ -4985,6 +6458,9 @@
     updateMarketPerformanceControls();
 
     const level=MARKET_PERF_STATE.level;
+    const marketTable=document.getElementById('marketPerformanceTable');
+    if(marketTable)marketTable.dataset.level=level;
+
     let data=aggregateMarketPerformance(rows,level);
     const q=MARKET_PERF_STATE.search.trim().toLowerCase();
 
@@ -5105,68 +6581,249 @@
 
   function renderFuturePipeline(rows){
     const wrap=document.getElementById('pipelineWrap');
+    const pager=document.getElementById('pipelinePager');
+    const summaryPeriod=document.getElementById('pipelineSummaryPeriod');
+    const summaryMetricLabel=document.getElementById('pipelineSummaryMetricLabel');
+    const summaryTotal=document.getElementById('pipelineSummaryTotal');
+    const summaryMarkets=document.getElementById('pipelineSummaryMarkets');
+    const summaryYear=document.getElementById('pipelineSummaryYear');
+
+    renderPipelineYearOptions();
+
     document.getElementById('pipelineDesc').textContent =
-      pipelineMetric==='revenue' ? 'Future check-ins by revenue' : 'Future check-ins by room nights';
+      pipelineMetric==='revenue'
+        ? 'Revenue matrix by stay month'
+        : 'Room nights matrix by stay month';
 
-    // Future pipeline is based on check-in date; the global period still filters by Booking Date.
-    const now=new Date();
-    const todayUTC=new Date(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()));
-    const future=rows.filter(r=>r.checkIn && r.checkIn>=todayUTC);
-
-    if(!future.length){
-      wrap.innerHTML='<div class="empty-state">No future check-ins for the selected booking period</div>';
+    const years=availablePipelineYears();
+    if(!years.length || !pipelineYear){
+      if(summaryPeriod)summaryPeriod.textContent='—';
+      if(summaryMetricLabel)summaryMetricLabel.textContent='Pipeline Total';
+      if(summaryTotal)summaryTotal.textContent='—';
+      if(summaryMarkets)summaryMarkets.textContent='0';
+      if(summaryYear)summaryYear.textContent='—';
+      wrap.innerHTML='<div class="empty-state">No stay-year data available</div>';
+      if(pager)pager.innerHTML='';
       return;
     }
 
-    const monthKeys=[...new Set(future.map(r=>monthKey(r.checkIn)))].sort().slice(0,12);
+    if(summaryYear)summaryYear.textContent=String(pipelineYear);
+
+    // rows has already been filtered by the selected Booking Date period.
+    // Here we filter only by Check-in year.
+    const stayRows=rows.filter(r=>
+      r.checkIn &&
+      r.checkIn.getUTCFullYear()===pipelineYear
+    );
+
+    const monthKeys=Array.from(
+      {length:12},
+      (_,i)=>`${pipelineYear}-${String(i+1).padStart(2,'0')}`
+    );
+    const monthShort=PIPELINE_MONTHS;
+    const activeMonths=pipelineSelectedMonths.length
+      ? pipelineSelectedMonths
+      : monthShort;
+
     const markets={};
 
-    future.forEach(r=>{
+    stayRows.forEach(r=>{
       const market=(r.country||'Unknown').trim()||'Unknown';
       const mk=monthKey(r.checkIn);
-      if(!monthKeys.includes(mk))return;
-      if(!markets[market])markets[market]={months:{},total:0};
-      const v=pipelineMetric==='revenue' ? r.value : (Number.isFinite(r.nights)&&r.nights!==null?r.nights:0);
+      const monthAbbr=monthShort[Number(mk.slice(5,7))-1];
+
+      if(!markets[market]){
+        markets[market]={
+          months:{},
+          total:0,
+          focusTotal:0
+        };
+      }
+
+      const v=pipelineMetric==='revenue'
+        ? Number(r.value||0)
+        : (Number.isFinite(r.nights)&&r.nights!==null ? Number(r.nights) : 0);
+
       markets[market].months[mk]=(markets[market].months[mk]||0)+v;
       markets[market].total+=v;
+
+      if(activeMonths.includes(monthAbbr)){
+        markets[market].focusTotal+=v;
+      }
     });
 
-    const ranked=Object.entries(markets).sort((a,b)=>b[1].total-a[1].total).slice(0,12);
-    if(!ranked.length || ranked.every(([,v])=>v.total===0)){
-      wrap.innerHTML='<div class="empty-state">No future pipeline values available</div>';
-      return;
-    }
+    // When months are selected, re-rank countries by those selected months.
+    // With no selection, rank by the full Jan-Dec total.
+    const rankedAll=Object.entries(markets)
+      .sort((a,b)=>{
+        const av=pipelineSelectedMonths.length ? a[1].focusTotal : a[1].total;
+        const bv=pipelineSelectedMonths.length ? b[1].focusTotal : b[1].total;
+        if(bv!==av)return bv-av;
+        return a[0].localeCompare(b[0]);
+      });
 
+    const totalMarkets=rankedAll.length;
+    const totalPages=Math.max(1,Math.ceil(totalMarkets/pipelinePageSize));
+    pipelinePage=Math.min(Math.max(1,pipelinePage),totalPages);
+
+    const pageStart=(pipelinePage-1)*pipelinePageSize;
+    const ranked=rankedAll.slice(pageStart,pageStart+pipelinePageSize);
+
+    // Totals always use all source markets.
     const grandByMonth={};
     monthKeys.forEach(k=>grandByMonth[k]=0);
-    ranked.forEach(([,v])=>monthKeys.forEach(k=>grandByMonth[k]+=v.months[k]||0));
-    const grandTotal=ranked.reduce((a,[,v])=>a+v.total,0);
-    const maxCell=Math.max(1,...ranked.flatMap(([,v])=>monthKeys.map(k=>v.months[k]||0)));
+    rankedAll.forEach(([,v])=>{
+      monthKeys.forEach(k=>grandByMonth[k]+=v.months[k]||0);
+    });
+
+    const grandTotal=rankedAll.reduce((sum,[,v])=>sum+v.total,0);
+    const focusTotal=rankedAll.reduce((sum,[,v])=>{
+      return sum + (pipelineSelectedMonths.length ? v.focusTotal : v.total);
+    },0);
+
+    if(summaryPeriod)summaryPeriod.textContent=pipelinePeriodLabel(pipelineSelectedMonths);
+    if(summaryMetricLabel){
+      summaryMetricLabel.textContent=pipelineSelectedMonths.length
+        ? (pipelineMetric==='revenue' ? 'Period Revenue' : 'Period Room Nights')
+        : (pipelineMetric==='revenue' ? 'Total Pipeline Revenue' : 'Total Pipeline Room Nights');
+    }
+    if(summaryTotal)summaryTotal.textContent=focusTotal ? compactMetric(focusTotal,pipelineMetric) : '—';
+    if(summaryMarkets)summaryMarkets.textContent=String(totalMarkets);
+
+    const maxCell=Math.max(
+      1,
+      ...rankedAll.flatMap(([,v])=>monthKeys.map(k=>v.months[k]||0))
+    );
 
     const heatStyle=(v)=>{
       if(!v)return '';
       const ratio=Math.max(0,Math.min(1,v/maxCell));
-      const alpha=.08 + ratio*.54;
-      return `background:rgba(100,71,232,${alpha.toFixed(3)});${ratio>.72?'color:#fff;':''}`;
+      const alpha=.06 + ratio*.44;
+      return `--heat-alpha:${alpha.toFixed(3)};`;
     };
 
-    const head=`<thead><tr><th>Source Market</th>${monthKeys.map(k=>`<th>${monthLabel(k)}</th>`).join('')}<th class="total-col">Total</th></tr></thead>`;
-    const body=ranked.map(([market,v])=>{
-      const cells=monthKeys.map(k=>{
-        const val=v.months[k]||0;
-        return `<td class="heat-cell" style="${heatStyle(val)}" title="${esc(market)} · ${monthLabel(k)} · ${pipelineMetric==='revenue'?money(val):Number(val).toLocaleString('en-US',{maximumFractionDigits:1})+' room nights'}">${compactMetric(val,pipelineMetric)}</td>`;
+    const selectedSet=new Set(pipelineSelectedMonths);
+
+    const head=`<thead><tr>
+      <th class="pipeline-market-head">Source Market</th>
+      ${monthShort.map(m=>{
+        const selected=selectedSet.has(m);
+        const dim=pipelineSelectedMonths.length && !selected;
+        return `<th
+          class="pipeline-month-col pipeline-month-th ${selected?'pipeline-month-active':''} ${dim?'pipeline-month-dim':''}"
+          data-pipeline-month="${m}"
+          title="Click to ${selected?'remove':'focus'} ${m}">
+          <button type="button" class="pipeline-month-btn" data-pipeline-month-btn="${m}">${m}</button>
+        </th>`;
+      }).join('')}
+      <th class="total-col">TOTAL</th>
+    </tr></thead>`;
+
+    if(!rankedAll.length){
+      const emptyMonths=monthShort.map(m=>{
+        const selected=selectedSet.has(m);
+        const dim=pipelineSelectedMonths.length && !selected;
+        return `<td class="heat-cell ${selected?'pipeline-col-active':''} ${dim?'pipeline-col-dim':''}"><span class="pipeline-null">—</span></td>`;
       }).join('');
-      return `<tr><td>${esc(market)}</td>${cells}<td class="total-col">${compactMetric(v.total,pipelineMetric)}</td></tr>`;
+
+      wrap.innerHTML=`<table class="pipeline-table">${head}<tbody>
+        <tr class="pipeline-empty-message-row">
+          <td class="pipeline-market-cell">No check-ins in ${pipelineYear}</td>
+          ${emptyMonths}
+          <td class="total-col">—</td>
+        </tr>
+      </tbody></table>`;
+      if(pager)pager.innerHTML='';
+
+      wrap.querySelectorAll('[data-pipeline-month-btn]').forEach(btn=>{
+        btn.addEventListener('click',()=>togglePipelineMonth(btn.dataset.pipelineMonthBtn));
+      });
+      return;
+    }
+
+    const body=ranked.map(([market,v])=>{
+      const cells=monthKeys.map((k,idx)=>{
+        const val=v.months[k]||0;
+        const m=monthShort[idx];
+        const selected=selectedSet.has(m);
+        const dim=pipelineSelectedMonths.length && !selected;
+
+        return `<td
+          class="heat-cell pipeline-data-cell ${selected?'pipeline-col-active':''} ${dim?'pipeline-col-dim':''}"
+          style="${heatStyle(val)}"
+          title="${esc(market)} · ${m} ${pipelineYear} · ${pipelineMetric==='revenue'?money(val):Number(val).toLocaleString('en-US',{maximumFractionDigits:1})+' room nights'}">
+          ${val?compactMetric(val,pipelineMetric):'<span class="pipeline-null">—</span>'}
+        </td>`;
+      }).join('');
+
+      return `<tr>
+        <td class="pipeline-market-cell">
+          <strong class="pipeline-market-name">${esc(market)}</strong>
+        </td>
+        ${cells}
+        <td class="total-col">
+          <strong>${compactMetric(v.total,pipelineMetric)}</strong>
+        </td>
+      </tr>`;
     }).join('');
 
-    const grandCells=monthKeys.map(k=>{
-      const v=grandByMonth[k]||0;
-      const share=grandTotal ? v/grandTotal*100 : 0;
-      return `<td>${compactMetric(v,pipelineMetric)}<span class="pipeline-share">${share.toFixed(1)}%</span></td>`;
+    // Percentage is intentionally shown ONLY on the Grand Total row.
+    // It represents each month's contribution to the selected Stay Year's total.
+    const grandCells=monthKeys.map((k)=>{
+      const val=grandByMonth[k]||0;
+      const share=grandTotal ? val/grandTotal*100 : 0;
+
+      return `<td class="grand-month-cell">
+        <strong>${val?compactMetric(val,pipelineMetric):'<span class="pipeline-null">—</span>'}</strong>
+        <span>${val?share.toFixed(1)+'%':''}</span>
+      </td>`;
     }).join('');
 
-    const foot=`<tr class="grand-total"><td>Grand Total</td>${grandCells}<td class="total-col">${compactMetric(grandTotal,pipelineMetric)}<span class="pipeline-share">100%</span></td></tr>`;
-    wrap.innerHTML=`<table class="pipeline-table">${head}<tbody>${body}${foot}</tbody></table>`;
+    const foot=`<tr class="grand-total">
+      <td>GRAND TOTAL</td>
+      ${grandCells}
+      <td class="total-col">
+        <strong>${grandTotal?compactMetric(grandTotal,pipelineMetric):'—'}</strong>
+        <span class="grand-total-share">100%</span>
+      </td>
+    </tr>`;
+
+    const focusToolbar=pipelineSelectedMonths.length
+      ? `<div class="pipeline-focus-bar">
+          <span>Focused months: <strong>${esc(pipelinePeriodLabel(pipelineSelectedMonths))}</strong></span>
+          <button type="button" id="clearPipelineMonthsBtn">Clear</button>
+        </div>`
+      : ``;
+
+    wrap.innerHTML=`
+      ${focusToolbar}
+      <table class="pipeline-table">${head}<tbody>${body}${foot}</tbody></table>
+    `;
+
+    wrap.querySelectorAll('[data-pipeline-month-btn]').forEach(btn=>{
+      btn.addEventListener('click',()=>togglePipelineMonth(btn.dataset.pipelineMonthBtn));
+    });
+
+    const clearBtn=document.getElementById('clearPipelineMonthsBtn');
+    if(clearBtn)clearBtn.addEventListener('click',clearPipelineMonths);
+
+    renderXpoPager(
+      'pipelinePager',
+      pipelinePage,
+      pipelinePageSize,
+      totalMarkets,
+      'Source Markets',
+      page=>{
+        pipelinePage=page;
+        renderFuturePipeline(currentPeriodRows());
+      },
+      size=>{
+        pipelinePageSize=size;
+        pipelinePage=1;
+        renderFuturePipeline(currentPeriodRows());
+      },
+      [5,10,20,50,100]
+    );
   }
 
   function renderSixth(rows){ renderChannelPerformance(rows); }
@@ -5183,6 +6840,8 @@
 
   let DATA_MIN_DATE=null;
   let DATA_MAX_DATE=null;
+  let DATA_ROW_MAX_DATE=null;
+  let DATA_AS_OF_DATE=null;
 
   function utcDateFromInput(value){
     if(!value)return null;
@@ -5474,6 +7133,7 @@
 
     bookingPage=1;
     MARKET_PERF_STATE.page=1;
+    pipelinePage=1;
 
     // Prevent a previous period's XPO Spend from appearing while the new period is loading.
     MARKET_COUNTRY_ADS = new Map();
@@ -5485,8 +7145,15 @@
   function setupPeriodFilter(rows){
     const dates=rows.map(r=>r.bookingDate).filter(Boolean).sort((a,b)=>a-b);
     if(!dates.length)return;
+
     DATA_MIN_DATE=dates[0];
-    DATA_MAX_DATE=dates[dates.length-1];
+    DATA_ROW_MAX_DATE=dates[dates.length-1];
+
+    // Coverage end comes from DashboardMeta when available.
+    // Example: data can be complete through 31 Aug even if the last booking row is 21 Aug.
+    DATA_MAX_DATE=(DATA_AS_OF_DATE && DATA_AS_OF_DATE > DATA_ROW_MAX_DATE)
+      ? DATA_AS_OF_DATE
+      : DATA_ROW_MAX_DATE;
 
     const startEl=document.getElementById('periodStart');
     const endEl=document.getElementById('periodEnd');
@@ -5792,6 +7459,15 @@
     }
   });
 
+  function setToggleState(containerId,metric){
+    const container=document.getElementById(containerId);
+    if(!container)return;
+    container.querySelectorAll('button[data-metric]').forEach(btn=>{
+      btn.classList.toggle('active',btn.dataset.metric===metric);
+      btn.setAttribute('aria-pressed',String(btn.dataset.metric===metric));
+    });
+  }
+
   document.querySelectorAll('#marketToggle button').forEach(btn=>btn.addEventListener('click',()=>{
     marketMetric=btn.dataset.metric;
     setToggleState('marketToggle',marketMetric);
@@ -5813,9 +7489,20 @@
 
   document.querySelectorAll('#pipelineToggle button').forEach(btn=>btn.addEventListener('click',()=>{
     pipelineMetric=btn.dataset.metric;
+    pipelinePage=1;
     setToggleState('pipelineToggle',pipelineMetric);
     renderFuturePipeline(currentPeriodRows());
   }));
+
+  const pipelineYearSelect=document.getElementById('pipelineYearSelect');
+  if(pipelineYearSelect){
+    pipelineYearSelect.addEventListener('change',()=>{
+      pipelineYear=Number(pipelineYearSelect.value)||pipelineYear;
+      pipelineSelectedMonths=[];
+      pipelinePage=1;
+      renderFuturePipeline(currentPeriodRows());
+    });
+  }
 
 
 
@@ -5836,6 +7523,8 @@
   }
 
   bindCollapseButton('bookingCollapseBtn','bookingDetailsBody');
+  bindCollapseButton('marketPerformanceCollapseBtn','marketPerformanceBody');
+  bindCollapseButton('futurePipelineCollapseBtn','futurePipelineBody');
 
   bindMarketPerformanceControls();
 
@@ -6098,14 +7787,20 @@
       const raw = parseGviz(gvizResponse);
       const rows = normalizeRows(raw);
       ALL_ROWS = rows;
+
+      // Load the coverage date BEFORE building the period filter.
+      DATA_AS_OF_DATE=(metadataResult.ok && metadataResult.meta?.dataAsOf)
+        ? metadataResult.meta.dataAsOf
+        : null;
+
       setupPeriodFilter(rows);
       updateCustomVisibility();
       renderDashboard();
 
       // "Data as of" is the booking-data coverage date from DashboardMeta.
       // It is intentionally NOT derived from page load time or Max Booking Date.
-      if(metadataResult.ok && metadataResult.meta?.dataAsOf){
-        setDataAsOfDisplay(metadataResult.meta.dataAsOf);
+      if(DATA_AS_OF_DATE){
+        setDataAsOfDisplay(DATA_AS_OF_DATE);
       }else{
         setDataAsOfDisplay(null);
         if(!metadataResult.ok){
