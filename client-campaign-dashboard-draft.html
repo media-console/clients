@@ -1827,6 +1827,174 @@
       display:none;
     }
   }
+
+
+  /* ================= v15: XPO-LIKE MARKET PERFORMANCE ================= */
+  #bookingsTab .market-xpo-card{
+    padding:0!important;
+    overflow:hidden;
+    border-radius:12px!important;
+    border:1px solid #e3e0e7!important;
+    box-shadow:none!important;
+    background:#fff;
+  }
+  #bookingsTab .market-xpo-toolbar{
+    min-height:68px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    padding:12px 20px;
+    border-bottom:1px solid #e7e4ea;
+  }
+  #bookingsTab .market-xpo-toolbar-left{
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  #bookingsTab .market-xpo-label{
+    font-size:16px!important;
+    font-weight:700;
+    color:#26232b;
+  }
+  #bookingsTab .market-metric-toggle{
+    display:flex;
+    gap:0;
+    padding:3px;
+    border:1px solid #ddd9e3;
+    border-radius:20px;
+    background:#f7f6f8;
+  }
+  #bookingsTab .market-metric-toggle button{
+    height:34px;
+    border:0;
+    border-radius:17px;
+    padding:0 15px;
+    background:transparent;
+    color:#706a76;
+    font-size:13px!important;
+    font-weight:700;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  #bookingsTab .market-metric-toggle button.active{
+    background:#fff;
+    color:var(--purple);
+    box-shadow:0 1px 3px rgba(20,18,25,.10);
+  }
+  #bookingsTab .market-metric-toggle button:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+    box-shadow:none;
+  }
+  #bookingsTab .market-xpo-search-wrap{
+    width:min(280px,34vw);
+    min-width:210px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    border:1px solid #d9d5df;
+    background:#fff;
+    padding:0 12px;
+  }
+  #bookingsTab .market-xpo-search-wrap svg{
+    width:17px;height:17px;fill:none;stroke:#97919d;stroke-width:1.8;flex:0 0 17px;
+  }
+  #bookingsTab .market-xpo-search-wrap input{
+    width:100%!important;min-width:0!important;height:38px!important;
+    padding:0!important;border:0!important;border-radius:0!important;
+    outline:0!important;background:transparent!important;
+    font-size:14px!important;font-weight:500;color:#2b2730;
+  }
+  #bookingsTab .market-xpo-tabs{
+    height:52px;
+    display:flex;
+    align-items:flex-end;
+    gap:30px;
+    padding:0 20px;
+    border-bottom:1px solid #e7e4ea;
+  }
+  #bookingsTab .market-xpo-tabs button{
+    height:52px;
+    padding:0 1px;
+    border:0;
+    border-bottom:3px solid transparent;
+    background:transparent;
+    color:#827c87;
+    font-size:14px!important;
+    font-weight:700;
+    cursor:pointer;
+  }
+  #bookingsTab .market-xpo-tabs button.active{
+    color:var(--purple);
+    border-bottom-color:var(--purple);
+  }
+  #bookingsTab .market-xpo-note{
+    display:none;
+    padding:9px 20px;
+    border-bottom:1px solid #ece9ef;
+    background:#faf9fb;
+    color:#817b88;
+    font-size:12px!important;
+    line-height:1.45;
+  }
+  #bookingsTab .market-xpo-note.show{display:block}
+  #bookingsTab .market-xpo-table-wrap{width:100%;overflow-x:auto}
+  #bookingsTab .market-xpo-table{
+    width:100%;min-width:760px;border-collapse:collapse;table-layout:fixed;
+  }
+  #bookingsTab .market-xpo-table th{
+    height:56px;
+    padding:0 20px!important;
+    background:#fff!important;
+    border-bottom:1px solid #dcd8e0!important;
+    color:#5d5862!important;
+    text-transform:none!important;
+    letter-spacing:0!important;
+    font-size:13px!important;
+    font-weight:600!important;
+    text-align:right;
+    white-space:nowrap;
+  }
+  #bookingsTab .market-xpo-table th:first-child{width:32%;text-align:left}
+  #bookingsTab .market-sort-indicator{margin-left:6px;color:#7c7681;font-size:12px}
+  #bookingsTab .market-xpo-table td{
+    height:58px;
+    padding:10px 20px!important;
+    border-bottom:1px solid #e5e2e7!important;
+    color:#27232a;
+    font-size:14px!important;
+    line-height:1.35!important;
+    text-align:right;
+    vertical-align:middle;
+    white-space:nowrap;
+  }
+  #bookingsTab .market-xpo-table td:first-child{text-align:left;white-space:normal}
+  #bookingsTab .market-xpo-table tbody tr:nth-child(odd) td{background:#fbfbfc}
+  #bookingsTab .market-xpo-table tbody tr:hover td{background:#f7f5fa}
+  #bookingsTab .market-geo-name{font-weight:600;color:#242029}
+  #bookingsTab .market-geo-sub{margin-top:3px;color:#8e8894;font-size:12px!important}
+  #bookingsTab .market-primary-cell{font-weight:800;color:#17141b}
+  #bookingsTab .market-muted-cell{color:#a19aa6}
+  #bookingsTab .market-xpo-table tfoot td{
+    height:62px;padding:12px 20px!important;
+    background:#fff!important;border-top:1px solid #d8d4dc!important;border-bottom:0!important;
+    font-weight:800!important;color:#17141b!important;
+  }
+  #bookingsTab .market-loading-cell,
+  #bookingsTab .market-empty-cell{
+    height:120px!important;text-align:center!important;color:#918b97!important;background:#fff!important;
+  }
+  #bookingsTab #marketPerformancePager{border-top:1px solid #e6e2e8}
+  @media(max-width:760px){
+    #bookingsTab .market-xpo-toolbar{align-items:stretch;flex-direction:column}
+    #bookingsTab .market-xpo-toolbar-left{align-items:flex-start;flex-direction:column;gap:9px}
+    #bookingsTab .market-metric-toggle{width:100%;overflow-x:auto}
+    #bookingsTab .market-metric-toggle button{flex:1 0 auto}
+    #bookingsTab .market-xpo-search-wrap{width:100%;min-width:0}
+    #bookingsTab .market-xpo-tabs{gap:22px;overflow-x:auto}
+  }
 </style>
 </head>
 <body>
@@ -1978,64 +2146,55 @@
       <div class="section-head">
         <div>
           <h2 class="section-title">Market <span class="accent">Performance</span></h2>
-          <p class="section-sub">Ad spend and validated booking outcomes by market for the selected period.</p>
+          <p class="section-sub">Compare market performance by country, region, or city for the selected period.</p>
         </div>
       </div>
 
-      <div class="card integrated-market-card collapsible-card">
-        <div class="integrated-market-head collapsible-head">
-          <div>
-            <div class="integrated-market-title">Integrated Market Performance</div>
-            <div class="integrated-market-desc">
-              Ad spend by country matched with validated bookings and revenue for the selected period. Click a country to view its region and city breakdown below.
+      <div class="card market-xpo-card">
+        <div class="market-xpo-toolbar">
+          <div class="market-xpo-toolbar-left">
+            <div class="market-xpo-label">Geo</div>
+            <div class="metric-toggle market-metric-toggle" id="marketPerformanceMetricToggle" aria-label="Market Performance metric">
+              <button type="button" class="active" data-metric="spend">Spend</button>
+              <button type="button" data-metric="bookings">Bookings</button>
+              <button type="button" data-metric="revenue">Revenue</button>
+              <button type="button" data-metric="abv">ABV</button>
             </div>
           </div>
-          <div class="head-actions">
-            <div class="integrated-live-pill">
-              <span class="integrated-live-dot"></span>
-              <span>Live Ad Spend</span>
-            </div>
-            <button class="collapse-btn" id="integratedCollapseBtn" type="button" aria-expanded="true" aria-controls="integratedMarketBody">
-              <span>Collapse</span><span class="collapse-chevron">⌃</span>
-            </button>
+
+          <div class="market-xpo-search-wrap">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.8-3.8"></path></svg>
+            <input id="marketPerformanceSearch" type="search" placeholder="Type to search..." autocomplete="off">
           </div>
         </div>
 
-        <div class="collapsible-body" id="integratedMarketBody">
-          <div id="integratedMarketContent">
-            <div class="integrated-status">Loading integrated market data...</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="geo-section" id="geoDrillSection">
-        <div class="geo-section-head">
-          <div>
-            <div class="geo-title">Booking Geo Performance</div>
-            <div class="idesc" id="geoDrillDesc">Country performance · click a market to drill down to region and city</div>
-          </div>
-          <div class="metric-toggle" id="geoToggle" aria-label="Geo Performance metric">
-            <button type="button" class="active" data-metric="bookings">Bookings</button>
-            <button type="button" data-metric="revenue">Revenue</button>
-            <button type="button" data-metric="abv">ABV</button>
-          </div>
+        <div class="market-xpo-tabs" id="marketPerformanceTabs">
+          <button type="button" class="active" data-level="country">Country</button>
+          <button type="button" data-level="region">Region</button>
+          <button type="button" data-level="city">City</button>
         </div>
 
-        <div class="card geo-drill-card" id="geoDrillCard">
-          <div class="geo-drill-top">
-            <div>
-              <div class="geo-breadcrumb" id="geoBreadcrumb"></div>
-              <div class="ititle" id="geoLevelTitle">Country Performance</div>
-            </div>
-            <div class="geo-drill-hint" id="geoDrillHint">Click a country to view its regions</div>
-          </div>
+        <div class="market-xpo-note" id="marketPerformanceNote"></div>
 
-          <div class="geo-drill-chart" id="geoDrillChart">
-            <div class="empty-state">Loading...</div>
-          </div>
-
-          <div class="pager-wrap" id="geoDrillPager"></div>
+        <div class="market-xpo-table-wrap">
+          <table class="market-xpo-table">
+            <thead>
+              <tr>
+                <th>GEO <span class="market-sort-indicator">↕</span></th>
+                <th>SPEND</th>
+                <th>BOOKINGS</th>
+                <th>REVENUE</th>
+                <th>ABV</th>
+              </tr>
+            </thead>
+            <tbody id="marketPerformanceTbody">
+              <tr><td colspan="5" class="market-loading-cell">Loading market performance...</td></tr>
+            </tbody>
+            <tfoot id="marketPerformanceTfoot"></tfoot>
+          </table>
         </div>
+
+        <div class="pager-wrap" id="marketPerformancePager"></div>
       </div>
     </section>
 
@@ -2625,199 +2784,237 @@
   }
 
 
-  let geoMetric='bookings';
   let pipelineMetric='nights';
-  const geoDrill={
-    country:'',
-    region:'',
+
+  const MARKET_PERF_STATE={
+    level:'country',
+    metric:'spend',
+    search:'',
     page:1,
     pageSize:10
   };
 
-  function geoMetricLabel(metric){
-    return metric==='revenue' ? 'Revenue' : metric==='abv' ? 'Avg. Booking Value' : 'Bookings';
+  let MARKET_COUNTRY_SPEND=new Map();
+
+  function marketLevelLabel(level){
+    return level==='region'?'Regions':level==='city'?'Cities':'Geos';
   }
 
-  function geoMetricValue(item){
-    return geoMetric==='revenue'
-      ? money(item.value)
-      : geoMetric==='abv'
-        ? money(item.value)
-        : Math.round(item.value).toLocaleString('en-US');
+  function marketSpendForCountry(country){
+    return MARKET_COUNTRY_SPEND.get(normalizedCountryKey(country))||0;
   }
 
-  function renderGeoBreadcrumb(){
-    const el=document.getElementById('geoBreadcrumb');
-    if(!el)return;
+  function aggregateMarketPerformance(rows,level){
+    const map=new Map();
 
-    const parts=[];
-    parts.push(`<button type="button" class="geo-crumb ${!geoDrill.country?'current':''}" data-geo-reset="country">All Countries</button>`);
+    rows.forEach(r=>{
+      const country=canonicalCountryName(r.country||'Unknown');
+      const region=(String(r.region||'Other').trim()||'Other');
+      const city=(String(r.city||'Other').trim()||'Other');
 
-    if(geoDrill.country){
-      parts.push('<span class="geo-crumb-sep">›</span>');
-      parts.push(`<button type="button" class="geo-crumb ${!geoDrill.region?'current':''}" data-geo-country="${esc(geoDrill.country)}">${esc(geoDrill.country)}</button>`);
+      let key,label,sub='';
+      if(level==='region'){
+        key=normalizedCountryKey(country)+'||'+region.toLowerCase();
+        label=region;
+        sub=country;
+      }else if(level==='city'){
+        key=normalizedCountryKey(country)+'||'+region.toLowerCase()+'||'+city.toLowerCase();
+        label=city;
+        sub=`${region} · ${country}`;
+      }else{
+        key=normalizedCountryKey(country);
+        label=country;
+      }
+
+      if(!map.has(key)){
+        map.set(key,{
+          key,label,sub,country,
+          spend:level==='country'?marketSpendForCountry(country):null,
+          bookings:0,revenue:0
+        });
+      }
+      const x=map.get(key);
+      x.bookings+=1;
+      x.revenue+=Number(r.value||0);
+    });
+
+    return [...map.values()].map(r=>({
+      ...r,
+      abv:r.bookings?r.revenue/r.bookings:0
+    }));
+  }
+
+  function marketMetricValue(row,metric){
+    if(metric==='bookings')return row.bookings||0;
+    if(metric==='revenue')return row.revenue||0;
+    if(metric==='abv')return row.abv||0;
+    return Number(row.spend||0);
+  }
+
+  function marketCellValue(row,metric){
+    if(metric==='bookings')return Math.round(row.bookings||0).toLocaleString('en-US');
+    if(metric==='revenue')return money(row.revenue||0);
+    if(metric==='abv')return money(row.abv||0);
+    if(row.spend===null || row.spend===undefined)return '—';
+    return money(row.spend||0);
+  }
+
+  function updateMarketPerformanceControls(){
+    const spendBtn=document.querySelector('#marketPerformanceMetricToggle [data-metric="spend"]');
+    const note=document.getElementById('marketPerformanceNote');
+    const isCountry=MARKET_PERF_STATE.level==='country';
+
+    if(spendBtn)spendBtn.disabled=!isCountry;
+
+    if(!isCountry && MARKET_PERF_STATE.metric==='spend'){
+      MARKET_PERF_STATE.metric='bookings';
     }
 
-    if(geoDrill.region){
-      parts.push('<span class="geo-crumb-sep">›</span>');
-      parts.push(`<button type="button" class="geo-crumb current">${esc(geoDrill.region)}</button>`);
-    }
+    document.querySelectorAll('#marketPerformanceMetricToggle button').forEach(btn=>{
+      btn.classList.toggle('active',btn.dataset.metric===MARKET_PERF_STATE.metric);
+    });
 
-    el.innerHTML=parts.join('');
-
-    const allBtn=el.querySelector('[data-geo-reset="country"]');
-    if(allBtn && geoDrill.country){
-      allBtn.addEventListener('click',()=>{
-        geoDrill.country='';
-        geoDrill.region='';
-        geoDrill.page=1;
-        renderGeoDrilldown(filteredByPeriod());
-      });
-    }
-
-    const countryBtn=el.querySelector('[data-geo-country]');
-    if(countryBtn && geoDrill.region){
-      countryBtn.addEventListener('click',()=>{
-        geoDrill.region='';
-        geoDrill.page=1;
-        renderGeoDrilldown(filteredByPeriod());
-      });
+    if(note){
+      if(isCountry){
+        note.textContent='';
+        note.classList.remove('show');
+      }else{
+        note.textContent='Spend is currently available from XPO at Country level. Region and City use validated Booking, Revenue and ABV data.';
+        note.classList.add('show');
+      }
     }
   }
 
-  function renderGeoDrilldown(rows){
-    const chart=document.getElementById('geoDrillChart');
-    const title=document.getElementById('geoLevelTitle');
-    const desc=document.getElementById('geoDrillDesc');
-    const hint=document.getElementById('geoDrillHint');
-    if(!chart || !title || !desc || !hint)return;
+  function renderMarketPerformance(rows){
+    const tbody=document.getElementById('marketPerformanceTbody');
+    const tfoot=document.getElementById('marketPerformanceTfoot');
+    if(!tbody || !tfoot)return;
 
-    let scoped=rows.slice();
-    let level='country';
+    updateMarketPerformanceControls();
 
-    if(geoDrill.country){
-      const countryKey=normalizedCountryKey(geoDrill.country);
-      scoped=scoped.filter(r=>normalizedCountryKey(r.country)===countryKey);
-      level='region';
+    let data=aggregateMarketPerformance(rows,MARKET_PERF_STATE.level);
+    const q=MARKET_PERF_STATE.search.trim().toLowerCase();
+
+    if(q){
+      data=data.filter(r=>
+        String(r.label||'').toLowerCase().includes(q) ||
+        String(r.sub||'').toLowerCase().includes(q)
+      );
     }
 
-    if(geoDrill.region){
-      const regionKey=String(geoDrill.region||'').trim().toLowerCase();
-      scoped=scoped.filter(r=>String(r.region||'').trim().toLowerCase()===regionKey);
-      level='city';
-    }
+    const metric=MARKET_PERF_STATE.metric;
+    data.sort((a,b)=>{
+      const av=marketMetricValue(a,metric);
+      const bv=marketMetricValue(b,metric);
+      if(bv!==av)return bv-av;
+      return String(a.label||'').localeCompare(String(b.label||''));
+    });
 
-    const entries=aggregateBy(scoped,level,geoMetric,Number.MAX_SAFE_INTEGER);
-    const totalPages=Math.max(1,Math.ceil(entries.length/geoDrill.pageSize));
-    geoDrill.page=Math.min(Math.max(1,geoDrill.page),totalPages);
-    const start=(geoDrill.page-1)*geoDrill.pageSize;
-    const pageEntries=entries.slice(start,start+geoDrill.pageSize);
-    const overallMax=entries.length ? Math.max(entries[0].value,1) : 1;
+    const totalItems=data.length;
+    const totalPages=Math.max(1,Math.ceil(totalItems/MARKET_PERF_STATE.pageSize));
+    MARKET_PERF_STATE.page=Math.min(Math.max(1,MARKET_PERF_STATE.page),totalPages);
 
-    if(level==='country'){
-      title.textContent='Country Performance';
-      desc.textContent=`All booking markets for the selected period · ranked by ${geoMetricLabel(geoMetric)}`;
-      hint.textContent='Click a country to view its region breakdown';
-    }else if(level==='region'){
-      title.textContent=`Region Performance — ${geoDrill.country}`;
-      desc.textContent=`${geoDrill.country} region breakdown · ranked by ${geoMetricLabel(geoMetric)}`;
-      hint.textContent='Click a region to view its city breakdown';
-    }else{
-      title.textContent=`City Performance — ${geoDrill.region}`;
-      desc.textContent=`${geoDrill.region}, ${geoDrill.country} city breakdown · ranked by ${geoMetricLabel(geoMetric)}`;
-      hint.textContent='City is the deepest available booking geo level';
-    }
+    const start=(MARKET_PERF_STATE.page-1)*MARKET_PERF_STATE.pageSize;
+    const pageRows=data.slice(start,start+MARKET_PERF_STATE.pageSize);
 
-    renderGeoBreadcrumb();
-
-    if(!pageEntries.length){
-      chart.innerHTML='<div class="geo-drill-empty">No booking geo data for this selection and period.</div>';
-      renderXpoPager('geoDrillPager',1,geoDrill.pageSize,0,'Markets',()=>{},()=>{});
+    if(!pageRows.length){
+      tbody.innerHTML='<tr><td colspan="5" class="market-empty-cell">No market data found for this selection.</td></tr>';
+      tfoot.innerHTML='';
+      renderXpoPager('marketPerformancePager',1,MARKET_PERF_STATE.pageSize,0,marketLevelLabel(MARKET_PERF_STATE.level),()=>{},()=>{});
       return;
     }
 
-    chart.innerHTML=`
-      <div class="geo-chart-head">
-        <div>${level==='country'?'Country':level==='region'?'Region':'City'}</div>
-        <div>${geoMetricLabel(geoMetric)} Performance</div>
-        <div>Bookings</div>
-        <div>Revenue</div>
-        <div>ABV</div>
-        <div></div>
-      </div>
-      ${pageEntries.map(item=>{
-        const pct=Math.max(3,item.value/overallMax*100);
-        const isLeaf=level==='city';
-        return `
-          <button type="button"
-            class="geo-bar-row ${isLeaf?'is-leaf':''}"
-            ${isLeaf?'':'data-geo-label="'+esc(item.label)+'"'}
-            aria-label="${esc(item.label)}">
-            <span class="geo-bar-label"><strong>${esc(item.label)}</strong></span>
-            <span class="geo-bar-track"><span class="geo-bar-fill" style="width:${pct.toFixed(1)}%"></span></span>
-            <span class="geo-secondary-value geo-secondary-bookings">${item.bookings.toLocaleString('en-US')}</span>
-            <span class="geo-secondary-value">${money(item.revenue)}</span>
-            <span class="geo-secondary-value geo-secondary-abv">${money(item.abv)}</span>
-            <span class="geo-bar-chevron">${isLeaf?'':'›'}</span>
-          </button>
-        `;
-      }).join('')}
+    tbody.innerHTML=pageRows.map(r=>`
+      <tr>
+        <td>
+          <div class="market-geo-name">${esc(r.label)}</div>
+          ${r.sub?`<div class="market-geo-sub">${esc(r.sub)}</div>`:''}
+        </td>
+        <td class="${metric==='spend'?'market-primary-cell':(r.spend==null?'market-muted-cell':'')}">${marketCellValue(r,'spend')}</td>
+        <td class="${metric==='bookings'?'market-primary-cell':''}">${marketCellValue(r,'bookings')}</td>
+        <td class="${metric==='revenue'?'market-primary-cell':''}">${marketCellValue(r,'revenue')}</td>
+        <td class="${metric==='abv'?'market-primary-cell':''}">${marketCellValue(r,'abv')}</td>
+      </tr>
+    `).join('');
+
+    const totals=data.reduce((acc,r)=>{
+      acc.bookings+=r.bookings||0;
+      acc.revenue+=r.revenue||0;
+      if(r.spend!=null)acc.spend+=Number(r.spend||0);
+      return acc;
+    },{bookings:0,revenue:0,spend:0});
+
+    const totalAbv=totals.bookings?totals.revenue/totals.bookings:0;
+
+    tfoot.innerHTML=`
+      <tr>
+        <td>Total from ${totalItems.toLocaleString('en-US')} ${marketLevelLabel(MARKET_PERF_STATE.level)}</td>
+        <td>${MARKET_PERF_STATE.level==='country'?money(totals.spend):'—'}</td>
+        <td>${Math.round(totals.bookings).toLocaleString('en-US')}</td>
+        <td>${money(totals.revenue)}</td>
+        <td>${money(totalAbv)}</td>
+      </tr>
     `;
 
-    if(level!=='city'){
-      chart.querySelectorAll('[data-geo-label]').forEach(btn=>{
-        btn.addEventListener('click',()=>{
-          const label=btn.dataset.geoLabel||'';
-          if(level==='country'){
-            geoDrill.country=label;
-            geoDrill.region='';
-          }else{
-            geoDrill.region=label;
-          }
-          geoDrill.page=1;
-          renderGeoDrilldown(filteredByPeriod());
-        });
-      });
-    }
-
-    const labelPlural=level==='country'?'Countries':level==='region'?'Regions':'Cities';
     renderXpoPager(
-      'geoDrillPager',
-      geoDrill.page,
-      geoDrill.pageSize,
-      entries.length,
-      labelPlural,
-      (page)=>{
-        geoDrill.page=page;
-        renderGeoDrilldown(filteredByPeriod());
+      'marketPerformancePager',
+      MARKET_PERF_STATE.page,
+      MARKET_PERF_STATE.pageSize,
+      totalItems,
+      marketLevelLabel(MARKET_PERF_STATE.level),
+      page=>{
+        MARKET_PERF_STATE.page=page;
+        renderMarketPerformance(filteredByPeriod());
       },
-      (size)=>{
-        geoDrill.pageSize=size;
-        geoDrill.page=1;
-        renderGeoDrilldown(filteredByPeriod());
+      size=>{
+        MARKET_PERF_STATE.pageSize=size;
+        MARKET_PERF_STATE.page=1;
+        renderMarketPerformance(filteredByPeriod());
       },
-      [5,10,20,50]
+      [5,10,20,50,100]
     );
   }
 
-  function openGeoCountry(country){
-    if(!country)return;
-    geoDrill.country=country;
-    geoDrill.region='';
-    geoDrill.page=1;
-    renderGeoDrilldown(filteredByPeriod());
+  function bindMarketPerformanceControls(){
+    document.querySelectorAll('#marketPerformanceTabs button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        MARKET_PERF_STATE.level=btn.dataset.level||'country';
+        MARKET_PERF_STATE.page=1;
 
-    requestAnimationFrame(()=>{
-      const target=document.getElementById('geoDrillSection');
-      if(!target)return;
+        document.querySelectorAll('#marketPerformanceTabs button').forEach(b=>{
+          b.classList.toggle('active',b===btn);
+        });
 
-      const rect=target.getBoundingClientRect();
-      const topOffset=170;
-
-      // Only move enough to reveal the Geo section, while keeping Market Performance context visible.
-      const desiredTop=Math.max(0,window.scrollY + rect.top - topOffset);
-      window.scrollTo({top:desiredTop,behavior:'smooth'});
+        renderMarketPerformance(filteredByPeriod());
+      });
     });
+
+    document.querySelectorAll('#marketPerformanceMetricToggle button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        if(btn.disabled)return;
+        MARKET_PERF_STATE.metric=btn.dataset.metric||'bookings';
+        MARKET_PERF_STATE.page=1;
+
+        document.querySelectorAll('#marketPerformanceMetricToggle button').forEach(b=>{
+          b.classList.toggle('active',b===btn);
+        });
+
+        renderMarketPerformance(filteredByPeriod());
+      });
+    });
+
+    const search=document.getElementById('marketPerformanceSearch');
+    if(search){
+      let timer=null;
+      search.addEventListener('input',()=>{
+        clearTimeout(timer);
+        timer=setTimeout(()=>{
+          MARKET_PERF_STATE.search=search.value||'';
+          MARKET_PERF_STATE.page=1;
+          renderMarketPerformance(filteredByPeriod());
+        },120);
+      });
+    }
   }
 
   function monthStartUTC(d){
@@ -2906,8 +3103,6 @@
 
 
   let ALL_ROWS = [];
-  let integratedMarketPageSize = 10;
-  let integratedMarketPage = 1;
   let integratedMarketRequestSeq = 0;
 
   let DATA_MIN_DATE=null;
@@ -3081,150 +3276,18 @@
     return {start:s,end:e};
   }
 
-  function integratedSummaryMoney(v){
-    return shortMoney(v||0);
-  }
-
-  function integratedSummaryNumber(v){
-    return Math.round(v||0).toLocaleString('en-US');
-  }
-
-  function renderIntegratedMarketTable(mergedRows, totals, meta={}){
-    const el=document.getElementById('integratedMarketContent');
-    if(!el)return;
-
-    const totalPages=Math.max(1,Math.ceil(mergedRows.length/integratedMarketPageSize));
-    integratedMarketPage=Math.min(Math.max(1,integratedMarketPage),totalPages);
-    const start=(integratedMarketPage-1)*integratedMarketPageSize;
-    const rowsToShow=mergedRows.slice(start,start+integratedMarketPageSize);
-
-    const body=rowsToShow.map(r=>`
-      <tr>
-        <td>
-          <button type="button"
-            class="market-drill-link ${r.bookings>0?'':'is-disabled'}"
-            data-country="${esc(r.country)}"
-            data-drillable="${r.bookings>0?'1':'0'}">
-            <span>${esc(r.country)}</span>
-            <span class="market-drill-arrow">›</span>
-          </button>
-        </td>
-        <td>${money(r.spend)}</td>
-        <td>${Math.round(r.bookings).toLocaleString('en-US')}</td>
-        <td>${money(r.revenue)}</td>
-      </tr>
-    `).join('');
-
-    el.innerHTML=`
-      <div class="integrated-market-summary">
-        <div class="integrated-summary-card">
-          <div class="integrated-summary-label">Ad Spend</div>
-          <div class="integrated-summary-value">${integratedSummaryMoney(totals.spend)}</div>
-        </div>
-        <div class="integrated-summary-card">
-          <div class="integrated-summary-label">Bookings</div>
-          <div class="integrated-summary-value">${integratedSummaryNumber(totals.bookings)}</div>
-        </div>
-        <div class="integrated-summary-card">
-          <div class="integrated-summary-label">Revenue</div>
-          <div class="integrated-summary-value">${integratedSummaryMoney(totals.revenue)}</div>
-        </div>
-      </div>
-
-      <div class="integrated-market-wrap">
-        <table class="integrated-market-table">
-          <thead>
-            <tr>
-              <th>Country</th>
-              <th>Ad Spend</th>
-              <th>Bookings</th>
-              <th>Revenue</th>
-            </tr>
-          </thead>
-          <tbody>${body || '<tr><td colspan="4" style="text-align:center;color:#999">No market data for this period</td></tr>'}</tbody>
-          <tfoot>
-            <tr>
-              <td>Total from ${mergedRows.length.toLocaleString('en-US')} markets</td>
-              <td>${money(totals.spend)}</td>
-              <td>${Math.round(totals.bookings).toLocaleString('en-US')}</td>
-              <td>${money(totals.revenue)}</td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-
-      <div class="pager-wrap" id="integratedMarketPager"></div>
-
-      <div class="integrated-source-note">
-        Ad Spend: live from ${esc(DASHBOARD_CONFIG.ads.provider || 'ad platform')} ·
-        Bookings & Revenue: validated booking data ·
-        Period basis: Booking Date / same selected reporting period
-      </div>
-    `;
-
-    el.querySelectorAll('.market-drill-link[data-country]').forEach(btn=>{
-      if(btn.dataset.drillable!=='1')return;
-      btn.addEventListener('click',()=>{
-        openGeoCountry(btn.dataset.country||'');
-      });
-    });
-
-    renderXpoPager(
-      'integratedMarketPager',
-      integratedMarketPage,
-      integratedMarketPageSize,
-      mergedRows.length,
-      'Markets',
-      (page)=>{
-        integratedMarketPage=page;
-        renderIntegratedMarketTable(mergedRows,totals,meta);
-      },
-      (size)=>{
-        integratedMarketPageSize=size;
-        integratedMarketPage=1;
-        renderIntegratedMarketTable(mergedRows,totals,meta);
-      }
-    );
-  }
-
   async function renderIntegratedMarketPerformance(bookingRows){
-    const el=document.getElementById('integratedMarketContent');
-    if(!el)return;
-
     const gasUrl=String(DASHBOARD_CONFIG.ads.gasBridgeUrl||'').trim();
     const token=extractXpoToken();
     const {start,end}=integratedPeriodRange();
 
-    if(!gasUrl || gasUrl.includes('PASTE_SHARED_MC_XPO_GAS_WEB_APP_URL_HERE')){
-      el.innerHTML=`
-        <div class="integrated-status">
-          Integrated Market Performance is ready.<br>
-          Deploy the shared MC XPO GAS web app once and paste its <b>/exec</b> URL in
-          <b>DASHBOARD_CONFIG.ads.gasBridgeUrl</b>.
-        </div>`;
-      return;
-    }
-
-    if(!token || !start || !end){
-      el.innerHTML='<div class="integrated-status error">Missing XPO token or reporting period.</div>';
+    if(!gasUrl || gasUrl.includes('PASTE_SHARED_MC_XPO_GAS_WEB_APP_URL_HERE') || !token || !start || !end){
+      MARKET_COUNTRY_SPEND=new Map();
+      renderMarketPerformance(bookingRows);
       return;
     }
 
     const seq=++integratedMarketRequestSeq;
-    el.innerHTML='<div class="integrated-status">Loading live ad spend and matching booking data...</div>';
-
-    // Booking side: validated source of truth
-    const bookingsMap=new Map();
-    for(const r of bookingRows){
-      const country=canonicalCountryName(r.country||'Unknown');
-      const key=normalizedCountryKey(country);
-      if(!bookingsMap.has(key)){
-        bookingsMap.set(key,{country,bookings:0,revenue:0});
-      }
-      const x=bookingsMap.get(key);
-      x.bookings+=1;
-      x.revenue+=Number(r.value||0);
-    }
 
     try{
       const base=gasUrl.replace(/\?+$/,'');
@@ -3236,60 +3299,34 @@
       });
 
       const data=await loadJsonp(`${base}${base.includes('?')?'&':'?'}${qs.toString()}`);
-
       if(seq!==integratedMarketRequestSeq)return;
 
       if(!data || data.ok===false){
         throw new Error(data?.error || 'Shared GAS returned an error');
       }
 
-      const adRows=Array.isArray(data?.rows) ? data.rows : [];
-      const merged=new Map();
+      const spendMap=new Map();
+      const adRows=Array.isArray(data?.rows)?data.rows:[];
 
-      // Start with booking markets so countries with bookings but no spend remain visible.
-      for(const [key,b] of bookingsMap.entries()){
-        merged.set(key,{
-          country:b.country,
-          spend:0,
-          bookings:b.bookings,
-          revenue:b.revenue
-        });
-      }
-
-      // Merge live XPO spend.
-      for(const a of adRows){
+      adRows.forEach(a=>{
         const country=canonicalCountryName(a.countryName||a.country||a.countryCode||'Unknown');
         const key=normalizedCountryKey(country);
-        if(!merged.has(key)){
-          merged.set(key,{country,spend:0,bookings:0,revenue:0});
-        }
-        const x=merged.get(key);
-        x.spend+=Number(a.spend||0);
-        if((x.country==='Unknown' || !bookingsMap.has(key)) && country!=='Unknown'){
-          x.country=country;
-        }
-      }
+        spendMap.set(key,(spendMap.get(key)||0)+Number(a.spend||0));
+      });
 
-      const mergedRows=[...merged.values()]
-        .filter(r=>r.spend>0 || r.bookings>0 || r.revenue>0)
-        .sort((a,b)=>(b.spend-a.spend) || (b.revenue-a.revenue) || (b.bookings-a.bookings));
-
-      const totals=mergedRows.reduce((acc,r)=>{
-        acc.spend+=r.spend;
-        acc.bookings+=r.bookings;
-        acc.revenue+=r.revenue;
-        return acc;
-      },{spend:0,bookings:0,revenue:0});
-
-      integratedMarketPage=1;
-      renderIntegratedMarketTable(mergedRows,totals,{start,end});
+      MARKET_COUNTRY_SPEND=spendMap;
+      renderMarketPerformance(bookingRows);
     }catch(err){
       if(seq!==integratedMarketRequestSeq)return;
-      el.innerHTML=`
-        <div class="integrated-status error">
-          Failed to load live ad spend.<br>
-          ${esc(err?.message||'Unknown error')}
-        </div>`;
+
+      MARKET_COUNTRY_SPEND=new Map();
+      renderMarketPerformance(bookingRows);
+
+      const note=document.getElementById('marketPerformanceNote');
+      if(note && MARKET_PERF_STATE.level==='country'){
+        note.textContent='Live XPO spend could not be loaded. Booking metrics are still available for the selected period.';
+        note.classList.add('show');
+      }
     }
   }
 
@@ -3307,8 +3344,7 @@
   function renderDashboard(){
     const rows=filteredByPeriod();
     bookingPage=1;
-    geoDrill.page=1;
-    integratedMarketPage=1;
+    MARKET_PERF_STATE.page=1;
     renderTable(rows);
     renderKPIs(rows);
     renderMarkets(rows);
@@ -3317,7 +3353,7 @@
     renderStayDemand(rows);
     renderLOS(rows);
     renderChannelPerformance(rows);
-    renderGeoDrilldown(rows);
+    renderMarketPerformance(rows);
     renderFuturePipeline(rows);
     renderIntegratedMarketPerformance(rows);
     bindInteractions();
@@ -3386,12 +3422,6 @@
     bindInteractions();
   }));
 
-  document.querySelectorAll('#geoToggle button').forEach(btn=>btn.addEventListener('click',()=>{
-    geoMetric=btn.dataset.metric;
-    geoDrill.page=1;
-    setToggleState('geoToggle',geoMetric);
-    renderGeoDrilldown(filteredByPeriod());
-  }));
   document.querySelectorAll('#pipelineToggle button').forEach(btn=>btn.addEventListener('click',()=>{
     pipelineMetric=btn.dataset.metric;
     setToggleState('pipelineToggle',pipelineMetric);
@@ -3417,7 +3447,8 @@
   }
 
   bindCollapseButton('bookingCollapseBtn','bookingDetailsBody');
-  bindCollapseButton('integratedCollapseBtn','integratedMarketBody');
+
+  bindMarketPerformanceControls();
 
   function initDashboardConfig(){
     document.getElementById('clientName').textContent = DASHBOARD_CONFIG.clientName || 'Client';
@@ -3562,7 +3593,7 @@
       console.error(err);
       document.getElementById('bookingTbody').innerHTML =
         `<tr><td colspan="11" style="text-align:center;color:#c66;padding:28px">Failed to load Google Sheet data: ${esc(err.message)}</td></tr>`;
-      ['marketRows','bookingWindowLegend','channelRows','geoDrillChart','pipelineWrap'].forEach(id=>{
+      ['marketRows','bookingWindowLegend','channelRows','marketPerformanceTbody','pipelineWrap'].forEach(id=>{
         const el=document.getElementById(id); if(el)el.innerHTML='<div style="color:#c66;font-size:11px;padding-top:18px">Unable to load data</div>';
       });
       document.getElementById('lastUpdated').textContent='Load failed';
