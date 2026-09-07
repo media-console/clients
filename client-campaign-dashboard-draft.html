@@ -1436,6 +1436,397 @@
     }
     .geo-bar-label small{display:none}
   }
+
+
+  /* ================= v14: READABILITY + XPO-LIKE STRUCTURE ================= */
+
+  /* A single readable typography scale across the whole Bookings tab */
+  #bookingsTab{
+    font-family:Inter,Arial,sans-serif !important;
+    font-size:14px !important;
+    line-height:1.45;
+  }
+  #bookingsTab *{
+    font-family:Inter,Arial,sans-serif;
+  }
+  #bookingsTab .section-title{
+    font-size:30px !important;
+    line-height:1.15 !important;
+    font-weight:800 !important;
+    letter-spacing:-.035em !important;
+  }
+  #bookingsTab .ititle,
+  #bookingsTab .integrated-market-title,
+  #bookingsTab .geo-title{
+    font-size:17px !important;
+    line-height:1.3 !important;
+    font-weight:800 !important;
+    letter-spacing:-.015em !important;
+  }
+  #bookingsTab .section-sub,
+  #bookingsTab .idesc,
+  #bookingsTab .integrated-market-desc,
+  #bookingsTab .integrated-source-note,
+  #bookingsTab .mini-note,
+  #bookingsTab .geo-drill-hint,
+  #bookingsTab .trend{
+    font-size:13px !important;
+    line-height:1.5 !important;
+  }
+  #bookingsTab .klabel,
+  #bookingsTab .integrated-summary-label{
+    font-size:13px !important;
+    line-height:1.35 !important;
+    font-weight:700 !important;
+  }
+  #bookingsTab .kvalue{
+    font-size:28px !important;
+    line-height:1.12 !important;
+    font-weight:800 !important;
+  }
+  #bookingsTab button,
+  #bookingsTab select,
+  #bookingsTab input,
+  #bookingsTab .metric-toggle button,
+  #bookingsTab .collapse-btn{
+    font-size:13px !important;
+  }
+  #bookingsTab table,
+  #bookingsTab .integrated-market-table{
+    font-size:14px !important;
+  }
+  #bookingsTab th,
+  #bookingsTab .integrated-market-table th{
+    font-size:13px !important;
+    line-height:1.35 !important;
+    font-weight:700 !important;
+    letter-spacing:.02em !important;
+  }
+  #bookingsTab td,
+  #bookingsTab .integrated-market-table td{
+    font-size:14px !important;
+    line-height:1.4 !important;
+  }
+
+  /* Booking Detail table: closer to XPO's readable table rhythm */
+  #bookingsTab .booking-details-card table th{
+    padding-top:14px !important;
+    padding-bottom:14px !important;
+  }
+  #bookingsTab .booking-details-card table td{
+    padding-top:15px !important;
+    padding-bottom:15px !important;
+  }
+  #bookingsTab .booking-details-card .pill{
+    font-size:14px !important;
+    padding:6px 11px !important;
+    border-radius:7px !important;
+  }
+
+  /* XPO-like pager, but kept in dashboard theme */
+  #bookingsTab .pager-wrap{
+    min-height:64px;
+    padding:14px 20px 16px !important;
+  }
+  #bookingsTab .xpo-pager-display,
+  #bookingsTab .xpo-per-page{
+    font-size:13px !important;
+  }
+  #bookingsTab .xpo-pager-controls{
+    gap:16px;
+  }
+  #bookingsTab .xpo-per-page{
+    gap:9px;
+  }
+  #bookingsTab .xpo-per-page select{
+    min-width:82px !important;
+    width:82px !important;
+    height:38px !important;
+    padding:0 30px 0 13px !important;
+    border-radius:20px !important;
+    font-size:13px !important;
+    line-height:38px !important;
+    text-align:left !important;
+  }
+  #bookingsTab .xpo-pages{
+    min-height:38px;
+    border-radius:20px;
+    padding:3px 7px;
+  }
+  #bookingsTab .xpo-page-btn{
+    min-width:30px;
+    height:30px;
+    border-radius:15px;
+    font-size:13px !important;
+    padding:0 8px;
+  }
+  #bookingsTab .xpo-page-ellipsis{
+    font-size:13px !important;
+    padding:0 5px;
+  }
+
+  /* ---------------- Integrated Market Performance redesign ---------------- */
+  #bookingsTab .integrated-market-card{
+    border-radius:14px !important;
+    overflow:hidden;
+    box-shadow:0 2px 7px rgba(25,22,35,.035);
+  }
+  #bookingsTab .integrated-market-head{
+    padding:20px 22px 18px !important;
+    align-items:center;
+  }
+  #bookingsTab .integrated-market-desc{
+    max-width:760px;
+    margin-top:5px;
+  }
+  #bookingsTab .integrated-live-pill{
+    font-size:12px !important;
+    padding:7px 11px;
+  }
+
+  /* One flat summary rail instead of 3 floating mini-cards */
+  #bookingsTab .integrated-market-summary{
+    display:grid !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:0 !important;
+    padding:0 !important;
+    margin:0 22px !important;
+    border:1px solid #e9e6f0;
+    border-radius:10px;
+    overflow:hidden;
+    background:#fbfaff;
+  }
+  #bookingsTab .integrated-summary-card{
+    border:0 !important;
+    border-right:1px solid #e9e6f0 !important;
+    border-radius:0 !important;
+    background:transparent !important;
+    min-height:78px;
+    padding:14px 18px !important;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  #bookingsTab .integrated-summary-card:last-child{
+    border-right:0 !important;
+  }
+  #bookingsTab .integrated-summary-label{
+    text-transform:none !important;
+    letter-spacing:0 !important;
+    color:#817b8d !important;
+  }
+  #bookingsTab .integrated-summary-value{
+    margin-top:4px !important;
+    font-size:24px !important;
+    line-height:1.15 !important;
+    font-weight:800 !important;
+    color:#211e28 !important;
+  }
+
+  #bookingsTab .integrated-market-wrap{
+    padding:18px 22px 0 !important;
+  }
+  #bookingsTab .integrated-market-table{
+    min-width:680px;
+    border:1px solid #e9e6f0;
+    border-radius:10px;
+    overflow:hidden;
+    border-collapse:separate;
+    border-spacing:0;
+  }
+  #bookingsTab .integrated-market-table th{
+    padding:13px 16px !important;
+    text-transform:none !important;
+    background:#f8f7fa !important;
+    color:#5f5a68 !important;
+    border-bottom:1px solid #e7e4eb !important;
+  }
+  #bookingsTab .integrated-market-table td{
+    padding:15px 16px !important;
+    border-bottom:1px solid #efedf2 !important;
+  }
+  #bookingsTab .integrated-market-table tbody tr:hover td{
+    background:#faf9fc !important;
+  }
+  #bookingsTab .integrated-market-table tfoot td{
+    padding:14px 16px !important;
+    background:#f8f7fa !important;
+    border-top:1px solid #e4e1e9 !important;
+    font-weight:800 !important;
+  }
+  #bookingsTab .integrated-market-table th:first-child,
+  #bookingsTab .integrated-market-table th:last-child{
+    border-radius:0 !important;
+  }
+  #bookingsTab .market-drill-link{
+    font-size:14px !important;
+    font-weight:700 !important;
+  }
+  #bookingsTab .market-drill-arrow{
+    font-size:18px !important;
+  }
+  #bookingsTab .integrated-source-note{
+    padding:10px 22px 18px !important;
+    color:#8c8694 !important;
+  }
+
+  /* ---------------- Booking Geo Performance redesign ---------------- */
+  #bookingsTab #geoDrillSection{
+    scroll-margin-top:170px;
+  }
+  #bookingsTab .geo-section{
+    margin-top:26px !important;
+  }
+  #bookingsTab .geo-section-head{
+    align-items:flex-end;
+    margin-bottom:12px;
+  }
+  #bookingsTab .geo-drill-card{
+    border-radius:14px !important;
+    padding:0 !important;
+    overflow:hidden;
+    box-shadow:0 2px 7px rgba(25,22,35,.035);
+  }
+  #bookingsTab .geo-drill-top{
+    padding:18px 22px !important;
+    align-items:center !important;
+    border-bottom:1px solid #e9e6f0 !important;
+    background:#fff;
+  }
+  #bookingsTab .geo-breadcrumb{
+    min-height:22px;
+    margin-bottom:5px !important;
+  }
+  #bookingsTab .geo-crumb,
+  #bookingsTab .geo-crumb-sep{
+    font-size:13px !important;
+  }
+  #bookingsTab .geo-drill-hint{
+    max-width:360px;
+  }
+
+  /* chart becomes a table-chart hybrid: easier to scan, still drillable */
+  #bookingsTab .geo-chart-head{
+    display:grid;
+    grid-template-columns:minmax(180px,1.4fr) minmax(190px,1.7fr) 110px 130px 120px 28px;
+    align-items:center;
+    gap:14px;
+    padding:12px 20px;
+    background:#f8f7fa;
+    border-bottom:1px solid #e7e4eb;
+    color:#5f5a68;
+    font-size:13px;
+    font-weight:700;
+  }
+  #bookingsTab .geo-chart-head > div:nth-child(n+3){
+    text-align:right;
+  }
+  #bookingsTab .geo-drill-chart{
+    padding:0 !important;
+    gap:0 !important;
+  }
+  #bookingsTab .geo-bar-row{
+    display:grid !important;
+    grid-template-columns:minmax(180px,1.4fr) minmax(190px,1.7fr) 110px 130px 120px 28px !important;
+    gap:14px !important;
+    min-height:58px;
+    padding:11px 20px !important;
+    border-radius:0 !important;
+    border-bottom:1px solid #efedf2 !important;
+    background:#fff !important;
+  }
+  #bookingsTab .geo-bar-row:last-child{
+    border-bottom:0 !important;
+  }
+  #bookingsTab .geo-bar-row:hover{
+    background:#faf9fc !important;
+  }
+  #bookingsTab .geo-bar-label strong{
+    font-size:14px !important;
+    font-weight:700 !important;
+  }
+  #bookingsTab .geo-bar-label small{
+    display:none !important;
+  }
+  #bookingsTab .geo-bar-track{
+    height:14px !important;
+    border-radius:2px !important;
+    background:#eceaf0 !important;
+  }
+  #bookingsTab .geo-bar-fill{
+    border-radius:2px !important;
+  }
+  #bookingsTab .geo-bar-value,
+  #bookingsTab .geo-secondary-value{
+    font-size:14px !important;
+    font-weight:700 !important;
+    text-align:right;
+    white-space:nowrap;
+    color:#312d38;
+  }
+  #bookingsTab .geo-secondary-value{
+    font-weight:600 !important;
+  }
+  #bookingsTab .geo-bar-chevron{
+    font-size:20px !important;
+  }
+  #bookingsTab .geo-drill-empty{
+    font-size:14px !important;
+    padding:38px 22px !important;
+  }
+
+  /* Same text rhythm across Insights + Pipeline */
+  #bookingsTab .insight,
+  #bookingsTab .pipeline-card{
+    font-size:14px !important;
+  }
+  #bookingsTab .rank-label,
+  #bookingsTab .rank-val,
+  #bookingsTab .legend,
+  #bookingsTab .bar-label,
+  #bookingsTab .bar-value,
+  #bookingsTab .pipeline-table,
+  #bookingsTab .pipeline-table th,
+  #bookingsTab .pipeline-table td{
+    font-size:13px !important;
+  }
+
+  @media(max-width:980px){
+    #bookingsTab .geo-chart-head,
+    #bookingsTab .geo-bar-row{
+      grid-template-columns:minmax(150px,1.2fr) minmax(150px,1.4fr) 90px 110px 105px 24px !important;
+      gap:10px !important;
+    }
+  }
+
+  @media(max-width:760px){
+    #bookingsTab .section-title{font-size:26px !important}
+    #bookingsTab .integrated-market-summary{
+      grid-template-columns:1fr !important;
+    }
+    #bookingsTab .integrated-summary-card{
+      border-right:0 !important;
+      border-bottom:1px solid #e9e6f0 !important;
+    }
+    #bookingsTab .integrated-summary-card:last-child{
+      border-bottom:0 !important;
+    }
+    #bookingsTab .xpo-pager-controls{
+      width:100%;
+      justify-content:space-between;
+      margin-left:0;
+    }
+    #bookingsTab .geo-chart-head{
+      display:none;
+    }
+    #bookingsTab .geo-bar-row{
+      grid-template-columns:minmax(120px,1.3fr) minmax(90px,1fr) 92px 24px !important;
+    }
+    #bookingsTab .geo-secondary-bookings,
+    #bookingsTab .geo-secondary-abv{
+      display:none;
+    }
+  }
 </style>
 </head>
 <body>
@@ -1596,7 +1987,7 @@
           <div>
             <div class="integrated-market-title">Integrated Market Performance</div>
             <div class="integrated-market-desc">
-              Live ad spend by country matched with validated bookings and revenue for the selected booking period. Click a country to drill into booking region and city.
+              Ad spend by country matched with validated bookings and revenue for the selected period. Click a country to view its region and city breakdown below.
             </div>
           </div>
           <div class="head-actions">
@@ -1928,7 +2319,7 @@
     return out;
   }
 
-  function renderXpoPager(containerId,page,pageSize,totalItems,itemLabel,onPageChange,onPageSizeChange,pageSizeOptions=[5,10,20,50]){
+  function renderXpoPager(containerId,page,pageSize,totalItems,itemLabel,onPageChange,onPageSizeChange,pageSizeOptions=[5,10,20,50,100]){
     const el=document.getElementById(containerId);
     if(!el)return;
 
@@ -2325,15 +2716,15 @@
 
     if(level==='country'){
       title.textContent='Country Performance';
-      desc.textContent=`All source markets · ${geoMetricLabel(geoMetric)}`;
+      desc.textContent=`All booking markets for the selected period · ranked by ${geoMetricLabel(geoMetric)}`;
       hint.textContent='Click a country to view its region breakdown';
     }else if(level==='region'){
       title.textContent=`Region Performance — ${geoDrill.country}`;
-      desc.textContent=`Regions within ${geoDrill.country} · ${geoMetricLabel(geoMetric)}`;
+      desc.textContent=`${geoDrill.country} region breakdown · ranked by ${geoMetricLabel(geoMetric)}`;
       hint.textContent='Click a region to view its city breakdown';
     }else{
       title.textContent=`City Performance — ${geoDrill.region}`;
-      desc.textContent=`Cities within ${geoDrill.region}, ${geoDrill.country} · ${geoMetricLabel(geoMetric)}`;
+      desc.textContent=`${geoDrill.region}, ${geoDrill.country} city breakdown · ranked by ${geoMetricLabel(geoMetric)}`;
       hint.textContent='City is the deepest available booking geo level';
     }
 
@@ -2345,25 +2736,33 @@
       return;
     }
 
-    chart.innerHTML=pageEntries.map(item=>{
-      const pct=Math.max(3,item.value/overallMax*100);
-      const metadata=`${item.bookings.toLocaleString('en-US')} bookings · ${money(item.revenue)} revenue · ${money(item.abv)} ABV`;
-      const isLeaf=level==='city';
-      return `
-        <button type="button"
-          class="geo-bar-row ${isLeaf?'is-leaf':''}"
-          ${isLeaf?'':'data-geo-label="'+esc(item.label)+'"'}
-          aria-label="${esc(item.label)}">
-          <span class="geo-bar-label">
-            <strong>${esc(item.label)}</strong>
-            <small>${metadata}</small>
-          </span>
-          <span class="geo-bar-track"><span class="geo-bar-fill" style="width:${pct.toFixed(1)}%"></span></span>
-          <span class="geo-bar-value">${geoMetricValue(item)}</span>
-          <span class="geo-bar-chevron">${isLeaf?'':'›'}</span>
-        </button>
-      `;
-    }).join('');
+    chart.innerHTML=`
+      <div class="geo-chart-head">
+        <div>${level==='country'?'Country':level==='region'?'Region':'City'}</div>
+        <div>${geoMetricLabel(geoMetric)} Performance</div>
+        <div>Bookings</div>
+        <div>Revenue</div>
+        <div>ABV</div>
+        <div></div>
+      </div>
+      ${pageEntries.map(item=>{
+        const pct=Math.max(3,item.value/overallMax*100);
+        const isLeaf=level==='city';
+        return `
+          <button type="button"
+            class="geo-bar-row ${isLeaf?'is-leaf':''}"
+            ${isLeaf?'':'data-geo-label="'+esc(item.label)+'"'}
+            aria-label="${esc(item.label)}">
+            <span class="geo-bar-label"><strong>${esc(item.label)}</strong></span>
+            <span class="geo-bar-track"><span class="geo-bar-fill" style="width:${pct.toFixed(1)}%"></span></span>
+            <span class="geo-secondary-value geo-secondary-bookings">${item.bookings.toLocaleString('en-US')}</span>
+            <span class="geo-secondary-value">${money(item.revenue)}</span>
+            <span class="geo-secondary-value geo-secondary-abv">${money(item.abv)}</span>
+            <span class="geo-bar-chevron">${isLeaf?'':'›'}</span>
+          </button>
+        `;
+      }).join('')}
+    `;
 
     if(level!=='city'){
       chart.querySelectorAll('[data-geo-label]').forEach(btn=>{
@@ -2410,7 +2809,14 @@
 
     requestAnimationFrame(()=>{
       const target=document.getElementById('geoDrillSection');
-      if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+      if(!target)return;
+
+      const rect=target.getBoundingClientRect();
+      const topOffset=170;
+
+      // Only move enough to reveal the Geo section, while keeping Market Performance context visible.
+      const desiredTop=Math.max(0,window.scrollY + rect.top - topOffset);
+      window.scrollTo({top:desiredTop,behavior:'smooth'});
     });
   }
 
@@ -2738,7 +3144,7 @@
           <tbody>${body || '<tr><td colspan="4" style="text-align:center;color:#999">No market data for this period</td></tr>'}</tbody>
           <tfoot>
             <tr>
-              <td>Total</td>
+              <td>Total from ${mergedRows.length.toLocaleString('en-US')} markets</td>
               <td>${money(totals.spend)}</td>
               <td>${Math.round(totals.bookings).toLocaleString('en-US')}</td>
               <td>${money(totals.revenue)}</td>
