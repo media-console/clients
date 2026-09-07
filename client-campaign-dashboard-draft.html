@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <title>Client Campaign Dashboard</title>
@@ -2189,13 +2190,1702 @@
       scroll-margin-top:20px;
     }
   }
+
+
+  /* ================= v17: XPO-INSPIRED BOOKINGS REPORT ================= */
+
+  /* One font language across the full outer dashboard.
+     The embedded XPO iframe remains controlled by XPO itself. */
+  html,body,
+  body button,
+  body input,
+  body select,
+  body table{
+    font-family:Roboto,Arial,Helvetica,sans-serif!important;
+  }
+
+  body{
+    color:#202024;
+    background:#fff;
+  }
+
+  .section-title,
+  .ititle,
+  .idesc,
+  .subchip,
+  .tab-btn,
+  .chip{
+    font-family:Roboto,Arial,Helvetica,sans-serif!important;
+  }
+
+  /* Top-level Ads / Bookings switcher: simpler and closer to XPO tabs */
+  .tabs{
+    display:flex!important;
+    gap:0!important;
+    width:max-content;
+    padding:0!important;
+    margin-bottom:10px!important;
+    border:1px solid #dedbe4!important;
+    border-radius:0!important;
+    background:#fff!important;
+    overflow:hidden;
+  }
+
+  .tab-btn{
+    min-width:126px;
+    height:42px;
+    padding:0 18px!important;
+    border:0!important;
+    border-right:1px solid #e7e4ea!important;
+    border-bottom:3px solid transparent!important;
+    border-radius:0!important;
+    background:#fff!important;
+    color:#7c7780!important;
+    font-size:14px!important;
+    font-weight:600!important;
+  }
+
+  .tab-btn:last-child{border-right:0!important}
+  .tab-btn.active{
+    color:#5e45dd!important;
+    background:#faf9ff!important;
+    border-bottom-color:#5e45dd!important;
+  }
+
+  /* Outer page titles */
+  .section-title{
+    font-size:30px!important;
+    font-weight:600!important;
+    letter-spacing:-.02em!important;
+    color:#1f1f22!important;
+  }
+
+  .section-title .accent{color:#6047e4!important}
+
+  /* Ads wrapper: flatter report container so both pages speak the same UI language */
+  .xpo-embed-card{
+    border:1px solid #e0dde5!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+  }
+
+  .xpo-embed-head{
+    min-height:62px;
+    padding:14px 18px!important;
+    border-bottom:1px solid #e6e3e9!important;
+  }
+
+  .xpo-embed-head .ititle{
+    font-size:15px!important;
+    font-weight:600!important;
+  }
+
+  .xpo-embed-head .idesc{
+    font-size:12px!important;
+  }
+
+  /* Full Bookings report becomes one report surface like XPO */
+  #bookingsTab{
+    border:1px solid #dedbe4;
+    background:#fff;
+  }
+
+  #bookingsTab .section{
+    padding:0 26px 30px!important;
+    margin:0!important;
+  }
+
+  #bookingsTab .section + .section{
+    padding-top:32px!important;
+    border-top:1px solid #e8e5eb;
+  }
+
+  /* XPO-like report header */
+  #bookingsTab .booking-app-header{
+    position:sticky;
+    top:0;
+    z-index:35;
+    min-height:60px!important;
+    grid-template-columns:170px minmax(0,1fr) minmax(210px,260px)!important;
+    margin:0!important;
+    border:0!important;
+    border-bottom:1px solid #dedbe4!important;
+    background:#21126d!important;
+    box-shadow:none!important;
+  }
+
+  #bookingsTab .booking-app-brand{
+    min-height:60px;
+    padding:8px 18px!important;
+    border-right:1px solid #e6e2eb!important;
+    background:#fff!important;
+  }
+
+  #bookingsTab .booking-wordmark{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    line-height:1;
+  }
+
+  #bookingsTab .booking-wordmark span{
+    display:block;
+    color:#4d3cae;
+    font-size:10px!important;
+    line-height:1.15;
+    font-weight:700;
+    letter-spacing:.04em;
+  }
+
+  #bookingsTab .booking-wordmark strong{
+    display:block;
+    margin-top:3px;
+    color:#6349e7;
+    font-size:24px!important;
+    line-height:.95;
+    font-weight:700;
+    letter-spacing:-.035em;
+  }
+
+  #bookingsTab .booking-app-nav button{
+    height:60px!important;
+    padding:0 18px!important;
+    color:#c9c3e7!important;
+    font-size:13px!important;
+    font-weight:500!important;
+    border-bottom:3px solid transparent!important;
+  }
+
+  #bookingsTab .booking-app-nav button:hover{
+    color:#fff!important;
+    background:rgba(255,255,255,.045)!important;
+  }
+
+  #bookingsTab .booking-app-nav button.active{
+    color:#fff!important;
+    background:rgba(255,255,255,.045)!important;
+    border-bottom-color:#fff!important;
+  }
+
+  #bookingsTab .booking-app-client{
+    min-height:60px;
+    padding:0 18px!important;
+    font-size:13px!important;
+    font-weight:500!important;
+  }
+
+  /* Overall Booking Performance */
+  #bookingsTab .booking-overview-section{
+    padding-top:28px!important;
+  }
+
+  #bookingsTab .booking-overview-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:20px;
+  }
+
+  #bookingsTab .booking-overview-head h2,
+  #bookingsTab .report-subsection-head h2{
+    margin:0;
+    color:#1d1d20;
+    font-size:24px!important;
+    line-height:1.25;
+    font-weight:500!important;
+    letter-spacing:-.015em;
+  }
+
+  #bookingsTab .booking-overview-meta{
+    margin-top:4px;
+    color:#7c7880;
+    font-size:12px!important;
+    line-height:1.45;
+  }
+
+  #bookingsTab .booking-overview-controls{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+  }
+
+  #bookingsTab .booking-date-pill,
+  #bookingsTab .booking-filter-pill{
+    min-height:36px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:0 13px;
+    border:1px solid #d8d5dc;
+    border-radius:18px;
+    background:#fff;
+    color:#4a474e;
+    font-size:13px!important;
+    font-weight:400;
+  }
+
+  #bookingsTab .booking-date-pill svg{
+    width:16px;
+    height:16px;
+    fill:none;
+    stroke:#5b4bb3;
+    stroke-width:1.7;
+  }
+
+  /* 4 KPI cards become one XPO-style horizontal KPI strip */
+  #bookingsTab .booking-kpi-strip{
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:0!important;
+    margin:0 0 22px!important;
+    border:1px solid #ddd9e0;
+    background:#fff;
+  }
+
+  #bookingsTab .booking-kpi-strip .kpi{
+    min-height:108px!important;
+    display:block!important;
+    padding:16px 18px!important;
+    border:0!important;
+    border-right:1px solid #e3e0e5!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+    background:#fff!important;
+  }
+
+  #bookingsTab .booking-kpi-strip .kpi:last-child{
+    border-right:0!important;
+  }
+
+  #bookingsTab .booking-kpi-strip .iconbox{
+    display:none!important;
+  }
+
+  #bookingsTab .booking-kpi-strip .klabel{
+    margin:0 0 8px!important;
+    color:#666169!important;
+    font-size:13px!important;
+    line-height:1.2!important;
+    font-weight:400!important;
+    text-transform:uppercase;
+    letter-spacing:.01em;
+  }
+
+  #bookingsTab .booking-kpi-strip .kvalue{
+    margin:0 0 6px!important;
+    color:#17171a!important;
+    font-size:23px!important;
+    line-height:1.1!important;
+    font-weight:500!important;
+    letter-spacing:-.01em!important;
+  }
+
+  #bookingsTab .booking-kpi-strip .trend{
+    color:#88838b!important;
+    font-size:12px!important;
+    line-height:1.35!important;
+  }
+
+  /* Booking Details becomes a flat XPO-like table block */
+  #bookingsTab .booking-details-card{
+    border:1px solid #dedbe3!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+  }
+
+  #bookingsTab .collapsible-head{
+    min-height:58px;
+    padding:13px 18px!important;
+    align-items:center!important;
+    border-bottom:1px solid #e3e0e6!important;
+  }
+
+  #bookingsTab .collapsible-head .ititle{
+    color:#242126!important;
+    font-size:16px!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .collapsible-head .idesc{
+    margin-top:3px;
+    color:#8b868f!important;
+    font-size:12px!important;
+  }
+
+  #bookingsTab .collapse-btn{
+    min-height:34px;
+    padding:0 12px!important;
+    border:1px solid #d9d5df!important;
+    border-radius:17px!important;
+    background:#fff!important;
+    color:#5c4cb6!important;
+    font-size:12px!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .table-scroll{
+    padding:0!important;
+  }
+
+  #bookingsTab .booking-details-card table{
+    border-collapse:collapse!important;
+  }
+
+  #bookingsTab .booking-details-card table th{
+    height:52px!important;
+    padding:0 14px!important;
+    border-bottom:1px solid #dad7dd!important;
+    background:#fff!important;
+    color:#5e5961!important;
+    font-size:12px!important;
+    font-weight:500!important;
+    text-transform:uppercase;
+    letter-spacing:0!important;
+  }
+
+  #bookingsTab .booking-details-card table td{
+    min-height:54px!important;
+    padding:13px 14px!important;
+    border-bottom:1px solid #e7e4e9!important;
+    color:#29262c!important;
+    font-size:13px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .booking-details-card tbody tr:nth-child(odd) td{
+    background:#fafafa!important;
+  }
+
+  #bookingsTab .booking-details-card .pill{
+    padding:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    color:inherit!important;
+    font-size:13px!important;
+  }
+
+  /* Other report sections */
+  #bookingsTab .report-subsection-head{
+    margin:0 0 18px;
+  }
+
+  #bookingsTab .report-subsection-head p{
+    margin:5px 0 0;
+    color:#817c84;
+    font-size:12px!important;
+    line-height:1.45;
+  }
+
+  /* Flatten report cards overall */
+  #bookingsTab .market-xpo-card,
+  #bookingsTab .insight,
+  #bookingsTab .pipeline-card{
+    border:1px solid #dedbe3!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+  }
+
+  #bookingsTab .insights-grid{
+    gap:18px!important;
+  }
+
+  #bookingsTab .insight{
+    padding:18px!important;
+  }
+
+  #bookingsTab .insight .ititle,
+  #bookingsTab .pipeline-card .ititle{
+    font-size:16px!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .insight .idesc,
+  #bookingsTab .pipeline-card .idesc{
+    font-size:12px!important;
+  }
+
+  #bookingsTab .metric-toggle{
+    border-color:#d8d4dc!important;
+    background:#f7f6f8!important;
+  }
+
+  #bookingsTab .metric-toggle button{
+    font-size:12px!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .metric-toggle button.active{
+    color:#5845c4!important;
+  }
+
+  /* Pagination typography aligned with XPO */
+  #bookingsTab .xpo-pager-display,
+  #bookingsTab .xpo-per-page,
+  #bookingsTab .xpo-page-btn,
+  #bookingsTab .xpo-page-ellipsis{
+    font-size:12px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .xpo-page-btn.active{
+    color:#5e45dd!important;
+    font-weight:500!important;
+  }
+
+  /* Market table */
+  #bookingsTab .market-xpo-toolbar,
+  #bookingsTab .market-xpo-tabs,
+  #bookingsTab .market-xpo-table th,
+  #bookingsTab .market-xpo-table td{
+    font-family:Roboto,Arial,Helvetica,sans-serif!important;
+  }
+
+  #bookingsTab .market-xpo-table th{
+    font-size:12px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .market-xpo-table td{
+    font-size:13px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .market-geo-name{
+    font-weight:400!important;
+  }
+
+  #bookingsTab .market-primary-cell{
+    font-weight:500!important;
+  }
+
+  /* Top controls use same font and lighter XPO-like styling */
+  .top-controls .chip,
+  .top-controls select,
+  .top-controls input{
+    font-size:13px!important;
+    font-weight:400!important;
+  }
+
+  .top-controls .chip{
+    border:1px solid #ddd9e2!important;
+    border-radius:18px!important;
+    background:#fff!important;
+    box-shadow:none!important;
+  }
+
+  @media(max-width:1000px){
+    #bookingsTab .booking-app-header{
+      grid-template-columns:150px minmax(0,1fr)!important;
+    }
+    #bookingsTab .booking-app-client{display:none!important}
+    #bookingsTab .booking-kpi-strip{
+      grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    }
+    #bookingsTab .booking-kpi-strip .kpi:nth-child(2){
+      border-right:0!important;
+    }
+    #bookingsTab .booking-kpi-strip .kpi:nth-child(-n+2){
+      border-bottom:1px solid #e3e0e5!important;
+    }
+  }
+
+  @media(max-width:720px){
+    #bookingsTab .booking-app-header{
+      position:relative!important;
+      grid-template-columns:1fr!important;
+    }
+    #bookingsTab .booking-app-brand{
+      min-height:56px;
+      border-bottom:1px solid #e4e0e7!important;
+    }
+    #bookingsTab .booking-app-nav button{
+      height:52px!important;
+      padding:0 13px!important;
+      font-size:12px!important;
+    }
+    #bookingsTab .section{
+      padding-left:16px!important;
+      padding-right:16px!important;
+    }
+    #bookingsTab .booking-kpi-strip{
+      grid-template-columns:1fr!important;
+    }
+    #bookingsTab .booking-kpi-strip .kpi{
+      border-right:0!important;
+      border-bottom:1px solid #e3e0e5!important;
+    }
+    #bookingsTab .booking-kpi-strip .kpi:last-child{
+      border-bottom:0!important;
+    }
+  }
+
+
+  /* ================= v18: HEADER / DATE FILTER / EQUAL GEO COLUMNS ================= */
+
+  /* Bookings page title now mirrors Ads Report placement */
+  #bookingsTab{
+    border:0!important;
+    background:transparent!important;
+  }
+
+  #bookingsTab .bookings-page-title{
+    margin:0 0 14px;
+  }
+
+  #bookingsTab .bookings-page-title .section-title{
+    margin:0!important;
+  }
+
+  /* Rebuild the Bookings report as a single bordered report surface below the page title */
+  #bookingsTab .booking-app-header{
+    border:1px solid #dedbe4!important;
+    border-bottom:0!important;
+  }
+
+  #bookingsTab .section{
+    background:#fff;
+    border-left:1px solid #dedbe4;
+    border-right:1px solid #dedbe4;
+  }
+
+  #bookingsTab #marketFuturePipelineSection{
+    border-bottom:1px solid #dedbe4;
+  }
+
+  /* Use the real Media Console logo in the exact header slot occupied by XPO's logo */
+  #bookingsTab .booking-app-brand{
+    justify-content:center!important;
+    padding:6px 14px!important;
+  }
+
+  #bookingsTab .booking-media-console-logo{
+    display:block;
+    width:auto;
+    max-width:118px;
+    height:46px;
+    object-fit:contain;
+  }
+
+  /* XPO header menu uses a lighter label weight */
+  #bookingsTab .booking-app-nav button{
+    font-weight:400!important;
+    letter-spacing:0!important;
+  }
+
+  #bookingsTab .booking-app-nav button.active{
+    font-weight:500!important;
+  }
+
+  #bookingsTab .booking-app-client{
+    font-weight:400!important;
+  }
+
+  /* Real period selector inside Overall Booking Performance */
+  #bookingsTab .booking-overview-controls{
+    position:relative;
+    margin-bottom:18px!important;
+  }
+
+  #bookingsTab .booking-date-control{
+    position:relative;
+    display:inline-flex;
+  }
+
+  #bookingsTab .booking-date-button{
+    border:1px solid #d7d4db!important;
+    background:#fff!important;
+    cursor:pointer;
+    min-width:230px;
+    justify-content:flex-start;
+  }
+
+  #bookingsTab .booking-date-button:hover{
+    background:#fafafa!important;
+  }
+
+  #bookingsTab .booking-date-caret{
+    margin-left:auto;
+    color:#76717a;
+    font-size:12px!important;
+  }
+
+  #bookingsTab .booking-date-menu{
+    display:none;
+    position:absolute;
+    z-index:70;
+    top:calc(100% + 7px);
+    left:0;
+    width:310px;
+    padding:14px;
+    border:1px solid #d9d5dd;
+    background:#fff;
+    box-shadow:0 8px 24px rgba(31,27,40,.14);
+  }
+
+  #bookingsTab .booking-date-menu.show{
+    display:block;
+  }
+
+  #bookingsTab .booking-date-field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+
+  #bookingsTab .booking-date-field > span{
+    color:#68636c;
+    font-size:12px!important;
+    font-weight:500;
+  }
+
+  #bookingsTab .booking-date-field select,
+  #bookingsTab .booking-date-field input{
+    width:100%!important;
+    height:38px!important;
+    padding:0 10px!important;
+    border:1px solid #d7d3db!important;
+    border-radius:0!important;
+    background:#fff!important;
+    color:#2c2930!important;
+    font-size:13px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .booking-custom-dates{
+    display:none;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:12px;
+  }
+
+  #bookingsTab .booking-custom-dates.show{
+    display:grid;
+  }
+
+  /* Market Performance: distribute every visible column equally.
+     Country has 5 columns, Region 5, City 6 — each view now divides evenly. */
+  #bookingsTab .market-xpo-table{
+    table-layout:fixed!important;
+  }
+
+  #bookingsTab .market-xpo-table th,
+  #bookingsTab .market-xpo-table td,
+  #bookingsTab .market-xpo-table th:first-child,
+  #bookingsTab .market-xpo-table td:first-child,
+  #bookingsTab .market-xpo-table .market-country-view-col-geo,
+  #bookingsTab .market-xpo-table .market-region-view-col-region,
+  #bookingsTab .market-xpo-table .market-region-view-col-country,
+  #bookingsTab .market-xpo-table .market-city-view-col-city,
+  #bookingsTab .market-xpo-table .market-city-view-col-region,
+  #bookingsTab .market-xpo-table .market-city-view-col-country{
+    width:auto!important;
+  }
+
+  #bookingsTab .market-xpo-table th,
+  #bookingsTab .market-xpo-table td{
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  @media(max-width:720px){
+    #bookingsTab .booking-media-console-logo{
+      max-width:105px;
+      height:42px;
+    }
+    #bookingsTab .booking-date-menu{
+      width:min(310px,calc(100vw - 48px));
+    }
+    #bookingsTab .booking-date-button{
+      min-width:min(260px,calc(100vw - 48px));
+    }
+  }
+
+
+  /* ================= v19: PIXEL-ALIGNED ADS/BOOKINGS + XPO DATE PICKER ================= */
+
+  /* 1-3. Bookings title/header placement must mirror Ads Report */
+  #bookingsTab .bookings-page-title{
+    margin-top:28px!important;
+    margin-bottom:18px!important;
+  }
+
+  #bookingsTab .bookings-page-title .section-title{
+    /* exact same title scale as Ads Report */
+    margin:0!important;
+    font-size:30px!important;
+    line-height:1.1!important;
+    font-weight:600!important;
+    letter-spacing:-.02em!important;
+    color:#1f1f22!important;
+  }
+
+  #bookingsTab .bookings-page-title .section-title .accent{
+    color:#6047e4!important;
+  }
+
+  /* Same insight header dimensions as the Ads XPO embed header */
+  #bookingsTab .booking-report-insights-head{
+    min-height:62px;
+    padding:14px 18px!important;
+    border:1px solid #e0dde5!important;
+    border-bottom:0!important;
+    background:#fff;
+  }
+
+  #bookingsTab .booking-report-insights-head .ititle{
+    font-size:15px!important;
+    font-weight:600!important;
+  }
+
+  #bookingsTab .booking-report-insights-head .idesc{
+    font-size:12px!important;
+  }
+
+  #bookingsTab .booking-app-header{
+    border-top:1px solid #dedbe4!important;
+  }
+
+  /* The Booking report surface starts at exactly the same x/w as Ads report card */
+  #bookingsTab .booking-report-insights-head,
+  #bookingsTab .booking-app-header,
+  #bookingsTab .section{
+    width:100%;
+    margin-left:0!important;
+    margin-right:0!important;
+  }
+
+  /* 4. XPO-like period control */
+  #bookingsTab .booking-overview-controls{
+    margin-bottom:18px!important;
+  }
+
+  #bookingsTab .booking-date-button{
+    min-width:0!important;
+    height:36px!important;
+    padding:0 13px!important;
+    border:1px solid #d2cfd6!important;
+    border-radius:18px!important;
+    background:#fff!important;
+    color:#333037!important;
+    font-size:13px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .booking-date-menu.xpo-date-picker{
+    width:680px!important;
+    max-width:calc(100vw - 90px);
+    padding:0!important;
+    display:none;
+    grid-template-columns:190px minmax(0,1fr);
+    top:calc(100% + 6px);
+    left:0;
+    border:1px solid #d8d5dc!important;
+    border-radius:0!important;
+    background:#fff!important;
+    box-shadow:0 8px 18px rgba(26,23,33,.16)!important;
+    overflow:hidden;
+  }
+
+  #bookingsTab .booking-date-menu.xpo-date-picker.show{
+    display:grid!important;
+  }
+
+  #bookingsTab .xpo-date-presets{
+    border-right:1px solid #e2dfe5;
+    background:#fff;
+    padding:0;
+  }
+
+  #bookingsTab .xpo-preset-btn{
+    width:100%;
+    min-height:51px;
+    display:block;
+    padding:9px 14px 8px;
+    border:0;
+    border-bottom:1px solid #f1eff3;
+    background:#fff;
+    color:#37333a;
+    text-align:left;
+    cursor:pointer;
+  }
+
+  #bookingsTab .xpo-preset-btn:hover{
+    background:#faf9fc;
+  }
+
+  #bookingsTab .xpo-preset-btn.active{
+    color:#2f247f;
+    background:#faf9ff;
+  }
+
+  #bookingsTab .xpo-preset-name{
+    display:block;
+    font-size:13px!important;
+    line-height:1.25;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .xpo-preset-range{
+    display:block;
+    margin-top:3px;
+    color:#87a0ac;
+    font-size:11px!important;
+    line-height:1.25;
+    font-style:italic;
+  }
+
+  #bookingsTab .xpo-preset-btn.active .xpo-preset-range{
+    color:#302586;
+  }
+
+  #bookingsTab .xpo-calendar-area{
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    background:#fff;
+  }
+
+  #bookingsTab .xpo-calendar-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    min-height:342px;
+  }
+
+  #bookingsTab .xpo-calendar-month{
+    padding:14px 14px 10px;
+  }
+
+  #bookingsTab .xpo-calendar-month:first-child{
+    border-right:1px solid #f0edf2;
+  }
+
+  #bookingsTab .xpo-cal-head{
+    display:grid;
+    grid-template-columns:28px 1fr 28px;
+    align-items:center;
+    margin-bottom:10px;
+  }
+
+  #bookingsTab .xpo-cal-title{
+    text-align:center;
+    color:#111;
+    font-size:15px!important;
+    font-weight:600!important;
+  }
+
+  #bookingsTab .xpo-cal-nav{
+    width:28px;
+    height:28px;
+    padding:0;
+    border:0;
+    background:transparent;
+    color:#3e3a42;
+    font-size:20px!important;
+    line-height:28px;
+    cursor:pointer;
+  }
+
+  #bookingsTab .xpo-cal-nav:hover{
+    background:#f6f4fa;
+  }
+
+  #bookingsTab .xpo-cal-weekdays,
+  #bookingsTab .xpo-cal-days{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+  }
+
+  #bookingsTab .xpo-cal-weekdays span{
+    height:30px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#222;
+    font-size:11px!important;
+    font-weight:600!important;
+  }
+
+  #bookingsTab .xpo-cal-day{
+    position:relative;
+    height:35px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:0;
+    background:transparent;
+    color:#242126;
+    font-size:12px!important;
+    font-weight:400!important;
+    cursor:pointer;
+  }
+
+  #bookingsTab .xpo-cal-day.outside{
+    color:#dedbe2;
+  }
+
+  #bookingsTab .xpo-cal-day.disabled{
+    color:#e3e0e5;
+    cursor:not-allowed;
+  }
+
+  #bookingsTab .xpo-cal-day.in-range{
+    background:#efedff;
+  }
+
+  #bookingsTab .xpo-cal-day.range-start,
+  #bookingsTab .xpo-cal-day.range-end{
+    color:#fff!important;
+    background:#5b4cf5!important;
+  }
+
+  #bookingsTab .xpo-cal-day:not(.disabled):hover{
+    background:#f0edff;
+  }
+
+  #bookingsTab .xpo-date-footer{
+    min-height:58px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:8px 12px;
+    border-top:1px solid #e5e2e8;
+  }
+
+  #bookingsTab .xpo-date-custom-summary{
+    color:#302586;
+    font-size:11px!important;
+    font-style:italic;
+    line-height:1.35;
+  }
+
+  #bookingsTab .xpo-date-apply{
+    min-width:92px;
+    height:38px;
+    padding:0 18px;
+    border:0;
+    border-radius:20px;
+    background:#5a50f0;
+    color:#fff;
+    font-size:13px!important;
+    font-weight:500!important;
+    cursor:pointer;
+  }
+
+  #bookingsTab .xpo-date-apply:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+  }
+
+  /* 5. Market Performance row banding exactly matches Booking Details */
+  #bookingsTab .market-xpo-table tbody tr:nth-child(odd) td{
+    background:#fafafa!important;
+  }
+
+  #bookingsTab .market-xpo-table tbody tr:nth-child(even) td{
+    background:#fff!important;
+  }
+
+  #bookingsTab .booking-details-card tbody tr:nth-child(odd) td{
+    background:#fafafa!important;
+  }
+
+  #bookingsTab .booking-details-card tbody tr:nth-child(even) td{
+    background:#fff!important;
+  }
+
+  #bookingsTab .market-xpo-table tbody tr:hover td,
+  #bookingsTab .booking-details-card tbody tr:hover td{
+    background:#f6f4fb!important;
+  }
+
+  @media(max-width:760px){
+    #bookingsTab .booking-date-menu.xpo-date-picker{
+      width:min(680px,calc(100vw - 48px))!important;
+      grid-template-columns:150px minmax(0,1fr);
+    }
+    #bookingsTab .xpo-calendar-grid{
+      grid-template-columns:1fr;
+    }
+    #bookingsTab .xpo-calendar-month:first-child{
+      border-right:0;
+      border-bottom:1px solid #f0edf2;
+    }
+  }
+
+
+  /* ================= v20: SWITCH-BAR META + DUPLICATED REPORT ALIGNMENT ================= */
+
+  .master-controls-hidden{
+    display:none!important;
+  }
+
+  .report-switch-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    padding:18px 0 0;
+    border-top:1px solid var(--line);
+  }
+
+  .report-switch-row .tabs{
+    margin:0!important;
+  }
+
+  .report-switch-meta{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+
+  .report-meta-chip{
+    min-height:36px;
+    padding:0 13px!important;
+    border:1px solid #ddd9e2!important;
+    border-radius:18px!important;
+    background:#fff!important;
+    box-shadow:none!important;
+    color:#514d56!important;
+    font-size:12px!important;
+    font-weight:400!important;
+  }
+
+  .report-meta-chip b{
+    font-weight:600!important;
+    color:#29262d;
+  }
+
+  .report-meta-live{
+    min-height:36px;
+    padding:0 13px!important;
+    font-size:12px!important;
+    font-weight:500!important;
+  }
+
+  /* Ads and Bookings titles now share one exact layout rule */
+  #adsTab > .section{
+    padding-top:28px!important;
+  }
+
+  #adsTab .report-page-heading,
+  #bookingsTab .report-page-heading{
+    height:auto!important;
+    min-height:0!important;
+    display:flex!important;
+    align-items:flex-end!important;
+    justify-content:space-between!important;
+    margin:0 0 18px!important;
+    padding:0!important;
+  }
+
+  #adsTab .report-page-heading .section-title,
+  #bookingsTab .report-page-heading .section-title{
+    margin:0!important;
+    padding:0!important;
+    font-size:30px!important;
+    line-height:1.1!important;
+    font-weight:600!important;
+    letter-spacing:-.02em!important;
+  }
+
+  #bookingsTab .bookings-page-title{
+    margin-top:28px!important;
+  }
+
+  /* Both report boxes begin on the exact same x-axis and width */
+  #adsTab .xpo-embed-card,
+  #bookingsTab .booking-report-insights-head,
+  #bookingsTab .booking-app-header,
+  #bookingsTab .section{
+    width:100%!important;
+    margin-left:0!important;
+    margin-right:0!important;
+    box-sizing:border-box!important;
+  }
+
+  #adsTab .xpo-embed-head,
+  #bookingsTab .booking-report-insights-head{
+    min-height:62px!important;
+    padding:14px 18px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+  }
+
+  /* Bookings navigation: never bold, including active tab */
+  #bookingsTab .booking-app-nav button,
+  #bookingsTab .booking-app-nav button.active{
+    font-weight:400!important;
+  }
+
+  #bookingsTab .booking-app-nav button.active{
+    background:rgba(255,255,255,.045)!important;
+  }
+
+  #bookingsTab .booking-app-client{
+    font-weight:400!important;
+  }
+
+  @media(max-width:760px){
+    .report-switch-row{
+      align-items:flex-start;
+      flex-direction:column;
+    }
+    .report-switch-meta{
+      width:100%;
+      justify-content:flex-start;
+    }
+  }
+
+
+  /* ================= v22: EXACT INSIGHT HEADER + XPO-LIKE DATE PICKER ================= */
+
+  /* Exact shared structure for XPO Campaign Insights / Booking Campaign Insights */
+  #adsTab .xpo-embed-head,
+  #bookingsTab .booking-report-insights-head{
+    min-height:62px!important;
+    height:62px!important;
+    padding:0 18px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    box-sizing:border-box!important;
+  }
+
+  #adsTab .xpo-embed-head > div:first-child,
+  #bookingsTab .booking-report-insights-head > div:first-child{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-start!important;
+    justify-content:center!important;
+    gap:2px!important;
+    margin:0!important;
+    padding:0!important;
+  }
+
+  #adsTab .xpo-embed-head .ititle,
+  #bookingsTab .booking-report-insights-head .ititle{
+    margin:0!important;
+    padding:0!important;
+    font-size:15px!important;
+    line-height:18px!important;
+    font-weight:600!important;
+  }
+
+  #adsTab .xpo-embed-head .idesc,
+  #bookingsTab .booking-report-insights-head .idesc{
+    margin:0!important;
+    padding:0!important;
+    font-size:12px!important;
+    line-height:15px!important;
+    font-weight:400!important;
+  }
+
+  /* Custom period popup: match the XPO layout more closely */
+  #bookingsTab .booking-date-menu.xpo-date-picker{
+    width:665px!important;
+    max-width:calc(100vw - 90px)!important;
+    grid-template-columns:190px 1fr!important;
+    overflow:hidden!important;
+  }
+
+  #bookingsTab .xpo-date-presets{
+    width:190px!important;
+  }
+
+  #bookingsTab .xpo-preset-btn{
+    min-height:51px!important;
+    padding:9px 14px 8px!important;
+  }
+
+  #bookingsTab .xpo-preset-name{
+    font-size:13px!important;
+    line-height:16px!important;
+  }
+
+  #bookingsTab .xpo-preset-range{
+    margin-top:2px!important;
+    font-size:11px!important;
+    line-height:14px!important;
+  }
+
+  #bookingsTab .xpo-calendar-area{
+    min-height:438px!important;
+  }
+
+  #bookingsTab .xpo-calendar-grid{
+    grid-template-columns:1fr 1fr!important;
+    min-height:381px!important;
+  }
+
+  #bookingsTab .xpo-calendar-month{
+    padding:14px 14px 8px!important;
+  }
+
+  #bookingsTab .xpo-cal-head{
+    height:32px!important;
+    margin-bottom:7px!important;
+  }
+
+  #bookingsTab .xpo-cal-title{
+    font-size:15px!important;
+    line-height:18px!important;
+    font-weight:600!important;
+  }
+
+  #bookingsTab .xpo-cal-weekdays span{
+    height:29px!important;
+    font-size:11px!important;
+    line-height:14px!important;
+  }
+
+  #bookingsTab .xpo-cal-day{
+    height:32px!important;
+    font-size:12px!important;
+    line-height:32px!important;
+  }
+
+  /* XPO visually emphasizes only the range endpoints.
+     Do not fill the whole selected date span lavender. */
+  #bookingsTab .xpo-cal-day.in-range{
+    background:transparent!important;
+  }
+
+  #bookingsTab .xpo-cal-day.range-start,
+  #bookingsTab .xpo-cal-day.range-end{
+    color:#fff!important;
+    background:#5b4cf5!important;
+  }
+
+  /* Bottom action row like XPO: no duplicate Custom summary text */
+  #bookingsTab .xpo-date-footer{
+    min-height:57px!important;
+    height:57px!important;
+    justify-content:flex-end!important;
+    padding:8px 10px!important;
+    border-top:1px solid #e5e2e8!important;
+  }
+
+  #bookingsTab .xpo-date-custom-summary{
+    display:none!important;
+  }
+
+  #bookingsTab .xpo-date-apply{
+    min-width:98px!important;
+    height:36px!important;
+    border-radius:20px!important;
+    padding:0 18px!important;
+    font-size:13px!important;
+    font-weight:500!important;
+  }
+
+  @media(max-width:760px){
+    #bookingsTab .booking-date-menu.xpo-date-picker{
+      width:min(665px,calc(100vw - 48px))!important;
+    }
+  }
+
+
+  /* ================= v23: FREEZE HEADER + XPO TYPE SCALE + PERIOD CONSISTENCY ================= */
+
+  /* 1) Allow the Bookings purple navigation to truly stick to the viewport.
+     .shell used overflow:hidden in the early design, which can break sticky positioning. */
+  .shell,
+  .page{
+    overflow:visible!important;
+  }
+
+  #bookingsTab .booking-app-header{
+    position:sticky!important;
+    top:0!important;
+    z-index:120!important;
+    box-shadow:0 2px 8px rgba(24,18,70,.12)!important;
+  }
+
+  /* Keep anchor jumps from hiding section titles underneath the frozen header. */
+  #bookingsTab .section{
+    scroll-margin-top:78px!important;
+  }
+
+  /* 2) Booking period filter typography aligned more closely to the XPO date picker */
+  #bookingsTab .booking-date-button{
+    height:38px!important;
+    padding:0 14px!important;
+    font-size:14px!important;
+    line-height:38px!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .booking-date-button svg{
+    width:17px!important;
+    height:17px!important;
+  }
+
+  #bookingsTab .booking-date-caret{
+    font-size:13px!important;
+  }
+
+  #bookingsTab .xpo-preset-btn{
+    min-height:53px!important;
+    padding:9px 14px 8px!important;
+  }
+
+  #bookingsTab .xpo-preset-name{
+    font-size:14px!important;
+    line-height:17px!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .xpo-preset-range{
+    margin-top:3px!important;
+    font-size:12px!important;
+    line-height:15px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .xpo-cal-title{
+    font-size:16px!important;
+    line-height:20px!important;
+    font-weight:600!important;
+  }
+
+  #bookingsTab .xpo-cal-weekdays span{
+    height:30px!important;
+    font-size:12px!important;
+    line-height:15px!important;
+    font-weight:600!important;
+  }
+
+  #bookingsTab .xpo-cal-day{
+    height:33px!important;
+    font-size:13px!important;
+    line-height:33px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .xpo-cal-nav{
+    font-size:21px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .xpo-date-apply{
+    min-width:100px!important;
+    height:38px!important;
+    font-size:14px!important;
+    font-weight:500!important;
+  }
+
+  /* 3) Raise the Bookings report type scale so it reads at the same visual density as XPO.
+     This affects all Bookings sections, not only Booking Details. */
+  #bookingsTab{
+    font-size:14px!important;
+  }
+
+  #bookingsTab .booking-overview-head h2,
+  #bookingsTab .report-subsection-head h2{
+    font-size:25px!important;
+    line-height:1.25!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .booking-overview-meta,
+  #bookingsTab .report-subsection-head p{
+    font-size:13px!important;
+    line-height:1.5!important;
+  }
+
+  #bookingsTab .booking-kpi-strip .klabel{
+    font-size:14px!important;
+    line-height:1.25!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .booking-kpi-strip .kvalue{
+    font-size:25px!important;
+    line-height:1.1!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .booking-kpi-strip .trend{
+    font-size:13px!important;
+    line-height:1.4!important;
+  }
+
+  #bookingsTab .collapsible-head .ititle,
+  #bookingsTab .insight .ititle,
+  #bookingsTab .pipeline-card .ititle{
+    font-size:17px!important;
+    line-height:1.3!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .collapsible-head .idesc,
+  #bookingsTab .insight .idesc,
+  #bookingsTab .pipeline-card .idesc,
+  #bookingsTab .market-xpo-note{
+    font-size:13px!important;
+    line-height:1.45!important;
+  }
+
+  #bookingsTab .booking-details-card table th,
+  #bookingsTab .market-xpo-table th{
+    font-size:13px!important;
+    line-height:1.35!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .booking-details-card table td,
+  #bookingsTab .market-xpo-table td{
+    font-size:14px!important;
+    line-height:1.4!important;
+  }
+
+  #bookingsTab .market-xpo-label{
+    font-size:16px!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .market-metric-toggle button,
+  #bookingsTab .market-xpo-tabs button,
+  #bookingsTab .metric-toggle button{
+    font-size:13px!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .market-xpo-search-wrap input{
+    font-size:14px!important;
+  }
+
+  #bookingsTab .xpo-pager-display,
+  #bookingsTab .xpo-per-page,
+  #bookingsTab .xpo-page-btn,
+  #bookingsTab .xpo-page-ellipsis{
+    font-size:13px!important;
+  }
+
+  #bookingsTab .rank-label,
+  #bookingsTab .rank-val,
+  #bookingsTab .legend,
+  #bookingsTab .bar-label,
+  #bookingsTab .bar-value,
+  #bookingsTab .pipeline-table,
+  #bookingsTab .pipeline-table th,
+  #bookingsTab .pipeline-table td{
+    font-size:14px!important;
+  }
+
+  #bookingsTab .mini-note{
+    font-size:12px!important;
+  }
+
+  #bookingsTab .donut-center-text{
+    font-size:10px!important;
+  }
+
+  #bookingsTab .donut-center-big{
+    font-size:19px!important;
+  }
+
+  #bookingsTab .chart-x-label{
+    font-size:9px!important;
+  }
+
+  #bookingsTab .vbar label{
+    font-size:10px!important;
+  }
+
+  #bookingsTab .pipeline-share{
+    font-size:11px!important;
+  }
+
+  /* Keep the Booking header labels intentionally light like XPO. */
+  #bookingsTab .booking-app-nav button,
+  #bookingsTab .booking-app-nav button.active,
+  #bookingsTab .booking-app-client{
+    font-size:13px!important;
+    font-weight:400!important;
+  }
+
+  @media(max-width:720px){
+    #bookingsTab .booking-app-header{
+      position:relative!important;
+      top:auto!important;
+    }
+  }
+
+
+  /* ================= v24: XPO-LIKE REPORT SCROLL + PERIOD FILTER BALANCE ================= */
+
+  /* The Ads iframe scrolls internally. Bookings now does the same:
+     Insight header stays above the report; the entire report body scrolls inside its own frame. */
+  #bookingsTab .booking-report-scroll{
+    position:relative;
+    width:100%;
+    height:1050px;
+    overflow-y:auto;
+    overflow-x:hidden;
+    overscroll-behavior:contain;
+    background:#fff;
+    border-left:1px solid #dedbe4;
+    border-right:1px solid #dedbe4;
+    border-bottom:1px solid #dedbe4;
+    scrollbar-gutter:stable;
+  }
+
+  #bookingsTab .booking-app-header{
+    position:sticky!important;
+    top:0!important;
+    z-index:120!important;
+    border-left:0!important;
+    border-right:0!important;
+    border-top:0!important;
+  }
+
+  /* Sections are inside the report scroll surface now; avoid duplicate outer borders. */
+  #bookingsTab .booking-report-scroll .section{
+    border-left:0!important;
+    border-right:0!important;
+  }
+
+  #bookingsTab .booking-report-scroll #marketFuturePipelineSection{
+    border-bottom:0!important;
+  }
+
+  /* Internal anchor jumps must account for the frozen purple nav. */
+  #bookingsTab .booking-report-scroll .section{
+    scroll-margin-top:72px!important;
+  }
+
+  /* 2) Period filter proportions:
+     smaller preset rail on the left, larger and easier-to-read calendars on the right. */
+  #bookingsTab .booking-date-menu.xpo-date-picker{
+    width:720px!important;
+    max-width:calc(100vw - 110px)!important;
+    grid-template-columns:168px minmax(0,1fr)!important;
+  }
+
+  #bookingsTab .xpo-date-presets{
+    width:168px!important;
+  }
+
+  #bookingsTab .xpo-preset-btn{
+    min-height:46px!important;
+    padding:7px 11px 6px!important;
+  }
+
+  #bookingsTab .xpo-preset-name{
+    font-size:12px!important;
+    line-height:15px!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .xpo-preset-range{
+    margin-top:2px!important;
+    font-size:10px!important;
+    line-height:13px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .xpo-calendar-area{
+    min-width:0!important;
+    min-height:445px!important;
+  }
+
+  #bookingsTab .xpo-calendar-grid{
+    grid-template-columns:1fr 1fr!important;
+    min-height:388px!important;
+  }
+
+  #bookingsTab .xpo-calendar-month{
+    padding:15px 17px 10px!important;
+  }
+
+  #bookingsTab .xpo-cal-head{
+    height:36px!important;
+    margin-bottom:9px!important;
+  }
+
+  #bookingsTab .xpo-cal-title{
+    font-size:17px!important;
+    line-height:21px!important;
+    font-weight:600!important;
+  }
+
+  #bookingsTab .xpo-cal-nav{
+    width:30px!important;
+    height:30px!important;
+    font-size:22px!important;
+    line-height:30px!important;
+  }
+
+  #bookingsTab .xpo-cal-weekdays span{
+    height:32px!important;
+    font-size:13px!important;
+    line-height:16px!important;
+    font-weight:600!important;
+  }
+
+  #bookingsTab .xpo-cal-day{
+    height:36px!important;
+    font-size:14px!important;
+    line-height:36px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .xpo-date-footer{
+    min-height:57px!important;
+    height:57px!important;
+  }
+
+  #bookingsTab .xpo-date-apply{
+    min-width:100px!important;
+    height:38px!important;
+    font-size:14px!important;
+  }
+
+  @media(max-width:900px){
+    #bookingsTab .booking-report-scroll{
+      height:900px;
+    }
+  }
+
+  @media(max-width:760px){
+    #bookingsTab .booking-report-scroll{
+      height:auto;
+      max-height:none;
+      overflow:visible;
+      border-left:0;
+      border-right:0;
+    }
+
+    #bookingsTab .booking-app-header{
+      position:relative!important;
+      top:auto!important;
+    }
+
+    #bookingsTab .booking-date-menu.xpo-date-picker{
+      width:min(720px,calc(100vw - 48px))!important;
+      grid-template-columns:145px minmax(0,1fr)!important;
+    }
+
+    #bookingsTab .xpo-date-presets{
+      width:145px!important;
+    }
+  }
 </style>
 </head>
 <body>
 <div class="shell">
   <div class="page">
 
-    <div class="top-controls">
+    <!-- Hidden master controls used by the Booking period logic -->
+    <div class="top-controls master-controls-hidden" aria-hidden="true">
       <div class="chip">Client: <b id="clientName">—</b></div>
       <div class="chip period-chip" id="topPeriodChip">
         <span>Period:</span>
@@ -2225,20 +3915,28 @@
       <div class="chip" id="topUpdatedChip">Updated: <b id="lastUpdated">Loading...</b></div>
     </div>
 
+    <div class="report-switch-row">
+      <div class="tabs" role="tablist" aria-label="Dashboard reports">
+        <button class="tab-btn active" id="adsTabBtn" type="button" role="tab" aria-selected="true" aria-controls="adsTab">Ads Report</button>
+        <button class="tab-btn" id="bookingsTabBtn" type="button" role="tab" aria-selected="false" aria-controls="bookingsTab">Bookings Report</button>
+      </div>
 
-    <!-- New client setup is controlled only by DASHBOARD_CONFIG in the script below. -->
-    <div class="tabs" role="tablist" aria-label="Dashboard reports">
-      <button class="tab-btn active" id="adsTabBtn" type="button" role="tab" aria-selected="true" aria-controls="adsTab">Ads Report</button>
-      <button class="tab-btn" id="bookingsTabBtn" type="button" role="tab" aria-selected="false" aria-controls="bookingsTab">Bookings Report</button>
+      <div class="report-switch-meta">
+        <div class="chip report-meta-chip">Client: <b id="switchClientName">—</b></div>
+        <div class="xpo-live-pill report-meta-live" id="switchAdsLive">
+          <span class="xpo-live-dot"></span>
+          <span id="switchAdsLiveText">Live from XPO</span>
+        </div>
+        <div class="chip report-meta-chip" id="switchBookingsUpdated">Data as of: <b id="switchDataAsOfText">—</b></div>
+      </div>
     </div>
 
     <div id="adsTab" class="tab-panel active" role="tabpanel" aria-labelledby="adsTabBtn">
       <section class="section">
-        <div class="section-head">
+        <div class="section-head report-page-heading">
           <div>
             <h2 class="section-title">Ads <span class="accent">Report</span></h2>
           </div>
-          <div class="subchip" id="adsProviderSubchip">Live Ads report</div>
         </div>
 
         <div class="card xpo-embed-card">
@@ -2247,7 +3945,6 @@
               <div class="ititle" id="adsProviderTitle">Ads Campaign Insights</div>
               <div class="idesc" id="adsProviderDesc">Use the filters inside the report for live date-range changes.</div>
             </div>
-            <div class="xpo-live-pill"><span class="xpo-live-dot"></span><span id="adsProviderPill">Live Ads</span></div>
           </div>
           <div class="xpo-frame-wrap">
             <iframe
@@ -2267,13 +3964,23 @@
     </div>
 
     <div id="bookingsTab" class="tab-panel" role="tabpanel" aria-labelledby="bookingsTabBtn">
+      <div class="section-head report-page-heading bookings-page-title">
+        <div>
+          <h2 class="section-title">Bookings <span class="accent">Report</span></h2>
+        </div>
+      </div>
+
+      <div class="xpo-embed-head booking-report-insights-head">
+        <div>
+          <div class="ititle">Booking Campaign Insights</div>
+          <div class="idesc">Use the filters inside the report for live date-range changes.</div>
+        </div>
+      </div>
+
+      <div class="booking-report-scroll" id="bookingReportScroll">
       <div class="booking-app-header" id="bookingAppHeader">
         <div class="booking-app-brand">
-          <div class="booking-brand-mark">MC</div>
-          <div class="booking-brand-copy">
-            <strong>BOOKING INTELLIGENCE</strong>
-            <span>Client Performance Dashboard</span>
-          </div>
+          <img class="booking-media-console-logo" src="data:image/png;base64,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" alt="Media Console">
         </div>
 
         <nav class="booking-app-nav" id="bookingAppNav" aria-label="Bookings dashboard navigation">
@@ -2288,15 +3995,43 @@
 
 
     <!-- 1. BOOKINGS REPORT -->
-    <section class="section" id="bookingsReportSection">
-      <div class="section-head">
+    <section class="section booking-overview-section" id="bookingsReportSection">
+      <div class="booking-overview-head">
         <div>
-          <h2 class="section-title">Bookings <span class="accent">Report</span></h2>
+          <h2>Overall Booking Performance</h2>
+          <div class="booking-overview-meta">
+            Booking Period: <span id="bookingOverviewPeriod">—</span> · (UTC+07:00) Asia/Bangkok
+          </div>
         </div>
-        <div class="subchip">Booking-level performance</div>
       </div>
 
-      <div class="kpis">
+      <div class="booking-overview-controls">
+        <div class="booking-date-control" id="bookingDateControl">
+          <button type="button" class="booking-date-pill booking-date-button" id="bookingOverviewDateBtn" aria-expanded="false" aria-controls="bookingOverviewDateMenu">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="15" rx="2"/><path d="M8 3.5v4M16 3.5v4M3.5 9.5h17"/></svg>
+            <span id="bookingOverviewPeriodLabel">All time</span>
+            <span class="booking-date-caret">▾</span>
+          </button>
+
+          <div class="booking-date-menu xpo-date-picker" id="bookingOverviewDateMenu" role="dialog" aria-label="Booking period filter">
+            <div class="xpo-date-presets" id="bookingDatePresets"></div>
+
+            <div class="xpo-calendar-area">
+              <div class="xpo-calendar-grid">
+                <div class="xpo-calendar-month" id="bookingCalendarLeft"></div>
+                <div class="xpo-calendar-month" id="bookingCalendarRight"></div>
+              </div>
+
+              <div class="xpo-date-footer">
+                <div class="xpo-date-custom-summary" id="bookingDateCustomSummary">Custom</div>
+                <button type="button" class="xpo-date-apply" id="bookingDateApply">APPLY</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kpis booking-kpi-strip">
         <div class="card kpi">
           <div class="iconbox"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 9h16"/><path d="M8 14l2 2 5-5"/></svg></div>
           <div><div class="klabel">Bookings</div><div class="kvalue" id="kBookings">—</div><div class="trend" id="kBookingsNote">Total bookings</div></div>
@@ -2356,11 +4091,9 @@
 
     <!-- 2. MARKET PERFORMANCE -->
     <section class="section" id="marketPerformanceSection">
-      <div class="section-head">
-        <div>
-          <h2 class="section-title">Market <span class="accent">Performance</span></h2>
-          <p class="section-sub">Compare market performance by country, region, or city for the selected period.</p>
-        </div>
+      <div class="report-subsection-head">
+        <h2>Market Performance</h2>
+        <p>Compare market performance by country, region, or city for the selected period.</p>
       </div>
 
       <div class="card market-xpo-card">
@@ -2413,11 +4146,9 @@
 
     <!-- 3. BOOKINGS INSIGHTS -->
     <section class="section" id="bookingsInsightsSection">
-      <div class="section-head">
-        <div>
-          <h2 class="section-title">Bookings <span class="accent">Insights</span></h2>
-        </div>
-        <div class="subchip">Interactive charts</div>
+      <div class="report-subsection-head">
+        <h2>Booking Insights</h2>
+        <p>Booking behavior, demand patterns and channel contribution.</p>
       </div>
 
       <div class="insights-grid">
@@ -2492,10 +4223,9 @@
 
     <!-- 4. MARKET FUTURE PIPELINE -->
     <section class="section" id="marketFuturePipelineSection">
-      <div class="section-head">
-        <div>
-          <h2 class="section-title">Market Future <span class="accent">Pipeline</span></h2>
-        </div>
+      <div class="report-subsection-head">
+        <h2>Future Pipeline</h2>
+        <p>Future check-ins from bookings captured in the selected booking period.</p>
       </div>
 
       <div class="card pipeline-card">
@@ -2516,6 +4246,7 @@
       <div class="footnote">Live data from Google Sheet</div>
     </section>
 
+      </div><!-- /booking-report-scroll -->
     </div>
 
   </div>
@@ -2537,6 +4268,11 @@
     bookings: {
       sheetId: "1wDcmYtUK2zJaaqEXYLvN__xkev2edNk9YooP6CVn47I",
       gid: "0",
+
+      // Fixed metadata tab used by every client Booking Sheet.
+      // Put "Data As Of" in column A and the coverage date in column B.
+      metaSheetName: "DashboardMeta",
+
       currencyCode: "THB",
       currencySymbol: "฿"
     },
@@ -2556,7 +4292,9 @@
 
   const SHEET_ID = DASHBOARD_CONFIG.bookings.sheetId;
   const SHEET_GID = DASHBOARD_CONFIG.bookings.gid;
+  const META_SHEET_NAME = DASHBOARD_CONFIG.bookings.metaSheetName || "DashboardMeta";
   const DATA_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?gid=${SHEET_GID}`;
+  const META_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(META_SHEET_NAME)}&headers=0`;
 
 
   const tooltip = document.getElementById('tooltip');
@@ -3297,12 +5035,12 @@
       marketLevelLabel(level),
       page=>{
         MARKET_PERF_STATE.page=page;
-        renderMarketPerformance(filteredByPeriod());
+        renderMarketPerformance(currentPeriodRows());
       },
       size=>{
         MARKET_PERF_STATE.pageSize=size;
         MARKET_PERF_STATE.page=1;
-        renderMarketPerformance(filteredByPeriod());
+        renderMarketPerformance(currentPeriodRows());
       },
       [5,10,20,50,100]
     );
@@ -3318,7 +5056,7 @@
           b.classList.toggle('active',b===btn);
         });
 
-        renderMarketPerformance(filteredByPeriod());
+        renderMarketPerformance(currentPeriodRows());
       });
     });
 
@@ -3332,7 +5070,7 @@
           b.classList.toggle('active',b===btn);
         });
 
-        renderMarketPerformance(filteredByPeriod());
+        renderMarketPerformance(currentPeriodRows());
       });
     });
 
@@ -3344,7 +5082,7 @@
         timer=setTimeout(()=>{
           MARKET_PERF_STATE.search=search.value||'';
           MARKET_PERF_STATE.page=1;
-          renderMarketPerformance(filteredByPeriod());
+          renderMarketPerformance(currentPeriodRows());
         },120);
       });
     }
@@ -3436,6 +5174,11 @@
 
 
   let ALL_ROWS = [];
+  let CURRENT_PERIOD_ROWS = [];
+
+  function currentPeriodRows(){
+    return CURRENT_PERIOD_ROWS;
+  }
   let integratedMarketRequestSeq = 0;
 
   let DATA_MIN_DATE=null;
@@ -3677,10 +5420,40 @@
     });
   }
 
-  function renderDashboard(){
-    const rows=filteredByPeriod();
-    bookingPage=1;
-    MARKET_PERF_STATE.page=1;
+
+  function xpoStyleDateLabel(d){
+    if(!d)return '—';
+    const months=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${String(d.getUTCDate()).padStart(2,'0')} ${months[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+  }
+
+  function updateBookingOverviewPeriod(){
+    const preset=document.getElementById('periodPreset')?.value||'all';
+    const option=document.querySelector(`#periodPreset option[value="${preset}"]`);
+    const presetLabel=option?option.textContent:'Selected period';
+    const {s,e}=presetRange(preset);
+
+    const detail=document.getElementById('bookingOverviewPeriod');
+    const pill=document.getElementById('bookingOverviewPeriodLabel');
+
+    if(detail){
+      detail.textContent=(s&&e)
+        ? `${xpoStyleDateLabel(s)} / ${xpoStyleDateLabel(e)}`
+        : presetLabel;
+    }
+
+    if(pill){
+      pill.textContent=(s&&e)
+        ? `${xpoStyleDateLabel(s)}  –  ${xpoStyleDateLabel(e)}`
+        : presetLabel;
+    }
+  }
+
+  function renderBookingSectionsForPeriod(rows){
+    // Single source of truth for every Bookings Report section.
+    // `rows` is ALWAYS filtered by the selected Booking Date period.
+    CURRENT_PERIOD_ROWS = rows;
+
     renderTable(rows);
     renderKPIs(rows);
     renderMarkets(rows);
@@ -3692,6 +5465,20 @@
     renderMarketPerformance(rows);
     renderFuturePipeline(rows);
     renderIntegratedMarketPerformance(rows);
+  }
+
+  function renderDashboard(){
+    updateBookingOverviewPeriod();
+
+    const rows=filteredByPeriod();
+
+    bookingPage=1;
+    MARKET_PERF_STATE.page=1;
+
+    // Prevent a previous period's XPO Spend from appearing while the new period is loading.
+    MARKET_COUNTRY_ADS = new Map();
+
+    renderBookingSectionsForPeriod(rows);
     bindInteractions();
   }
 
@@ -3709,16 +5496,282 @@
     endEl.value=dateInputValue(DATA_MAX_DATE);
   }
 
-  function setToggleState(containerId,metric){
-    document.querySelectorAll(`#${containerId} button`).forEach(btn=>{
-      btn.classList.toggle('active',btn.dataset.metric===metric);
-    });
-  }
-
   function updateCustomVisibility(){
     const custom=document.getElementById('periodPreset').value==='custom';
     document.getElementById('customRange').classList.toggle('show',custom);
   }
+
+
+  const BOOKING_PICKER_PRESETS=[
+    ['today','Today'],
+    ['yesterday','Yesterday'],
+    ['last7','Last 7 Days'],
+    ['last14','Last 14 Days'],
+    ['last30','Last 30 Days'],
+    ['thisMonth','This Month'],
+    ['lastMonth','Last Month'],
+    ['custom','Custom']
+  ];
+
+  const BOOKING_PICKER_STATE={
+    preset:'all',
+    start:null,
+    end:null,
+    leftMonth:null,
+    rightMonth:null,
+    selectingEnd:false
+  };
+
+  function monthStart(d){
+    return new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),1));
+  }
+
+  function addMonthsUTC(d,n){
+    return new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+n,1));
+  }
+
+  function sameUTCDate(a,b){
+    return !!a && !!b &&
+      a.getUTCFullYear()===b.getUTCFullYear() &&
+      a.getUTCMonth()===b.getUTCMonth() &&
+      a.getUTCDate()===b.getUTCDate();
+  }
+
+  function bookingPickerRangeForPreset(preset){
+    if(preset==='custom'){
+      return {s:BOOKING_PICKER_STATE.start,e:BOOKING_PICKER_STATE.end};
+    }
+    if(preset==='all'){
+      return {s:DATA_MIN_DATE,e:DATA_MAX_DATE};
+    }
+    return presetRange(preset);
+  }
+
+  function compactRangeLabel(s,e){
+    if(!s || !e)return '';
+    return `${xpoStyleDateLabel(s)} - ${xpoStyleDateLabel(e)}`;
+  }
+
+  function renderBookingPresetList(){
+    const el=document.getElementById('bookingDatePresets');
+    if(!el)return;
+
+    el.innerHTML=BOOKING_PICKER_PRESETS.map(([value,label])=>{
+      const r=value==='custom'
+        ? {s:BOOKING_PICKER_STATE.start,e:BOOKING_PICKER_STATE.end}
+        : bookingPickerRangeForPreset(value);
+      const sub=(r.s&&r.e)?compactRangeLabel(r.s,r.e):'Select date range';
+      const active=BOOKING_PICKER_STATE.preset===value;
+      return `
+        <button type="button" class="xpo-preset-btn ${active?'active':''}" data-picker-preset="${value}">
+          <span class="xpo-preset-name">${label}</span>
+          <span class="xpo-preset-range">${sub}</span>
+        </button>`;
+    }).join('');
+
+    el.querySelectorAll('[data-picker-preset]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const preset=btn.dataset.pickerPreset;
+
+        if(preset==='custom'){
+          BOOKING_PICKER_STATE.preset='custom';
+          if(!BOOKING_PICKER_STATE.start || !BOOKING_PICKER_STATE.end){
+            const current=presetRange(document.getElementById('periodPreset').value);
+            BOOKING_PICKER_STATE.start=current.s||DATA_MIN_DATE;
+            BOOKING_PICKER_STATE.end=current.e||DATA_MAX_DATE;
+          }
+        }else{
+          const {s,e}=bookingPickerRangeForPreset(preset);
+          BOOKING_PICKER_STATE.preset=preset;
+          BOOKING_PICKER_STATE.start=s;
+          BOOKING_PICKER_STATE.end=e;
+          BOOKING_PICKER_STATE.selectingEnd=false;
+        }
+
+        setBookingCalendarMonthsFromRange();
+        renderBookingDatePicker();
+      });
+    });
+  }
+
+  function setBookingCalendarMonthsFromRange(){
+    const s=BOOKING_PICKER_STATE.start||DATA_MIN_DATE||browserTodayUTC();
+    const e=BOOKING_PICKER_STATE.end||DATA_MAX_DATE||s;
+
+    BOOKING_PICKER_STATE.leftMonth=monthStart(s);
+    BOOKING_PICKER_STATE.rightMonth=monthStart(e);
+
+    if(BOOKING_PICKER_STATE.leftMonth.getTime()===BOOKING_PICKER_STATE.rightMonth.getTime()){
+      BOOKING_PICKER_STATE.rightMonth=addMonthsUTC(BOOKING_PICKER_STATE.leftMonth,1);
+    }
+  }
+
+  function calendarDaysForMonth(month){
+    const first=monthStart(month);
+    const start=addDaysUTC(first,-first.getUTCDay());
+    return Array.from({length:42},(_,i)=>addDaysUTC(start,i));
+  }
+
+  function renderOneBookingCalendar(containerId,month,side){
+    const el=document.getElementById(containerId);
+    if(!el)return;
+
+    const monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const days=calendarDaysForMonth(month);
+    const s=BOOKING_PICKER_STATE.start;
+    const e=BOOKING_PICKER_STATE.end;
+
+    el.innerHTML=`
+      <div class="xpo-cal-head">
+        <button type="button" class="xpo-cal-nav" data-cal-nav="${side}:-1">‹</button>
+        <div class="xpo-cal-title">${monthNames[month.getUTCMonth()]} ${month.getUTCFullYear()}</div>
+        <button type="button" class="xpo-cal-nav" data-cal-nav="${side}:1">›</button>
+      </div>
+      <div class="xpo-cal-weekdays">
+        ${['Su','Mo','Tu','We','Th','Fr','Sa'].map(d=>`<span>${d}</span>`).join('')}
+      </div>
+      <div class="xpo-cal-days">
+        ${days.map(d=>{
+          const outside=d.getUTCMonth()!==month.getUTCMonth();
+          const disabled=(DATA_MIN_DATE && d<DATA_MIN_DATE) || (DATA_MAX_DATE && d>DATA_MAX_DATE);
+          const inRange=s&&e&&d>=s&&d<=e;
+          const startClass=sameUTCDate(d,s)?'range-start':'';
+          const endClass=sameUTCDate(d,e)?'range-end':'';
+          return `<button type="button"
+            class="xpo-cal-day ${outside?'outside':''} ${disabled?'disabled':''} ${inRange?'in-range':''} ${startClass} ${endClass}"
+            data-cal-date="${dateInputValue(d)}"
+            ${disabled?'disabled':''}>${d.getUTCDate()}</button>`;
+        }).join('')}
+      </div>
+    `;
+
+    el.querySelectorAll('[data-cal-nav]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const [which,deltaRaw]=btn.dataset.calNav.split(':');
+        const delta=Number(deltaRaw);
+        if(which==='left')BOOKING_PICKER_STATE.leftMonth=addMonthsUTC(BOOKING_PICKER_STATE.leftMonth,delta);
+        else BOOKING_PICKER_STATE.rightMonth=addMonthsUTC(BOOKING_PICKER_STATE.rightMonth,delta);
+        renderBookingCalendars();
+      });
+    });
+
+    el.querySelectorAll('[data-cal-date]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const d=utcDateFromInput(btn.dataset.calDate);
+        if(!d)return;
+
+        BOOKING_PICKER_STATE.preset='custom';
+
+        if(!BOOKING_PICKER_STATE.selectingEnd || !BOOKING_PICKER_STATE.start || BOOKING_PICKER_STATE.end){
+          BOOKING_PICKER_STATE.start=d;
+          BOOKING_PICKER_STATE.end=null;
+          BOOKING_PICKER_STATE.selectingEnd=true;
+        }else{
+          if(d < BOOKING_PICKER_STATE.start){
+            BOOKING_PICKER_STATE.end=BOOKING_PICKER_STATE.start;
+            BOOKING_PICKER_STATE.start=d;
+          }else{
+            BOOKING_PICKER_STATE.end=d;
+          }
+          BOOKING_PICKER_STATE.selectingEnd=false;
+        }
+
+        renderBookingDatePicker();
+      });
+    });
+  }
+
+  function renderBookingCalendars(){
+    renderOneBookingCalendar('bookingCalendarLeft',BOOKING_PICKER_STATE.leftMonth,'left');
+    renderOneBookingCalendar('bookingCalendarRight',BOOKING_PICKER_STATE.rightMonth,'right');
+  }
+
+  function renderBookingDatePicker(){
+    renderBookingPresetList();
+    renderBookingCalendars();
+
+    const apply=document.getElementById('bookingDateApply');
+    if(apply)apply.disabled=!(BOOKING_PICKER_STATE.start&&BOOKING_PICKER_STATE.end);
+  }
+
+  function syncBookingPickerFromCurrentFilter(){
+    const sourcePreset=document.getElementById('periodPreset');
+    if(!sourcePreset)return;
+
+    const currentPreset=sourcePreset.value;
+    const {s,e}=presetRange(currentPreset);
+
+    BOOKING_PICKER_STATE.preset=
+      BOOKING_PICKER_PRESETS.some(([v])=>v===currentPreset)
+        ? currentPreset
+        : (currentPreset==='all'?'custom':currentPreset);
+
+    BOOKING_PICKER_STATE.start=s||DATA_MIN_DATE;
+    BOOKING_PICKER_STATE.end=e||DATA_MAX_DATE;
+    BOOKING_PICKER_STATE.selectingEnd=false;
+    setBookingCalendarMonthsFromRange();
+    renderBookingDatePicker();
+  }
+
+  function syncBookingOverviewFilter(){
+    /* Period text is updated by updateBookingOverviewPeriod().
+       The XPO-style picker reads directly from the same hidden master filter. */
+  }
+
+  function bindBookingOverviewDateFilter(){
+    const control=document.getElementById('bookingDateControl');
+    const btn=document.getElementById('bookingOverviewDateBtn');
+    const menu=document.getElementById('bookingOverviewDateMenu');
+    const apply=document.getElementById('bookingDateApply');
+    const sourcePreset=document.getElementById('periodPreset');
+    const sourceStart=document.getElementById('periodStart');
+    const sourceEnd=document.getElementById('periodEnd');
+
+    if(!control || !btn || !menu || !apply || !sourcePreset)return;
+
+    const closeMenu=()=>{
+      menu.classList.remove('show');
+      btn.setAttribute('aria-expanded','false');
+    };
+
+    btn.addEventListener('click',e=>{
+      e.stopPropagation();
+      const open=!menu.classList.contains('show');
+      if(open){
+        syncBookingPickerFromCurrentFilter();
+      }
+      menu.classList.toggle('show',open);
+      btn.setAttribute('aria-expanded',String(open));
+    });
+
+    menu.addEventListener('click',e=>e.stopPropagation());
+
+    apply.addEventListener('click',()=>{
+      if(!BOOKING_PICKER_STATE.start || !BOOKING_PICKER_STATE.end)return;
+
+      const preset=BOOKING_PICKER_STATE.preset;
+
+      if(preset!=='custom' && preset!=='all'){
+        sourcePreset.value=preset;
+      }else if(preset==='all'){
+        sourcePreset.value='all';
+      }else{
+        sourcePreset.value='custom';
+        if(sourceStart)sourceStart.value=dateInputValue(BOOKING_PICKER_STATE.start);
+        if(sourceEnd)sourceEnd.value=dateInputValue(BOOKING_PICKER_STATE.end);
+      }
+
+      updateCustomVisibility();
+      renderDashboard();
+      closeMenu();
+    });
+
+    document.addEventListener('click',e=>{
+      if(!control.contains(e.target))closeMenu();
+    });
+  }
+
+  bindBookingOverviewDateFilter();
 
   document.getElementById('periodPreset').addEventListener('change',()=>{
     updateCustomVisibility();
@@ -3742,26 +5795,26 @@
   document.querySelectorAll('#marketToggle button').forEach(btn=>btn.addEventListener('click',()=>{
     marketMetric=btn.dataset.metric;
     setToggleState('marketToggle',marketMetric);
-    renderMarkets(filteredByPeriod());
+    renderMarkets(currentPeriodRows());
     bindInteractions();
   }));
   document.querySelectorAll('#stayToggle button').forEach(btn=>btn.addEventListener('click',()=>{
     stayMetric=btn.dataset.metric;
     setToggleState('stayToggle',stayMetric);
-    renderStayDemand(filteredByPeriod());
+    renderStayDemand(currentPeriodRows());
     bindInteractions();
   }));
   document.querySelectorAll('#channelToggle button').forEach(btn=>btn.addEventListener('click',()=>{
     channelMetric=btn.dataset.metric;
     setToggleState('channelToggle',channelMetric);
-    renderChannelPerformance(filteredByPeriod());
+    renderChannelPerformance(currentPeriodRows());
     bindInteractions();
   }));
 
   document.querySelectorAll('#pipelineToggle button').forEach(btn=>btn.addEventListener('click',()=>{
     pipelineMetric=btn.dataset.metric;
     setToggleState('pipelineToggle',pipelineMetric);
-    renderFuturePipeline(filteredByPeriod());
+    renderFuturePipeline(currentPeriodRows());
   }));
 
 
@@ -3804,10 +5857,17 @@
 
         buttons.forEach(b=>b.classList.toggle('active',b===btn));
 
+        const scrollBox=document.getElementById('bookingReportScroll');
         const header=document.getElementById('bookingAppHeader');
         const headerH=header?header.getBoundingClientRect().height:0;
-        const y=window.scrollY+target.getBoundingClientRect().top-headerH-16;
-        window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+
+        if(scrollBox){
+          const targetTop=target.offsetTop-headerH-12;
+          scrollBox.scrollTo({top:Math.max(0,targetTop),behavior:'smooth'});
+        }else{
+          const y=window.scrollY+target.getBoundingClientRect().top-headerH-16;
+          window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+        }
       });
     });
 
@@ -3815,7 +5875,11 @@
     const updateActive=()=>{
       navTicking=false;
       const header=document.getElementById('bookingAppHeader');
-      const offset=(header?header.getBoundingClientRect().height:0)+34;
+      const scrollBox=document.getElementById('bookingReportScroll');
+      const headerH=header?header.getBoundingClientRect().height:0;
+      const offset=scrollBox
+        ? scrollBox.getBoundingClientRect().top + headerH + 34
+        : headerH + 34;
 
       let active=sections[0]||null;
       for(const section of sections){
@@ -3830,11 +5894,16 @@
       }
     };
 
-    window.addEventListener('scroll',()=>{
+    const scrollBox=document.getElementById('bookingReportScroll');
+
+    const requestNavUpdate=()=>{
       if(navTicking)return;
       navTicking=true;
       requestAnimationFrame(updateActive);
-    },{passive:true});
+    };
+
+    window.addEventListener('scroll',requestNavUpdate,{passive:true});
+    if(scrollBox)scrollBox.addEventListener('scroll',requestNavUpdate,{passive:true});
 
     updateActive();
   }
@@ -3848,9 +5917,13 @@
     const provider = ads.provider || 'Ads Platform';
     const mode = ads.mode || 'embed';
 
-    document.getElementById('adsProviderSubchip').textContent = `Live ${provider} report`;
     document.getElementById('adsProviderTitle').textContent = `${provider} Campaign Insights`;
-    document.getElementById('adsProviderPill').textContent = `Live from ${provider}`;
+
+    const switchClient=document.getElementById('switchClientName');
+    if(switchClient)switchClient.textContent=DASHBOARD_CONFIG.clientName || 'Client';
+
+    const switchLiveText=document.getElementById('switchAdsLiveText');
+    if(switchLiveText)switchLiveText.textContent=`Live from ${provider}`;
 
     const frame = document.getElementById('xpoFrame');
     const note = document.getElementById('adsProviderNote');
@@ -3882,13 +5955,11 @@
     document.getElementById('adsTabBtn').setAttribute('aria-selected',String(ads));
     document.getElementById('bookingsTabBtn').setAttribute('aria-selected',String(!ads));
 
-    // XPO iframe has its own live period filter and refresh state.
-    // Keep the shared controls only for the Bookings tab to avoid implying
-    // that the outer filter controls the embedded report.
-    const periodChip=document.getElementById('topPeriodChip');
-    const updatedChip=document.getElementById('topUpdatedChip');
-    if(periodChip)periodChip.style.display=ads?'none':'';
-    if(updatedChip)updatedChip.style.display=ads?'none':'';
+    const adsLive=document.getElementById('switchAdsLive');
+    const bookingUpdated=document.getElementById('switchBookingsUpdated');
+
+    if(adsLive)adsLive.style.display=ads?'inline-flex':'none';
+    if(bookingUpdated)bookingUpdated.style.display=ads?'none':'inline-flex';
   }
 
   document.getElementById('adsTabBtn').addEventListener('click',()=>activateTab('ads'));
@@ -3932,7 +6003,7 @@
     tooltip.classList.remove('show');
   });
 
-  function loadGvizJsonp(){
+  function loadGvizJsonpUrl(url, errorLabel='Google Sheet'){
     return new Promise((resolve,reject)=>{
       const callbackName = `gvizCallback_${Date.now()}_${Math.floor(Math.random()*100000)}`;
       const script = document.createElement('script');
@@ -3947,7 +6018,7 @@
       window[callbackName] = function(response){
         cleanup();
         if(!response || !response.table){
-          reject(new Error('Google Sheet returned no table data'));
+          reject(new Error(`${errorLabel} returned no table data`));
           return;
         }
         resolve(response);
@@ -3955,22 +6026,75 @@
 
       script.onerror = function(){
         cleanup();
-        reject(new Error('Could not load Google Sheet. Check sharing permission and Sheet URL.'));
+        reject(new Error(`Could not load ${errorLabel}. Check sharing permission and Sheet setup.`));
       };
 
-      script.src = `${DATA_URL}&tqx=responseHandler:${callbackName}&_=${Date.now()}`;
+      script.src = `${url}&tqx=responseHandler:${callbackName}&_=${Date.now()}`;
       document.head.appendChild(script);
 
       timer = setTimeout(()=>{
         cleanup();
-        reject(new Error('Google Sheet request timed out'));
+        reject(new Error(`${errorLabel} request timed out`));
       },15000);
     });
   }
 
+  function loadGvizJsonp(){
+    return loadGvizJsonpUrl(DATA_URL,'Google Sheet');
+  }
+
+  function metadataCellValue(cell){
+    if(!cell)return '';
+    if(cell.v !== null && cell.v !== undefined)return cell.v;
+    return cell.f ?? '';
+  }
+
+  function parseDashboardMetadata(response){
+    const rows=response?.table?.rows || [];
+
+    for(const row of rows){
+      const cells=row.c || [];
+      const key=String(metadataCellValue(cells[0]) ?? '').trim();
+      const value=metadataCellValue(cells[1]);
+
+      const normalized=normalizeHeader(key);
+      if([
+        'data as of',
+        'data through',
+        'data through date',
+        'booking data as of'
+      ].includes(normalized)){
+        const d=parseDate(value);
+        if(d)return {dataAsOf:d, raw:value};
+      }
+    }
+
+    return {dataAsOf:null, raw:null};
+  }
+
+  async function loadDashboardMetadata(){
+    const metaResponse=await loadGvizJsonpUrl(META_URL,`metadata tab "${META_SHEET_NAME}"`);
+    return parseDashboardMetadata(metaResponse);
+  }
+
+  function formatDataAsOf(d){
+    return d ? xpoStyleDateLabel(d) : '—';
+  }
+
+  function setDataAsOfDisplay(d){
+    const el=document.getElementById('switchDataAsOfText');
+    if(el)el.textContent=formatDataAsOf(d);
+  }
+
   async function loadData(){
     try{
-      const gvizResponse = await loadGvizJsonp();
+      const [gvizResponse, metadataResult] = await Promise.all([
+        loadGvizJsonp(),
+        loadDashboardMetadata()
+          .then(meta=>({ok:true,meta}))
+          .catch(err=>({ok:false,error:err}))
+      ]);
+
       const raw = parseGviz(gvizResponse);
       const rows = normalizeRows(raw);
       ALL_ROWS = rows;
@@ -3978,8 +6102,24 @@
       updateCustomVisibility();
       renderDashboard();
 
-      document.getElementById('lastUpdated').textContent =
+      // "Data as of" is the booking-data coverage date from DashboardMeta.
+      // It is intentionally NOT derived from page load time or Max Booking Date.
+      if(metadataResult.ok && metadataResult.meta?.dataAsOf){
+        setDataAsOfDisplay(metadataResult.meta.dataAsOf);
+      }else{
+        setDataAsOfDisplay(null);
+        if(!metadataResult.ok){
+          console.warn('Booking metadata not loaded:', metadataResult.error);
+        }else{
+          console.warn(`No "Data As Of" value found in ${META_SHEET_NAME}`);
+        }
+      }
+
+      // Keep load time internally for debugging only; it is not shown as booking freshness.
+      const updatedText =
         new Date().toLocaleString('en-GB',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+      document.getElementById('lastUpdated').textContent = updatedText;
+
     }catch(err){
       console.error(err);
       document.getElementById('bookingTbody').innerHTML =
@@ -3988,6 +6128,7 @@
         const el=document.getElementById(id); if(el)el.innerHTML='<div style="color:#c66;font-size:11px;padding-top:18px">Unable to load data</div>';
       });
       document.getElementById('lastUpdated').textContent='Load failed';
+      setDataAsOfDisplay(null);
     }
   }
 
