@@ -5118,6 +5118,1097 @@
       overflow:visible!important;
     }
   }
+
+
+  /* ================= v38: EXACT ADS / BOOKINGS REPORT WIDTH =================
+     Use the Ads report card as the width reference.
+     Bookings no longer adds its own outer tab border, and its two report
+     pieces (insight header + scroll surface) share the exact same outer width.
+  */
+
+  /* The old Bookings tab border made the whole Bookings surface read wider
+     than the Ads report card. Keep the panel itself neutral. */
+  #bookingsTab{
+    border:0!important;
+    background:transparent!important;
+  }
+
+  /* Exact same horizontal frame for both report types. */
+  #adsTab .xpo-embed-card,
+  #bookingsTab .booking-report-insights-head,
+  #bookingsTab .booking-report-scroll{
+    width:100%!important;
+    max-width:100%!important;
+    margin-left:0!important;
+    margin-right:0!important;
+    box-sizing:border-box!important;
+  }
+
+  /* Build the Bookings frame from two flush pieces so its outside edge is
+     identical to the single XPO card edge. */
+  #bookingsTab .booking-report-insights-head{
+    border:1px solid #e0dde5!important;
+    border-bottom:1px solid #e6e3e9!important;
+    border-radius:0!important;
+  }
+
+  #bookingsTab .booking-report-scroll{
+    border-left:1px solid #e0dde5!important;
+    border-right:1px solid #e0dde5!important;
+    border-bottom:1px solid #e0dde5!important;
+    border-top:0!important;
+    border-radius:0!important;
+  }
+
+  /* Prevent any internal Bookings section from extending beyond the report edge. */
+  #bookingsTab .booking-app-header,
+  #bookingsTab .booking-report-scroll .section,
+  #bookingsTab .booking-report-scroll .card{
+    max-width:100%!important;
+    box-sizing:border-box!important;
+  }
+
+
+  /* ================= v39: EXACT INNER CONTENT INSET =================
+     Match the visible XPO content geometry, not only the outer report width.
+     XPO keeps a noticeably larger inset between the report edge and the
+     Overall/KPI content; Bookings previously used only 26px.
+  */
+
+  @media(min-width:761px){
+    /* Match XPO's inner report content inset. */
+    #bookingsTab .booking-report-scroll .section{
+      padding-left:56px!important;
+      padding-right:56px!important;
+    }
+
+    /* Match the first KPI's text inset to XPO's SPENT card.
+       Previously Bookings used 18px while XPO visually uses ~44px. */
+    #bookingsTab .booking-kpi-strip .kpi{
+      padding-left:44px!important;
+      padding-right:44px!important;
+    }
+  }
+
+  /* Keep compact spacing on smaller screens. */
+  @media(max-width:760px){
+    #bookingsTab .booking-report-scroll .section{
+      padding-left:18px!important;
+      padding-right:18px!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi{
+      padding-left:18px!important;
+      padding-right:18px!important;
+    }
+  }
+
+
+  /* ================= v40: OVERALL BOOKING PERFORMANCE EXPANSION ================= */
+
+  #bookingsTab .booking-kpi-strip{
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;
+    margin-bottom:0!important;
+  }
+
+  #bookingsTab .booking-kpi-strip .kpi{
+    min-width:0!important;
+  }
+
+  #bookingsTab .booking-kpi-strip .kvalue{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  /* Main chart + right-side Performance Overview, modeled on XPO's composition. */
+  #bookingsTab .booking-performance-panel{
+    display:grid;
+    grid-template-columns:minmax(0,3.2fr) minmax(250px,1fr);
+    min-height:400px;
+    margin:0 0 22px;
+    border:1px solid #ddd9e0;
+    border-top:0;
+    background:#fff;
+  }
+
+  #bookingsTab .booking-performance-chart-pane{
+    min-width:0;
+    padding:22px 22px 14px;
+    border-right:1px solid #e4e1e6;
+    background:#fff;
+  }
+
+  #bookingsTab .booking-performance-overview{
+    padding:22px 22px 18px;
+    background:#fff;
+  }
+
+  #bookingsTab .booking-performance-title{
+    margin:0 0 14px;
+    color:#222025;
+    font-size:18px!important;
+    line-height:1.25;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .booking-performance-chart{
+    width:100%;
+    height:300px;
+    display:block;
+    overflow:visible;
+  }
+
+  #bookingsTab .booking-chart-grid{
+    stroke:#e9e7eb;
+    stroke-width:1;
+    vector-effect:non-scaling-stroke;
+  }
+
+  #bookingsTab .booking-chart-axis,
+  #bookingsTab .booking-chart-xlabel{
+    fill:#7f7984;
+    font-size:10px;
+    font-family:Roboto,Arial,sans-serif;
+    font-weight:400;
+  }
+
+  #bookingsTab .booking-chart-axis-title{
+    fill:#6f6974;
+    font-size:10px;
+    font-family:Roboto,Arial,sans-serif;
+    font-weight:500;
+  }
+
+  #bookingsTab .booking-chart-xlabel{
+    font-size:9px;
+  }
+
+  #bookingsTab .booking-chart-bar{
+    fill:#c8c4ff;
+    opacity:.76;
+  }
+
+  #bookingsTab .booking-chart-bar:hover{
+    fill:#a9a1ff;
+    opacity:1;
+  }
+
+  #bookingsTab .booking-chart-revenue-line{
+    fill:none;
+    stroke:#36333a;
+    stroke-width:1.7;
+    vector-effect:non-scaling-stroke;
+  }
+
+  #bookingsTab .booking-chart-hit{
+    fill:transparent;
+    stroke:transparent;
+    cursor:pointer;
+  }
+
+  #bookingsTab .booking-chart-empty{
+    fill:#a09aa5;
+    font-size:13px;
+    text-anchor:middle;
+    font-family:Roboto,Arial,sans-serif;
+  }
+
+  #bookingsTab .booking-performance-legend{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:18px;
+    margin-top:2px;
+    color:#403c44;
+    font-size:12px!important;
+    font-weight:400;
+  }
+
+  #bookingsTab .booking-performance-legend span{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+
+  #bookingsTab .booking-legend-bar{
+    width:10px;
+    height:10px;
+    display:inline-block;
+    border-radius:50%;
+    background:#c8c4ff;
+  }
+
+  #bookingsTab .booking-legend-line{
+    width:18px;
+    height:0;
+    display:inline-block;
+    border-top:2px solid #36333a;
+  }
+
+  #bookingsTab .booking-overview-metric{
+    margin:0 0 24px;
+  }
+
+  #bookingsTab .booking-overview-metric strong{
+    display:block;
+    margin-bottom:3px;
+    color:#5b4cf5;
+    font-size:24px!important;
+    line-height:1.05;
+    font-weight:600!important;
+    letter-spacing:-.02em;
+  }
+
+  #bookingsTab .booking-overview-metric span{
+    display:block;
+    color:#49454d;
+    font-size:12px!important;
+    line-height:1.35;
+    font-weight:400;
+  }
+
+  @media(max-width:1180px){
+    #bookingsTab .booking-kpi-strip{
+      grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi:nth-child(3){
+      border-right:0!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi:nth-child(n+4){
+      border-top:1px solid #e3e0e5!important;
+    }
+
+    #bookingsTab .booking-performance-panel{
+      grid-template-columns:1fr;
+    }
+
+    #bookingsTab .booking-performance-chart-pane{
+      border-right:0;
+      border-bottom:1px solid #e4e1e6;
+    }
+
+    #bookingsTab .booking-performance-overview{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    #bookingsTab .booking-performance-overview .booking-performance-title{
+      grid-column:1/-1;
+      margin-bottom:0;
+    }
+
+    #bookingsTab .booking-overview-metric{
+      margin-bottom:0;
+    }
+  }
+
+  @media(max-width:760px){
+    #bookingsTab .booking-kpi-strip{
+      grid-template-columns:1fr!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi{
+      border-right:0!important;
+      border-top:1px solid #e3e0e5!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi:first-child{
+      border-top:0!important;
+    }
+
+    #bookingsTab .booking-performance-overview{
+      grid-template-columns:1fr;
+    }
+
+    #bookingsTab .booking-performance-chart{
+      height:250px;
+    }
+  }
+
+
+  /* ================= v41: XPO-LIKE BOOKING OVERVIEW POLISH ================= */
+
+  /* One single KPI strip, separated only by vertical dividers. */
+  #bookingsTab .booking-kpi-strip{
+    display:grid!important;
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;
+    gap:0!important;
+    margin:0!important;
+    padding:0!important;
+    border:1px solid #ddd9e0!important;
+    border-bottom:0!important;
+    border-radius:0!important;
+    background:#fff!important;
+    box-shadow:none!important;
+    overflow:hidden!important;
+  }
+
+  #bookingsTab .booking-kpi-strip .kpi{
+    min-height:108px!important;
+    margin:0!important;
+    padding:17px 22px 16px!important;
+    border:0!important;
+    border-right:1px solid #e4e1e6!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+    background:#fff!important;
+  }
+
+  #bookingsTab .booking-kpi-strip .kpi:last-child{
+    border-right:0!important;
+  }
+
+  #bookingsTab .booking-kpi-strip .klabel{
+    margin-bottom:7px!important;
+    font-size:13px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .booking-kpi-strip .kvalue{
+    margin-bottom:6px!important;
+    font-size:24px!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .booking-kpi-strip .trend{
+    font-size:12px!important;
+  }
+
+  /* Chart and KPI strip read as one continuous XPO-style module. */
+  #bookingsTab .booking-performance-panel{
+    grid-template-columns:minmax(0,3.35fr) minmax(285px,1fr)!important;
+    min-height:486px!important;
+    margin:0 0 22px!important;
+    border:1px solid #ddd9e0!important;
+    border-top:1px solid #e4e1e6!important;
+    background:#fff!important;
+  }
+
+  #bookingsTab .booking-performance-chart-pane{
+    padding:24px 28px 18px!important;
+  }
+
+  #bookingsTab .booking-performance-overview{
+    padding:24px 28px 20px!important;
+  }
+
+  #bookingsTab .booking-performance-title{
+    margin-bottom:18px!important;
+    font-size:20px!important;
+    line-height:1.25!important;
+    font-weight:500!important;
+  }
+
+  /* Taller chart, closer to XPO proportions. */
+  #bookingsTab .booking-performance-chart{
+    width:100%!important;
+    height:380px!important;
+    min-height:380px!important;
+  }
+
+  /* XPO-like light blue bars. */
+  #bookingsTab .booking-chart-bar{
+    fill:#b9dcff!important;
+    opacity:.9!important;
+  }
+
+  #bookingsTab .booking-chart-bar:hover,
+  #bookingsTab .booking-chart-bar.is-selected{
+    fill:#91c8ff!important;
+    opacity:1!important;
+  }
+
+  /* Larger chart typography for readability. */
+  #bookingsTab .booking-chart-axis,
+  #bookingsTab .booking-chart-xlabel{
+    fill:#65616a!important;
+    font-size:13px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .booking-chart-axis-title{
+    fill:#55515a!important;
+    font-size:13px!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .booking-chart-xlabel{
+    font-size:11.5px!important;
+  }
+
+  #bookingsTab .booking-chart-grid{
+    stroke:#e4e2e6!important;
+  }
+
+  #bookingsTab .booking-chart-revenue-line{
+    stroke:#3c3a3f!important;
+    stroke-width:1.9!important;
+  }
+
+  #bookingsTab .booking-performance-legend{
+    gap:22px!important;
+    margin-top:8px!important;
+    font-size:13px!important;
+  }
+
+  #bookingsTab .booking-legend-bar{
+    background:#b9dcff!important;
+  }
+
+  #bookingsTab .booking-performance-overview .booking-performance-title{
+    font-size:20px!important;
+  }
+
+  #bookingsTab .booking-overview-metric{
+    margin-bottom:28px!important;
+  }
+
+  #bookingsTab .booking-overview-metric strong{
+    font-size:26px!important;
+  }
+
+  #bookingsTab .booking-overview-metric span{
+    font-size:13px!important;
+  }
+
+  /* XPO-like white chart tooltip. */
+  .tooltip.xpo-chart-tip{
+    max-width:260px!important;
+    padding:10px 12px!important;
+    border:1px solid #9dbce5!important;
+    border-radius:2px!important;
+    background:#fff!important;
+    color:#242126!important;
+    box-shadow:0 3px 10px rgba(0,0,0,.16)!important;
+    font-size:13px!important;
+    line-height:1.38!important;
+    transform:translate(12px,-105%)!important;
+  }
+
+  .tooltip.xpo-chart-tip strong{
+    display:block!important;
+    margin-bottom:3px!important;
+    color:#242126!important;
+    font-size:13px!important;
+    font-weight:600!important;
+  }
+
+  .tooltip.xpo-chart-tip small{
+    display:block!important;
+    margin:0!important;
+    color:#242126!important;
+    font-size:12px!important;
+    line-height:1.45!important;
+  }
+
+  @media(max-width:1180px){
+    #bookingsTab .booking-performance-panel{
+      min-height:auto!important;
+    }
+
+    #bookingsTab .booking-performance-chart{
+      height:340px!important;
+      min-height:340px!important;
+    }
+  }
+
+
+  /* ================= v46: RECOVERY + FULL XPO-LIKE CHART ================= */
+
+  /* Continuous KPI strip with short inset dividers like XPO. */
+  #bookingsTab .booking-kpi-strip .kpi{
+    position:relative!important;
+    border-right:0!important;
+  }
+
+  #bookingsTab .booking-kpi-strip .kpi:not(:last-child)::after{
+    content:"";
+    position:absolute;
+    right:0;
+    top:18px;
+    bottom:18px;
+    width:1px;
+    background:#e2dfe5;
+  }
+
+  /* Large chart pane, narrower Performance Overview rail. */
+  #bookingsTab .booking-performance-panel{
+    grid-template-columns:minmax(0,4fr) minmax(320px,1fr)!important;
+    min-height:535px!important;
+  }
+
+  #bookingsTab .booking-performance-chart-pane{
+    min-width:0!important;
+    padding:24px 22px 18px!important;
+  }
+
+  /* Fill the pane edge-to-edge like XPO. */
+  #bookingsTab .booking-performance-chart{
+    width:100%!important;
+    height:430px!important;
+    min-height:430px!important;
+    max-width:none!important;
+    display:block!important;
+  }
+
+  #bookingsTab .booking-chart-axis-title{
+    font-size:13px!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .booking-chart-axis-title-left,
+  #bookingsTab .booking-chart-axis-left{
+    fill:#4b9ef7!important;
+  }
+
+  #bookingsTab .booking-chart-axis-title-right,
+  #bookingsTab .booking-chart-axis-right{
+    fill:#4d4951!important;
+  }
+
+  #bookingsTab .booking-chart-xlabel{
+    font-size:11px!important;
+    fill:#6e6973!important;
+  }
+
+  @media(max-width:1180px){
+    #bookingsTab .booking-performance-panel{
+      grid-template-columns:1fr!important;
+      min-height:auto!important;
+    }
+
+    #bookingsTab .booking-performance-chart{
+      height:360px!important;
+      min-height:360px!important;
+    }
+  }
+
+
+  /* ================= v47: TRUE DAILY XPO-LIKE BOOKING CHART ================= */
+
+  #bookingsTab .booking-performance-panel{
+    grid-template-columns:minmax(0,4.2fr) minmax(300px,1fr)!important;
+    min-height:500px!important;
+  }
+
+  #bookingsTab .booking-performance-chart-pane{
+    min-width:0!important;
+    padding:24px 26px 14px!important;
+  }
+
+  /* Intentionally fill the entire left pane like the embedded XPO chart. */
+  #bookingsTab .booking-performance-chart{
+    width:100%!important;
+    height:400px!important;
+    min-height:400px!important;
+    max-width:none!important;
+    display:block!important;
+  }
+
+  #bookingsTab .booking-chart-bar{
+    fill:#b7d7f4!important;
+    opacity:1!important;
+  }
+
+  #bookingsTab .booking-chart-revenue-line{
+    fill:none!important;
+    stroke:#464247!important;
+    stroke-width:1.8!important;
+    vector-effect:non-scaling-stroke!important;
+  }
+
+  #bookingsTab .booking-chart-revenue-point{
+    fill:#464247!important;
+    stroke:#fff!important;
+    stroke-width:1.1!important;
+    vector-effect:non-scaling-stroke!important;
+  }
+
+  #bookingsTab .booking-chart-hover-zone{
+    fill:transparent!important;
+    stroke:none!important;
+    cursor:crosshair!important;
+  }
+
+  #bookingsTab .booking-chart-axis,
+  #bookingsTab .booking-chart-xlabel{
+    font-size:12px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .booking-chart-axis-title{
+    font-size:13px!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .booking-chart-axis-title-left,
+  #bookingsTab .booking-chart-axis-left{
+    fill:#4d9de8!important;
+  }
+
+  #bookingsTab .booking-chart-axis-title-right,
+  #bookingsTab .booking-chart-axis-right{
+    fill:#4d4951!important;
+  }
+
+  #bookingsTab .booking-performance-legend{
+    margin-top:2px!important;
+    font-size:13px!important;
+  }
+
+  #bookingsTab .booking-legend-bar{
+    background:#b7d7f4!important;
+  }
+
+  @media(max-width:1180px){
+    #bookingsTab .booking-performance-panel{
+      grid-template-columns:1fr!important;
+      min-height:auto!important;
+    }
+
+    #bookingsTab .booking-performance-chart{
+      height:360px!important;
+      min-height:360px!important;
+    }
+  }
+
+
+  /* ================= v48: SIMPLE DAILY DUAL-LINE CHART ================= */
+
+  #bookingsTab .booking-performance-panel{
+    grid-template-columns:minmax(0,4.2fr) minmax(300px,1fr)!important;
+    min-height:500px!important;
+  }
+
+  #bookingsTab .booking-performance-chart-pane{
+    min-width:0!important;
+    padding:24px 26px 14px!important;
+  }
+
+  #bookingsTab .booking-performance-chart{
+    width:100%!important;
+    height:400px!important;
+    min-height:400px!important;
+    max-width:none!important;
+    display:block!important;
+  }
+
+  #bookingsTab .booking-chart-spent-line{
+    fill:none!important;
+    stroke:#454247!important;
+    stroke-width:2!important;
+    stroke-linejoin:round!important;
+    stroke-linecap:round!important;
+    vector-effect:non-scaling-stroke!important;
+  }
+
+  #bookingsTab .booking-chart-revenue-line{
+    fill:none!important;
+    stroke:#e2bd16!important;
+    stroke-width:2!important;
+    stroke-linejoin:round!important;
+    stroke-linecap:round!important;
+    vector-effect:non-scaling-stroke!important;
+  }
+
+  #bookingsTab .booking-chart-hover-zone{
+    fill:transparent!important;
+    stroke:none!important;
+    cursor:crosshair!important;
+  }
+
+  #bookingsTab .booking-chart-axis,
+  #bookingsTab .booking-chart-xlabel{
+    font-size:12px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .booking-chart-axis-title{
+    font-size:13px!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .booking-chart-axis-title-left,
+  #bookingsTab .booking-chart-axis-left{
+    fill:#454247!important;
+  }
+
+  #bookingsTab .booking-chart-axis-title-right,
+  #bookingsTab .booking-chart-axis-right{
+    fill:#d2a900!important;
+  }
+
+  #bookingsTab .booking-performance-legend{
+    margin-top:4px!important;
+    font-size:13px!important;
+  }
+
+  #bookingsTab .booking-legend-spent-line,
+  #bookingsTab .booking-legend-revenue-line{
+    display:inline-block;
+    width:20px;
+    height:0;
+    border-top:2px solid;
+  }
+
+  #bookingsTab .booking-legend-spent-line{
+    border-color:#454247;
+  }
+
+  #bookingsTab .booking-legend-revenue-line{
+    border-color:#e2bd16;
+  }
+
+  @media(max-width:1180px){
+    #bookingsTab .booking-performance-panel{
+      grid-template-columns:1fr!important;
+      min-height:auto!important;
+    }
+
+    #bookingsTab .booking-performance-chart{
+      height:360px!important;
+      min-height:360px!important;
+    }
+  }
+
+
+  /* ================= v49: CHART GEOMETRY + FOCUS HOTFIX ================= */
+
+  /* Fixed overview rail prevents the chart from pushing under / past it. */
+  #bookingsTab .booking-performance-panel{
+    grid-template-columns:minmax(0,1fr) 330px!important;
+    min-height:560px!important;
+    overflow:hidden!important;
+  }
+
+  #bookingsTab .booking-performance-chart-pane{
+    min-width:0!important;
+    width:auto!important;
+    overflow:hidden!important;
+    padding:24px 28px 18px!important;
+  }
+
+  /* Taller, more balanced chart. JS matches the viewBox to this real size. */
+  #bookingsTab .booking-performance-chart{
+    width:100%!important;
+    height:460px!important;
+    min-height:460px!important;
+    max-width:100%!important;
+    display:block!important;
+    overflow:hidden!important;
+  }
+
+  #bookingsTab .booking-performance-overview{
+    width:330px!important;
+    min-width:330px!important;
+    box-sizing:border-box!important;
+  }
+
+  /* Two DAILY lines. */
+  #bookingsTab .booking-chart-spent-line{
+    fill:none!important;
+    stroke:#454247!important;
+    stroke-width:2!important;
+    stroke-linecap:round!important;
+    stroke-linejoin:round!important;
+    vector-effect:non-scaling-stroke!important;
+  }
+
+  #bookingsTab .booking-chart-revenue-line{
+    fill:none!important;
+    stroke:#e2bd16!important;
+    stroke-width:2!important;
+    stroke-linecap:round!important;
+    stroke-linejoin:round!important;
+    vector-effect:non-scaling-stroke!important;
+  }
+
+  /* Hover only: no focus box, no selected box, no click cursor. */
+  #bookingsTab .booking-chart-hover-zone{
+    fill:transparent!important;
+    stroke:none!important;
+    outline:none!important;
+    cursor:default!important;
+  }
+
+  #bookingsTab .booking-chart-hover-zone:focus,
+  #bookingsTab .booking-chart-hover-zone:active,
+  #bookingsTab .booking-chart-hover-zone.is-selected{
+    outline:none!important;
+    stroke:none!important;
+    filter:none!important;
+  }
+
+  #bookingsTab .booking-chart-axis,
+  #bookingsTab .booking-chart-xlabel{
+    font-size:12px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .booking-chart-axis-title{
+    font-size:13px!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .booking-chart-axis-title-left,
+  #bookingsTab .booking-chart-axis-left{
+    fill:#454247!important;
+  }
+
+  #bookingsTab .booking-chart-axis-title-right,
+  #bookingsTab .booking-chart-axis-right{
+    fill:#d2a900!important;
+  }
+
+  #bookingsTab .booking-chart-data-note{
+    fill:#8a8490;
+    font-size:12px;
+    font-family:Roboto,Arial,sans-serif;
+    font-weight:400;
+  }
+
+  @media(max-width:1180px){
+    #bookingsTab .booking-performance-panel{
+      grid-template-columns:1fr!important;
+      min-height:auto!important;
+      overflow:visible!important;
+    }
+
+    #bookingsTab .booking-performance-overview{
+      width:100%!important;
+      min-width:0!important;
+    }
+
+    #bookingsTab .booking-performance-chart{
+      height:420px!important;
+      min-height:420px!important;
+    }
+  }
+
+
+  /* ================= v50: FINAL DAILY CHART POLISH ================= */
+
+  #bookingsTab .booking-performance-panel{
+    grid-template-columns:minmax(0,1fr) 330px!important;
+    min-height:600px!important;
+    overflow:hidden!important;
+  }
+
+  #bookingsTab .booking-performance-chart-pane{
+    min-width:0!important;
+    overflow:hidden!important;
+    padding:24px 30px 18px!important;
+  }
+
+  #bookingsTab .booking-performance-chart{
+    width:100%!important;
+    height:500px!important;
+    min-height:500px!important;
+    max-width:100%!important;
+    display:block!important;
+    overflow:visible!important;
+  }
+
+  #bookingsTab .booking-chart-axis{
+    font-size:11px!important;
+    font-weight:400!important;
+    font-family:Roboto,Arial,sans-serif!important;
+  }
+
+  #bookingsTab .booking-chart-xlabel{
+    font-size:8px!important;
+    font-weight:400!important;
+    font-family:Roboto,Arial,sans-serif!important;
+    fill:#78727c!important;
+  }
+
+  #bookingsTab .booking-chart-axis-title{
+    font-size:12px!important;
+    font-weight:500!important;
+    font-family:Roboto,Arial,sans-serif!important;
+  }
+
+  #bookingsTab .booking-chart-spent-line{
+    fill:none!important;
+    stroke:#454247!important;
+    stroke-width:2.1!important;
+    stroke-linecap:round!important;
+    stroke-linejoin:round!important;
+    vector-effect:non-scaling-stroke!important;
+  }
+
+  #bookingsTab .booking-chart-revenue-line{
+    fill:none!important;
+    stroke:#e2bd16!important;
+    stroke-width:2.1!important;
+    stroke-linecap:round!important;
+    stroke-linejoin:round!important;
+    vector-effect:non-scaling-stroke!important;
+  }
+
+  .tooltip.xpo-chart-tip{
+    min-width:170px!important;
+    padding:11px 13px!important;
+    font-size:13px!important;
+    line-height:1.45!important;
+  }
+
+  .tooltip.xpo-chart-tip strong{
+    font-size:14px!important;
+  }
+
+  .tooltip.xpo-chart-tip small{
+    font-size:12px!important;
+    line-height:1.55!important;
+  }
+
+  @media(max-width:1180px){
+    #bookingsTab .booking-performance-panel{
+      grid-template-columns:1fr!important;
+      min-height:auto!important;
+    }
+
+    #bookingsTab .booking-performance-chart{
+      height:440px!important;
+      min-height:440px!important;
+    }
+  }
+
+
+  /* ================= v51: EXACT MONEY + SERIES TOGGLES + XPO HEIGHT ================= */
+
+  #bookingsTab .booking-performance-panel{
+    grid-template-columns:minmax(0,1fr) 330px!important;
+    min-height:455px!important;
+  }
+
+  #bookingsTab .booking-performance-chart-pane{
+    padding:20px 28px 12px!important;
+  }
+
+  #bookingsTab .booking-performance-chart{
+    width:100%!important;
+    height:350px!important;
+    min-height:350px!important;
+    max-width:100%!important;
+  }
+
+  #bookingsTab .booking-performance-title{
+    margin-bottom:10px!important;
+  }
+
+  #bookingsTab .booking-chart-axis{
+    font-size:9px!important;
+    font-family:Roboto,Arial,sans-serif!important;
+  }
+
+  #bookingsTab .booking-chart-xlabel{
+    font-size:7px!important;
+    font-family:Roboto,Arial,sans-serif!important;
+  }
+
+  #bookingsTab .booking-chart-axis-title{
+    font-size:11px!important;
+  }
+
+  #bookingsTab .booking-performance-legend{
+    display:flex!important;
+    justify-content:center!important;
+    align-items:center!important;
+    gap:8px!important;
+    margin-top:0!important;
+  }
+
+  #bookingsTab .booking-chart-series-toggle{
+    appearance:none;
+    border:0;
+    background:transparent;
+    padding:5px 8px;
+    border-radius:4px;
+    color:#aaa5ad;
+    font:400 11px/1.2 Roboto,Arial,sans-serif;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+
+  #bookingsTab .booking-chart-series-toggle.active{
+    color:#302d32;
+    font-weight:500;
+  }
+
+  #bookingsTab .booking-chart-series-toggle:not(.active) i{
+    opacity:.25;
+  }
+
+  #bookingsTab .booking-chart-series-toggle:hover{
+    background:#f7f6f8;
+  }
+
+  #bookingsTab .booking-chart-series-toggle:focus,
+  #bookingsTab .booking-chart-series-toggle:focus-visible{
+    outline:none!important;
+    box-shadow:none!important;
+  }
+
+  #bookingsTab .booking-legend-spent-line,
+  #bookingsTab .booking-legend-revenue-line{
+    width:18px!important;
+  }
+
+  @media(max-width:1180px){
+    #bookingsTab .booking-performance-chart{
+      height:330px!important;
+      min-height:330px!important;
+    }
+  }
+
+
+  /* ================= v52: DETERMINISTIC CHART WIDTH + REAL TOGGLES ================= */
+
+  #bookingsTab .booking-performance-chart-pane{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+    overflow:hidden!important;
+  }
+
+  #bookingsTab .booking-performance-chart{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    height:350px!important;
+    min-height:350px!important;
+    display:block!important;
+    box-sizing:border-box!important;
+  }
+
+  #bookingsTab .booking-performance-legend{
+    position:relative!important;
+    z-index:20!important;
+    pointer-events:auto!important;
+  }
+
+  #bookingsTab .booking-chart-series-toggle{
+    position:relative!important;
+    z-index:21!important;
+    pointer-events:auto!important;
+    user-select:none!important;
+  }
+
+  #bookingsTab .booking-chart-series-toggle.active{
+    opacity:1!important;
+  }
+
+  #bookingsTab .booking-chart-series-toggle:not(.active){
+    opacity:.45!important;
+  }
 </style>
 </head>
 <body>
@@ -5190,7 +6281,7 @@
             <iframe
               id="xpoFrame"
               class="xpo-frame"
-              src="about:blank"
+              src="https://dsp.knorex.com/public/reports/v2/insights/campaign?token=9tCmkOy6m6eBaKhmh1r9kebvTDdsWPg5GKlirLev"
               title="Live Ads Campaign Insights"
               loading="eager"
               allowfullscreen>
@@ -5273,21 +6364,50 @@
 
       <div class="kpis booking-kpi-strip">
         <div class="card kpi">
-          <div class="iconbox"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 9h16"/><path d="M8 14l2 2 5-5"/></svg></div>
-          <div><div class="klabel">Bookings</div><div class="kvalue" id="kBookings">—</div><div class="trend" id="kBookingsNote">Total bookings</div></div>
+          <div><div class="klabel">SPENT</div><div class="kvalue" id="kSpent">—</div><div class="trend" id="kSpentNote">Live XPO spend · selected period</div></div>
         </div>
         <div class="card kpi">
-          <div class="iconbox"><svg viewBox="0 0 24 24"><path d="M12 3v18M16 7.5c0-1.8-1.8-3-4-3s-4 1.2-4 3 1.7 2.6 4 3.2 4 1.4 4 3.5-1.8 3.3-4 3.3-4-1.2-4-3"/></svg></div>
-          <div><div class="klabel">Revenue</div><div class="kvalue" id="kRevenue">—</div><div class="trend" id="kRevenueNote">Total transaction value</div></div>
+          <div><div class="klabel">BOOKINGS</div><div class="kvalue" id="kBookings">—</div><div class="trend" id="kBookingsNote">Total bookings</div></div>
         </div>
         <div class="card kpi">
-          <div class="iconbox"><svg viewBox="0 0 24 24"><rect x="3.5" y="7" width="17" height="12" rx="2"/><path d="M6 7V5.5A1.5 1.5 0 0 1 7.5 4h9A1.5 1.5 0 0 1 18 5.5V7"/><circle cx="16.5" cy="13" r="1.5"/></svg></div>
-          <div><div class="klabel">Avg. Booking Value</div><div class="kvalue" id="kABV">—</div><div class="trend" id="kABVNote">Average per booking</div></div>
+          <div><div class="klabel">REVENUE</div><div class="kvalue" id="kRevenue">—</div><div class="trend" id="kRevenueNote">Total transaction value</div></div>
         </div>
         <div class="card kpi">
-          <div class="iconbox"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9S14.5 18.3 12 21c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z"/></svg></div>
-          <div><div class="klabel">Top Source Market</div><div class="kvalue" id="kTopMarket">—</div><div class="trend" id="kTopMarketNote">By booking count</div></div>
+          <div><div class="klabel">AVG. BOOKING VALUE</div><div class="kvalue" id="kABV">—</div><div class="trend" id="kABVNote">Average per booking</div></div>
         </div>
+        <div class="card kpi">
+          <div><div class="klabel">TOP SOURCE MARKET</div><div class="kvalue" id="kTopMarket">—</div><div class="trend" id="kTopMarketNote">By booking count</div></div>
+        </div>
+      </div>
+
+      <div class="booking-performance-panel">
+        <div class="booking-performance-chart-pane">
+          <div class="booking-performance-title">Daily Performance</div>
+          <svg id="bookingPerformanceChart" class="booking-performance-chart" viewBox="0 0 1200 460" preserveAspectRatio="none" role="img" aria-label="Daily spent and revenue performance chart"></svg>
+          <div class="booking-performance-legend" aria-label="Chart series selector">
+            <button type="button" id="bookingChartSpentToggle" class="booking-chart-series-toggle active" aria-pressed="true"><i class="booking-legend-spent-line"></i>Spent</button>
+            <button type="button" id="bookingChartRevenueToggle" class="booking-chart-series-toggle active" aria-pressed="true"><i class="booking-legend-revenue-line"></i>Revenue</button>
+          </div>
+        </div>
+
+        <aside class="booking-performance-overview">
+          <div class="booking-performance-title">Performance Overview</div>
+
+          <div class="booking-overview-metric">
+            <strong id="poBookings">—</strong>
+            <span>Bookings</span>
+          </div>
+
+          <div class="booking-overview-metric">
+            <strong id="poRoomNights">—</strong>
+            <span>Room Nights</span>
+          </div>
+
+          <div class="booking-overview-metric">
+            <strong id="poRevenue">—</strong>
+            <span>Revenue</span>
+          </div>
+        </aside>
       </div>
 
       <div class="card collapsible-card booking-details-card">
@@ -5590,6 +6710,10 @@
       mode: "embed",
       reportUrl: "https://dsp.knorex.com/public/reports/v2/insights/campaign?token=9tCmkOy6m6eBaKhmh1r9kebvTDdsWPg5GKlirLev",
 
+      // XPO campaign flight start. Used as the earliest selectable/reporting date
+      // even if the first attributed booking happened later.
+      flightStartDate: "2025-10-01",
+
       // Shared Media Console GAS GAS.
       // Deploy the GAS web app ONCE, then keep the SAME URL for every client dashboard.
       gasBridgeUrl: "https://script.google.com/macros/s/AKfycbxC_bO8oIC7PhuBFROi8Ck3AmCRK0v5BGL_ENa6N8BJs7qpMmdyWLbF6fuqaZbkMlId/exec"
@@ -5613,7 +6737,10 @@
     const n = parseFloat(String(v ?? '').replace(/[$฿,\s]/g,''));
     return Number.isFinite(n) ? n : 0;
   };
-  const money = v => DASHBOARD_CONFIG.bookings.currencySymbol + Math.round(v).toLocaleString('en-US');
+  const money = v => DASHBOARD_CONFIG.bookings.currencySymbol + Number(v||0).toLocaleString('en-US',{
+    minimumFractionDigits:2,
+    maximumFractionDigits:2
+  });
   const shortMoney = v => {
     const n=Number(v||0), a=Math.abs(n);
     const s=DASHBOARD_CONFIG.bookings.currencySymbol;
@@ -6091,13 +7218,491 @@
     );
   }
 
+  function compactAxisNumber(v){
+    const n=Number(v||0);
+    if(Math.abs(n)>=1000000)return `${(n/1000000).toFixed(n>=10000000?0:1)}M`;
+    if(Math.abs(n)>=1000)return `${(n/1000).toFixed(n>=100000?0:1)}k`;
+    return Number.isInteger(n)?String(n):n.toFixed(1);
+  }
+
+  function bookingDateKey(d){
+    return d ? `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}` : '';
+  }
+
+  function bookingChartDateLabel(d,includeYear=false){
+    return d.toLocaleDateString('en-GB',includeYear
+      ? {day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'}
+      : {day:'2-digit',month:'short',timeZone:'UTC'});
+  }
+
+  function money2(v){
+    const n=Number(v||0);
+    return DASHBOARD_CONFIG.bookings.currencySymbol + n.toLocaleString('en-US',{
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    });
+  }
+
+  function parseXpoDailyDate(v){
+    if(v===null || v===undefined || v==='')return null;
+
+    if(v instanceof Date && !isNaN(v)){
+      return new Date(Date.UTC(v.getUTCFullYear(),v.getUTCMonth(),v.getUTCDate()));
+    }
+
+    if(typeof v==='number'){
+      // XPO timestamps are Unix ms/sec, not Google Sheets serial dates.
+      const ms=v>100000000000 ? v : (v>1000000000 ? v*1000 : NaN);
+      if(Number.isFinite(ms)){
+        const d=new Date(ms);
+        if(!isNaN(d)){
+          // Convert using Bangkok reporting date.
+          const parts=new Intl.DateTimeFormat('en-CA',{
+            timeZone:'Asia/Bangkok',
+            year:'numeric',month:'2-digit',day:'2-digit'
+          }).formatToParts(d);
+          const get=t=>parts.find(p=>p.type===t)?.value;
+          return new Date(Date.UTC(+get('year'),+get('month')-1,+get('day')));
+        }
+      }
+    }
+
+    const s=String(v).trim();
+    if(!s)return null;
+
+    if(/^\d{12,13}$/.test(s))return parseXpoDailyDate(Number(s));
+    if(/^\d{10}$/.test(s))return parseXpoDailyDate(Number(s));
+
+    const iso=s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if(iso)return new Date(Date.UTC(+iso[1],+iso[2]-1,+iso[3]));
+
+    return parseDate(s);
+  }
+
+  function normalizeDailySpendRows(data){
+    const root =
+      Array.isArray(data) ? data :
+      Array.isArray(data?.rows) ? data.rows :
+      Array.isArray(data?.content) ? data.content :
+      Array.isArray(data?.data) ? data.data :
+      Array.isArray(data?.data?.rows) ? data.data.rows :
+      Array.isArray(data?.data?.content) ? data.data.content :
+      [];
+
+    const out=[];
+
+    root.forEach(r=>{
+      const rawDate =
+        r?.date ??
+        r?.day ??
+        r?.groupValue ??
+        r?.reportDate ??
+        r?.startDate ??
+        r?.periodStart ??
+        r?.dateTime ??
+        r?.datetime ??
+        r?.timestamp ??
+        '';
+
+      const d=parseXpoDailyDate(rawDate);
+      if(!d)return;
+
+      const rawSpend =
+        r?.spend ??
+        r?.spent ??
+        r?.budgetSpentPartnerCurrency ??
+        r?.budgetSpentAdvertiserCurrency ??
+        r?.budgetSpent ??
+        r?.cost;
+
+      const spend=Number(rawSpend);
+      if(!Number.isFinite(spend))return;
+
+      out.push({date:d,spend});
+    });
+
+    return out;
+  }
+
+  function formatChartSpendAxis(v){
+    const n=Number(v||0);
+    if(!Number.isFinite(n))return '—';
+    return n.toLocaleString('en-US',{
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    });
+  }
+
+  function formatChartRevenueAxis(v){
+    const n=Number(v||0);
+    if(!Number.isFinite(n))return '—';
+    return n.toLocaleString('en-US',{
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    });
+  }
+
+  function syncBookingChartSeriesUI(){
+    const spentBtn=document.getElementById('bookingChartSpentToggle');
+    const revenueBtn=document.getElementById('bookingChartRevenueToggle');
+
+    if(spentBtn){
+      spentBtn.classList.toggle('active',!!BOOKING_CHART_SERIES.spent);
+      spentBtn.setAttribute('aria-pressed',BOOKING_CHART_SERIES.spent?'true':'false');
+    }
+
+    if(revenueBtn){
+      revenueBtn.classList.toggle('active',!!BOOKING_CHART_SERIES.revenue);
+      revenueBtn.setAttribute('aria-pressed',BOOKING_CHART_SERIES.revenue?'true':'false');
+    }
+  }
+
+  function toggleBookingChartSeries(series){
+    if(series!=='spent' && series!=='revenue')return;
+
+    const other=series==='spent'?'revenue':'spent';
+
+    // Always keep at least one line visible.
+    if(BOOKING_CHART_SERIES[series] && !BOOKING_CHART_SERIES[other])return;
+
+    BOOKING_CHART_SERIES[series]=!BOOKING_CHART_SERIES[series];
+    syncBookingChartSeriesUI();
+    renderBookingPerformanceChart(currentPeriodRows());
+  }
+
+  function bindBookingChartSeriesControls(){
+    const spentBtn=document.getElementById('bookingChartSpentToggle');
+    const revenueBtn=document.getElementById('bookingChartRevenueToggle');
+
+    if(spentBtn && spentBtn.dataset.bound!=='1'){
+      spentBtn.dataset.bound='1';
+      spentBtn.addEventListener('click',e=>{
+        e.preventDefault();
+        e.stopPropagation();
+        toggleBookingChartSeries('spent');
+      });
+    }
+
+    if(revenueBtn && revenueBtn.dataset.bound!=='1'){
+      revenueBtn.dataset.bound='1';
+      revenueBtn.addEventListener('click',e=>{
+        e.preventDefault();
+        e.stopPropagation();
+        toggleBookingChartSeries('revenue');
+      });
+    }
+
+    syncBookingChartSeriesUI();
+  }
+
+  function scheduleBookingChartRender(){
+    if(bookingChartRenderRaf){
+      cancelAnimationFrame(bookingChartRenderRaf);
+    }
+
+    bookingChartRenderRaf=requestAnimationFrame(()=>{
+      bookingChartRenderRaf=requestAnimationFrame(()=>{
+        bookingChartRenderRaf=0;
+
+        const bookingsTab=document.getElementById('bookingsTab');
+        const svg=document.getElementById('bookingPerformanceChart');
+
+        if(!bookingsTab || !svg || !bookingsTab.classList.contains('active'))return;
+
+        renderBookingPerformanceChart(currentPeriodRows());
+      });
+    });
+  }
+
+  function initBookingChartResizeObserver(){
+    bindBookingChartSeriesControls();
+
+    const pane=document.querySelector('#bookingsTab .booking-performance-chart-pane');
+    if(!pane)return;
+
+    if('ResizeObserver' in window){
+      bookingChartResizeObserver=new ResizeObserver(entries=>{
+        const entry=entries && entries[0];
+        if(!entry)return;
+
+        const w=Math.round(entry.contentRect.width||0);
+        const h=Math.round(entry.contentRect.height||0);
+
+        if(
+          Math.abs(w-bookingChartLastObservedWidth)>2 ||
+          Math.abs(h-bookingChartLastObservedHeight)>2
+        ){
+          bookingChartLastObservedWidth=w;
+          bookingChartLastObservedHeight=h;
+          scheduleBookingChartRender();
+        }
+      });
+
+      bookingChartResizeObserver.observe(pane);
+    }
+
+    window.addEventListener('resize',scheduleBookingChartRender,{passive:true});
+  }
+
+  function bindBookingChartHover(){
+    document.querySelectorAll('.booking-chart-tip-target').forEach(el=>{
+      if(el.dataset.chartBound==='1')return;
+      el.dataset.chartBound='1';
+
+      el.addEventListener('mouseenter',e=>{
+        showTip(el,e.clientX,e.clientY);
+      });
+
+      el.addEventListener('mousemove',e=>{
+        showTip(el,e.clientX,e.clientY);
+      });
+
+      el.addEventListener('mouseleave',()=>{
+        tooltip.classList.remove('show');
+        tooltip.classList.remove('xpo-chart-tip');
+      });
+
+      // Intentionally no click/focus/select behavior for this chart.
+      el.addEventListener('mousedown',e=>e.preventDefault());
+    });
+  }
+
+  function renderBookingPerformanceChart(rows){
+    const svg=document.getElementById('bookingPerformanceChart');
+    if(!svg)return;
+
+    syncBookingChartSeriesUI();
+
+    const range=integratedPeriodRange();
+    let start=range.start;
+    let end=range.end;
+
+    if(!start || !end){
+      const dates=rows.map(r=>r.bookingDate).filter(Boolean).sort((a,b)=>a-b);
+      start=dates[0]||null;
+      end=dates[dates.length-1]||null;
+    }
+
+    if(!start || !end || end<start){
+      svg.innerHTML='<text x="50%" y="50%" class="booking-chart-empty">No data</text>';
+      return;
+    }
+
+    const bookingByDate=new Map();
+
+    rows.forEach(r=>{
+      if(!r.bookingDate)return;
+
+      const key=bookingDateKey(r.bookingDate);
+      const cur=bookingByDate.get(key)||{bookings:0,revenue:0};
+
+      cur.bookings+=1;
+      cur.revenue+=Number(r.value||0);
+
+      bookingByDate.set(key,cur);
+    });
+
+    // True daily axis — one point for every calendar day.
+    const points=[];
+    const cursor=new Date(start.getTime());
+    let guard=0;
+
+    while(cursor<=end && guard<1500){
+      const d=new Date(cursor.getTime());
+      const key=bookingDateKey(d);
+      const booking=bookingByDate.get(key)||{bookings:0,revenue:0};
+
+      points.push({
+        d,
+        key,
+        spent:Number(XPO_DAILY_SPEND.get(key)||0),
+        bookings:booking.bookings,
+        revenue:booking.revenue
+      });
+
+      cursor.setUTCDate(cursor.getUTCDate()+1);
+      guard++;
+    }
+
+    if(!points.length){
+      svg.innerHTML='<text x="50%" y="50%" class="booking-chart-empty">No data</text>';
+      return;
+    }
+
+    const bookingsTab=document.getElementById('bookingsTab');
+
+    // Critical: do not measure/render the SVG while the Bookings tab is hidden.
+    // Hidden elements report width=0 and were the reason the chart randomly
+    // appeared shrunken after refresh.
+    if(!bookingsTab || !bookingsTab.classList.contains('active')){
+      svg.dataset.pendingRender='1';
+      return;
+    }
+
+    const W=Math.round(svg.clientWidth||0);
+    const H=Math.round(svg.clientHeight||0);
+
+    if(W<500 || H<220){
+      svg.dataset.pendingRender='1';
+      return;
+    }
+
+    svg.dataset.pendingRender='0';
+
+    // The viewBox exactly matches the currently rendered CSS pixel size.
+    // Because both ratios are identical, preserveAspectRatio="none" fills the
+    // pane edge-to-edge without stretching text or leaving side letterboxing.
+    svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    svg.setAttribute('preserveAspectRatio','none');
+
+    // Wider margins because axis values now show exact 2 decimals.
+    const L=118;
+    const R=158;
+    const T=24;
+    const B=58;
+    const plotW=W-L-R;
+    const plotH=H-T-B;
+
+    const rawMaxSpent=Math.max(0,...points.map(p=>Number(p.spent)||0));
+    const rawMaxRevenue=Math.max(0,...points.map(p=>Number(p.revenue)||0));
+
+    const hasDailySpent=rawMaxSpent>0;
+    const maxSpent=hasDailySpent?rawMaxSpent:1;
+    const maxRevenue=Math.max(1,rawMaxRevenue);
+
+    const x=i => L + (points.length===1 ? plotW/2 : i*(plotW/(points.length-1)));
+    const ySpent=v => T + plotH*(1-v/maxSpent);
+    const yRevenue=v => T + plotH*(1-v/maxRevenue);
+
+    let grid='';
+
+    for(let i=0;i<=4;i++){
+      const yy=T+plotH*(i/4);
+      const sVal=maxSpent*(1-i/4);
+      const rVal=maxRevenue*(1-i/4);
+
+      grid+=`
+        <line x1="${L}" y1="${yy}" x2="${W-R}" y2="${yy}" class="booking-chart-grid"/>
+        ${BOOKING_CHART_SERIES.spent
+          ? `<text x="${L-14}" y="${yy+4}" text-anchor="end" class="booking-chart-axis booking-chart-axis-left">${hasDailySpent?formatChartSpendAxis(sVal):'—'}</text>`
+          : ''}
+        ${BOOKING_CHART_SERIES.revenue
+          ? `<text x="${W-R+15}" y="${yy+4}" text-anchor="start" class="booking-chart-axis booking-chart-axis-right">${formatChartRevenueAxis(rVal)}</text>`
+          : ''}`;
+    }
+
+    const spentLine=(BOOKING_CHART_SERIES.spent && hasDailySpent)
+      ? `<polyline class="booking-chart-spent-line" points="${points.map((p,i)=>`${x(i).toFixed(2)},${ySpent(p.spent).toFixed(2)}`).join(' ')}"/>`
+      : '';
+
+    const revenueLine=BOOKING_CHART_SERIES.revenue
+      ? `<polyline class="booking-chart-revenue-line" points="${points.map((p,i)=>`${x(i).toFixed(2)},${yRevenue(p.revenue).toFixed(2)}`).join(' ')}"/>`
+      : '';
+
+    const slot=plotW/Math.max(points.length,1);
+
+    const hoverZones=points.map((p,i)=>{
+      const x0=Math.max(L,x(i)-slot/2);
+      const x1=Math.min(W-R,x(i)+slot/2);
+      const width=Math.max(4,x1-x0);
+
+      const tip=`<strong>${bookingChartDateLabel(p.d,true)}:</strong><small>Spent: ${hasDailySpent?money2(p.spent):'—'}<br>Bookings: ${p.bookings.toLocaleString('en-US')}<br>Revenue: ${money(p.revenue)}</small>`;
+
+      return `<rect
+        class="booking-chart-hover-zone booking-chart-tip-target"
+        data-tip-theme="xpo"
+        x="${x0.toFixed(2)}"
+        y="${T}"
+        width="${width.toFixed(2)}"
+        height="${plotH}"
+        data-tip="${tip.replace(/"/g,'&quot;')}"/>`;
+    }).join('');
+
+    // Keep dates tiny. Thin labels by pixel spacing; always include final day without overlap.
+    const minLabelGapPx=58;
+    const maxLabels=Math.max(2,Math.floor(plotW/minLabelGapPx));
+    const labelStep=Math.max(1,Math.ceil((points.length-1)/(maxLabels-1)));
+    const labelIndices=[];
+
+    for(let i=0;i<points.length;i+=labelStep){
+      if(i<points.length-1)labelIndices.push(i);
+    }
+
+    if(!labelIndices.length || labelIndices[labelIndices.length-1]!==points.length-1){
+      if(labelIndices.length && x(points.length-1)-x(labelIndices[labelIndices.length-1])<minLabelGapPx){
+        labelIndices.pop();
+      }
+      labelIndices.push(points.length-1);
+    }
+
+    const xLabels=labelIndices.map(i=>{
+      const p=points[i];
+      return `<text
+        x="${x(i)}"
+        y="${H-14}"
+        text-anchor="middle"
+        class="booking-chart-xlabel">${bookingChartDateLabel(p.d)}</text>`;
+    }).join('');
+
+    let statusNote='';
+    if(BOOKING_CHART_SERIES.spent && !hasDailySpent){
+      if(XPO_DAILY_SPEND_LOADING){
+        statusNote=`<text x="${L+8}" y="${T+18}" class="booking-chart-data-note">Loading Daily Spend…</text>`;
+      }else if(XPO_DAILY_SPEND_ERROR){
+        statusNote=`<text x="${L+8}" y="${T+18}" class="booking-chart-data-note">Daily Spend unavailable</text>`;
+      }
+    }
+
+    const leftTitle=BOOKING_CHART_SERIES.spent
+      ? `<text
+          x="24"
+          y="${T+plotH/2}"
+          text-anchor="middle"
+          transform="rotate(-90 24 ${T+plotH/2})"
+          class="booking-chart-axis-title booking-chart-axis-title-left">Spent</text>`
+      : '';
+
+    const rightTitle=BOOKING_CHART_SERIES.revenue
+      ? `<text
+          x="${W-25}"
+          y="${T+plotH/2}"
+          text-anchor="middle"
+          transform="rotate(90 ${W-25} ${T+plotH/2})"
+          class="booking-chart-axis-title booking-chart-axis-title-right">Revenue</text>`
+      : '';
+
+    svg.innerHTML=`
+      ${grid}
+      ${leftTitle}
+      ${rightTitle}
+      ${spentLine}
+      ${revenueLine}
+      ${hoverZones}
+      ${xLabels}
+      ${statusNote}`;
+
+    bindBookingChartHover();
+  }
+
   function renderKPIs(rows){
     const bookings = rows.length;
-    const revenue = rows.reduce((a,r)=>a+r.value,0);
+    const revenue = rows.reduce((a,r)=>a+Number(r.value||0),0);
     const abv = bookings ? revenue/bookings : 0;
+    const roomNights = rows.reduce((a,r)=>{
+      const n=Number(r.nights);
+      return a+(Number.isFinite(n)?n:0);
+    },0);
+
     const counts = {};
     rows.forEach(r=>{if(r.country) counts[r.country]=(counts[r.country]||0)+1;});
     const top = Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
+
+    // Reset SPENT on every period change; live XPO overview updates it asynchronously.
+    XPO_OVERVIEW_SPEND=null;
+    const spentEl=document.getElementById('kSpent');
+    const spentNote=document.getElementById('kSpentNote');
+    if(spentEl)spentEl.textContent='—';
+    if(spentNote)spentNote.textContent='Loading live XPO spend...';
 
     document.getElementById('kBookings').textContent = bookings.toLocaleString('en-US');
     document.getElementById('kRevenue').textContent = money(revenue);
@@ -6105,6 +7710,15 @@
     document.getElementById('kABVNote').textContent = 'Average per booking';
     document.getElementById('kTopMarket').textContent = top ? top[0] : '—';
     document.getElementById('kTopMarketNote').textContent = top && bookings ? `${((top[1]/bookings)*100).toFixed(1)}% of total bookings` : 'By booking count';
+
+    const poBookings=document.getElementById('poBookings');
+    const poRoomNights=document.getElementById('poRoomNights');
+    const poRevenue=document.getElementById('poRevenue');
+    if(poBookings)poBookings.textContent=bookings.toLocaleString('en-US');
+    if(poRoomNights)poRoomNights.textContent=roomNights.toLocaleString('en-US',{maximumFractionDigits:1});
+    if(poRevenue)poRevenue.textContent=money(revenue);
+
+    renderBookingPerformanceChart(rows);
 
     document.getElementById('abvInsight').textContent = money(abv);
 
@@ -6395,6 +8009,19 @@
   // Region / City intentionally remain booking-only views because the two geo sources
   // should not be forced together unless they have been explicitly validated.
   let MARKET_COUNTRY_ADS=new Map();
+  let XPO_OVERVIEW_SPEND=null;
+  let XPO_DAILY_SPEND=new Map();
+  let XPO_DAILY_SPEND_LOADING=false;
+  let XPO_DAILY_SPEND_ERROR=false;
+  let BOOKING_CHART_SERIES={spent:true,revenue:true};
+
+  let bookingChartRenderRaf=0;
+  let bookingChartResizeObserver=null;
+  let bookingChartLastObservedWidth=0;
+  let bookingChartLastObservedHeight=0;
+
+  let overviewSpendRequestSeq=0;
+  let dailySpendRequestSeq=0;
 
   function marketLevelLabel(level){
     return level==='region'?'Regions':level==='city'?'Cities':'Geos';
@@ -7165,6 +8792,116 @@
     return {start:s,end:e};
   }
 
+  async function renderXpoOverviewSpend(){
+    const spendEl=document.getElementById('kSpent');
+    const noteEl=document.getElementById('kSpentNote');
+    const gasUrl=String(DASHBOARD_CONFIG.ads.gasBridgeUrl||'').trim();
+    const token=extractXpoToken();
+    const {start,end}=integratedPeriodRange();
+
+    if(!spendEl)return;
+
+    if(!gasUrl || gasUrl.includes('PASTE_SHARED_MC_XPO_GAS_WEB_APP_URL_HERE') || !token || !start || !end){
+      spendEl.textContent='—';
+      if(noteEl)noteEl.textContent='Live XPO spend unavailable';
+      return;
+    }
+
+    const seq=++overviewSpendRequestSeq;
+
+    try{
+      const base=gasUrl.replace(/\?+$/,'');
+      const qs=new URLSearchParams({
+        action:'overview',
+        token,
+        start:fmtDate(start),
+        end:fmtDate(end)
+      });
+
+      const data=await loadJsonp(`${base}${base.includes('?')?'&':'?'}${qs.toString()}`);
+      if(seq!==overviewSpendRequestSeq)return;
+
+      if(!data || data.ok===false){
+        throw new Error(data?.error || 'Shared GAS returned an error');
+      }
+
+      const spend=Number(data.spend);
+      if(!Number.isFinite(spend)){
+        throw new Error('Overview spend missing');
+      }
+
+      XPO_OVERVIEW_SPEND=spend;
+      spendEl.textContent=money(spend);
+      if(noteEl)noteEl.textContent='Live XPO spend · selected period';
+    }catch(err){
+      if(seq!==overviewSpendRequestSeq)return;
+      XPO_OVERVIEW_SPEND=null;
+      spendEl.textContent='—';
+      if(noteEl)noteEl.textContent='Update Shared GAS to enable live SPENT';
+      console.warn('XPO overview spend unavailable:',err);
+    }
+  }
+
+  async function renderXpoDailySpend(){
+    XPO_DAILY_SPEND_LOADING=true;
+    XPO_DAILY_SPEND_ERROR=false;
+    renderBookingPerformanceChart(currentPeriodRows());
+
+    const gasUrl=String(DASHBOARD_CONFIG.ads.gasBridgeUrl||'').trim();
+    const token=extractXpoToken();
+    const {start,end}=integratedPeriodRange();
+
+    if(!gasUrl || gasUrl.includes('PASTE_SHARED_MC_XPO_GAS_WEB_APP_URL_HERE') || !token || !start || !end){
+      XPO_DAILY_SPEND=new Map();
+      XPO_DAILY_SPEND_LOADING=false;
+      XPO_DAILY_SPEND_ERROR=true;
+      renderBookingPerformanceChart(currentPeriodRows());
+      return;
+    }
+
+    const seq=++dailySpendRequestSeq;
+
+    try{
+      const base=gasUrl.replace(/\?+$/,'');
+      const qs=new URLSearchParams({
+        action:'daily',
+        token,
+        start:fmtDate(start),
+        end:fmtDate(end)
+      });
+
+      const data=await loadJsonp(`${base}${base.includes('?')?'&':'?'}${qs.toString()}`);
+      if(seq!==dailySpendRequestSeq)return;
+
+      if(!data || data.ok===false){
+        throw new Error(data?.error || 'Shared GAS returned an error');
+      }
+
+      const normalized=normalizeDailySpendRows(data);
+      const map=new Map();
+
+      normalized.forEach(r=>{
+        const key=bookingDateKey(r.date);
+        map.set(key,(map.get(key)||0)+Number(r.spend||0));
+      });
+
+      XPO_DAILY_SPEND=map;
+      XPO_DAILY_SPEND_LOADING=false;
+      XPO_DAILY_SPEND_ERROR=!map.size;
+      renderBookingPerformanceChart(currentPeriodRows());
+
+    }catch(err){
+      if(seq!==dailySpendRequestSeq)return;
+
+      // Do not break the dashboard if Daily Spend is unavailable.
+      XPO_DAILY_SPEND=new Map();
+      XPO_DAILY_SPEND_LOADING=false;
+      XPO_DAILY_SPEND_ERROR=true;
+      renderBookingPerformanceChart(currentPeriodRows());
+      console.warn('XPO daily spend unavailable:',err);
+    }
+  }
+
   async function renderIntegratedMarketPerformance(bookingRows){
     const gasUrl=String(DASHBOARD_CONFIG.ads.gasBridgeUrl||'').trim();
     const token=extractXpoToken();
@@ -7277,6 +9014,8 @@
     renderChannelPerformance(rows);
     renderMarketPerformance(rows);
     renderFuturePipeline(rows);
+    renderXpoOverviewSpend();
+    renderXpoDailySpend();
     renderIntegratedMarketPerformance(rows);
   }
 
@@ -7289,18 +9028,29 @@
     MARKET_PERF_STATE.page=1;
     pipelinePage=1;
 
-    // Prevent a previous period's XPO Spend from appearing while the new period is loading.
+    // Prevent previous-period XPO data from appearing while the new period is loading.
     MARKET_COUNTRY_ADS = new Map();
+    XPO_DAILY_SPEND = new Map();
+    XPO_DAILY_SPEND_LOADING = false;
+    XPO_DAILY_SPEND_ERROR = false;
 
     renderBookingSectionsForPeriod(rows);
     bindInteractions();
+
+    if(document.getElementById('bookingsTab')?.classList.contains('active')){
+      scheduleBookingChartRender();
+    }
   }
 
   function setupPeriodFilter(rows){
     const dates=rows.map(r=>r.bookingDate).filter(Boolean).sort((a,b)=>a-b);
     if(!dates.length)return;
 
-    DATA_MIN_DATE=dates[0];
+    const bookingMinDate=dates[0];
+    const xpoFlightStart=utcDateFromInput(String(DASHBOARD_CONFIG.ads.flightStartDate||''));
+    DATA_MIN_DATE=(xpoFlightStart && xpoFlightStart < bookingMinDate)
+      ? xpoFlightStart
+      : bookingMinDate;
     DATA_ROW_MAX_DATE=dates[dates.length-1];
 
     // Coverage end comes from DashboardMeta when available.
@@ -7791,6 +9541,14 @@
 
   function activateTab(name){
     const ads=name==='ads';
+
+    if(ads){
+      const frame=document.getElementById('xpoFrame');
+      const configuredUrl=String((DASHBOARD_CONFIG.ads||{}).reportUrl||'').trim();
+      if(frame && configuredUrl && (!frame.getAttribute('src') || frame.getAttribute('src')==='about:blank')){
+        frame.setAttribute('src',configuredUrl);
+      }
+    }
     document.getElementById('adsTab').classList.toggle('active',ads);
     document.getElementById('bookingsTab').classList.toggle('active',!ads);
     document.getElementById('adsTabBtn').classList.toggle('active',ads);
@@ -7803,6 +9561,11 @@
 
     if(adsLive)adsLive.style.display=ads?'inline-flex':'none';
     if(bookingUpdated)bookingUpdated.style.display=ads?'none':'inline-flex';
+
+    if(!ads){
+      bindBookingChartSeriesControls();
+      scheduleBookingChartRender();
+    }
   }
 
   document.getElementById('adsTabBtn').addEventListener('click',()=>activateTab('ads'));
@@ -7815,7 +9578,7 @@
       el.dataset.bound='1';
       el.addEventListener('mouseenter',e=>showTip(el,e.clientX,e.clientY));
       el.addEventListener('mousemove',e=>showTip(el,e.clientX,e.clientY));
-      el.addEventListener('mouseleave',()=>{if(!selected)tooltip.classList.remove('show');});
+      el.addEventListener('mouseleave',()=>{if(!selected){tooltip.classList.remove('show');tooltip.classList.remove('xpo-chart-tip');}});
       el.addEventListener('click',e=>{
         e.stopPropagation();
         document.querySelectorAll('.is-selected').forEach(n=>n.classList.remove('is-selected'));
@@ -7831,8 +9594,9 @@
   function showTip(el,x,y){
     if(!el.dataset.tip)return;
     tooltip.innerHTML=el.dataset.tip;
+    tooltip.classList.toggle('xpo-chart-tip',el.dataset.tipTheme==='xpo');
     tooltip.classList.add('show');
-    const pad=12, tw=tooltip.offsetWidth||180, th=tooltip.offsetHeight||56;
+    const pad=12, tw=tooltip.offsetWidth||200, th=tooltip.offsetHeight||64;
     let left=x+12, top=y-10;
     if(left+tw>window.innerWidth-pad)left=x-tw-14;
     if(top-th<pad)top=y+th+8;
@@ -7844,6 +9608,7 @@
     selected=null;
     document.querySelectorAll('.is-selected').forEach(n=>n.classList.remove('is-selected'));
     tooltip.classList.remove('show');
+    tooltip.classList.remove('xpo-chart-tip');
   });
 
   function loadGvizJsonpUrl(url, errorLabel='Google Sheet'){
@@ -7982,6 +9747,7 @@
   }
 
   initDashboardConfig();
+  initBookingChartResizeObserver();
   loadData();
   activateTab('ads');
 })();
