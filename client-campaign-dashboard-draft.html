@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <title>Client Campaign Dashboard</title>
 <style>
   :root{
@@ -1108,6 +1111,331 @@
     .pager{grid-template-columns:auto 1fr auto}
     .pager-meta{white-space:normal}
   }
+
+
+  /* ================= v13: BOOKING BI TYPOGRAPHY + XPO PAGINATION + GEO DRILLDOWN ================= */
+  #bookingsTab{
+    font-family:Inter,Arial,sans-serif;
+    font-size:13px;
+  }
+  #bookingsTab button,
+  #bookingsTab select,
+  #bookingsTab input{
+    font-family:Inter,Arial,sans-serif;
+  }
+
+  /* Keep typography consistent across every Bookings Report section */
+  #bookingsTab .section-title{
+    font-family:Inter,Arial,sans-serif;
+    font-size:28px;
+    line-height:1.15;
+    font-weight:800;
+    letter-spacing:-.035em;
+  }
+  #bookingsTab .ititle,
+  #bookingsTab .integrated-market-title,
+  #bookingsTab .geo-title{
+    font-family:Inter,Arial,sans-serif;
+    font-size:15px;
+    line-height:1.3;
+    font-weight:800;
+    letter-spacing:-.015em;
+  }
+  #bookingsTab .section-sub,
+  #bookingsTab .idesc,
+  #bookingsTab .integrated-market-desc,
+  #bookingsTab .integrated-source-note,
+  #bookingsTab .mini-note{
+    font-family:Inter,Arial,sans-serif;
+    font-size:12px;
+    line-height:1.5;
+  }
+  #bookingsTab .klabel{
+    font-size:12px;
+    font-weight:700;
+  }
+  #bookingsTab .kvalue{
+    font-size:26px;
+    font-weight:800;
+    letter-spacing:-.035em;
+  }
+  #bookingsTab .trend{
+    font-size:11px;
+    line-height:1.4;
+  }
+  #bookingsTab table,
+  #bookingsTab .integrated-market-table{
+    font-family:Inter,Arial,sans-serif;
+    font-size:12px;
+  }
+  #bookingsTab th,
+  #bookingsTab .integrated-market-table th{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.04em;
+  }
+  #bookingsTab td,
+  #bookingsTab .integrated-market-table td{
+    font-size:12px;
+  }
+  #bookingsTab .metric-toggle button,
+  #bookingsTab .collapse-btn{
+    font-size:11px;
+  }
+
+  /* XPO-style pagination */
+  .pager-wrap{
+    padding:12px 20px 14px;
+  }
+  .xpo-pager{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    flex-wrap:wrap;
+  }
+  .xpo-pager-display{
+    color:#96939d;
+    font-size:11px;
+    font-weight:500;
+    white-space:nowrap;
+  }
+  .xpo-pager-controls{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:18px;
+    margin-left:auto;
+    flex-wrap:wrap;
+  }
+  .xpo-per-page{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#96939d;
+    font-size:11px;
+    font-weight:600;
+    white-space:nowrap;
+  }
+  .xpo-per-page select{
+    min-width:64px !important;
+    width:64px;
+    height:34px;
+    padding:0 24px 0 10px;
+    border:1px solid #dedbe6;
+    border-radius:18px;
+    background:#fff;
+    color:#4f4b58;
+    font-size:11px;
+    font-weight:700;
+    outline:none;
+    cursor:pointer;
+  }
+  .xpo-pages{
+    display:flex;
+    align-items:center;
+    gap:2px;
+    border:1px solid #dedbe6;
+    border-radius:20px;
+    padding:3px 6px;
+    background:#fff;
+  }
+  .xpo-page-btn{
+    min-width:28px;
+    height:28px;
+    border:0;
+    border-radius:14px;
+    background:transparent;
+    color:#27242d;
+    font-size:11px;
+    font-weight:600;
+    cursor:pointer;
+    padding:0 7px;
+  }
+  .xpo-page-btn:hover:not(:disabled){background:#f4f1ff;color:var(--purple)}
+  .xpo-page-btn.active{
+    color:var(--purple);
+    font-weight:800;
+  }
+  .xpo-page-btn:disabled{
+    opacity:.28;
+    cursor:default;
+  }
+  .xpo-page-ellipsis{
+    color:#77727f;
+    font-size:11px;
+    padding:0 3px;
+  }
+
+  /* Integrated Market: country is drillable */
+  .market-drill-link{
+    border:0;
+    background:transparent;
+    color:#2a2632;
+    font:inherit;
+    font-weight:700;
+    padding:0;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    text-align:left;
+  }
+  .market-drill-link:hover{color:var(--purple)}
+  .market-drill-link .market-drill-arrow{
+    color:#9d96b2;
+    font-size:15px;
+    line-height:1;
+  }
+  .market-drill-link.is-disabled{
+    cursor:default;
+    color:#77717f;
+  }
+  .market-drill-link.is-disabled .market-drill-arrow{display:none}
+
+  /* Single drill-down geo chart */
+  .geo-grid{display:none!important}
+  .geo-drill-card{
+    padding:18px 20px 0;
+    min-height:0;
+  }
+  .geo-drill-top{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:18px;
+    padding-bottom:14px;
+    border-bottom:1px solid #efedf4;
+  }
+  .geo-drill-hint{
+    font-size:11px;
+    line-height:1.4;
+    color:#918b9d;
+    text-align:right;
+    max-width:320px;
+  }
+  .geo-breadcrumb{
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:5px;
+    min-height:24px;
+    margin-bottom:5px;
+  }
+  .geo-crumb{
+    border:0;
+    background:transparent;
+    padding:0;
+    color:#777181;
+    font-size:11px;
+    font-weight:600;
+    cursor:pointer;
+  }
+  .geo-crumb:hover{color:var(--purple)}
+  .geo-crumb.current{
+    color:var(--purple);
+    font-weight:800;
+    cursor:default;
+  }
+  .geo-crumb-sep{
+    color:#b2adba;
+    font-size:11px;
+  }
+  .geo-drill-chart{
+    padding:16px 0 6px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .geo-bar-row{
+    width:100%;
+    display:grid;
+    grid-template-columns:minmax(155px,240px) minmax(180px,1fr) 100px 20px;
+    align-items:center;
+    gap:12px;
+    border:0;
+    background:#fff;
+    border-radius:8px;
+    padding:8px 8px;
+    text-align:left;
+    font-family:Inter,Arial,sans-serif;
+    cursor:pointer;
+  }
+  .geo-bar-row:hover{
+    background:#faf9ff;
+  }
+  .geo-bar-row.is-leaf{
+    cursor:default;
+  }
+  .geo-bar-label{
+    min-width:0;
+  }
+  .geo-bar-label strong{
+    display:block;
+    color:#26222c;
+    font-size:12px;
+    font-weight:700;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .geo-bar-label small{
+    display:block;
+    margin-top:3px;
+    color:#9b95a3;
+    font-size:10px;
+    line-height:1.35;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .geo-bar-track{
+    display:block;
+    height:16px;
+    background:#f0eef5;
+    border-radius:3px;
+    overflow:hidden;
+    position:relative;
+  }
+  .geo-bar-fill{
+    display:block;
+    height:100%;
+    min-width:3px;
+    border-radius:3px;
+    background:linear-gradient(90deg,#6b55e7,#9c8af2);
+  }
+  .geo-bar-value{
+    text-align:right;
+    color:#322e3a;
+    font-size:11px;
+    font-weight:800;
+    white-space:nowrap;
+  }
+  .geo-bar-chevron{
+    color:#aaa4b5;
+    font-size:17px;
+    line-height:1;
+    text-align:center;
+  }
+  .geo-drill-empty{
+    padding:34px 0;
+    text-align:center;
+    color:#9993a2;
+    font-size:12px;
+  }
+
+  @media(max-width:760px){
+    .xpo-pager{align-items:flex-start}
+    .xpo-pager-controls{width:100%;justify-content:space-between;margin-left:0}
+    .geo-drill-top{flex-direction:column}
+    .geo-drill-hint{text-align:left}
+    .geo-bar-row{
+      grid-template-columns:minmax(115px,1.1fr) minmax(110px,1fr) 78px 16px;
+      gap:8px;
+    }
+    .geo-bar-label small{display:none}
+  }
 </style>
 </head>
 <body>
@@ -1268,7 +1596,7 @@
           <div>
             <div class="integrated-market-title">Integrated Market Performance</div>
             <div class="integrated-market-desc">
-              Live ad spend by country matched with validated bookings and revenue for the selected booking period.
+              Live ad spend by country matched with validated bookings and revenue for the selected booking period. Click a country to drill into booking region and city.
             </div>
           </div>
           <div class="head-actions">
@@ -1289,11 +1617,11 @@
         </div>
       </div>
 
-      <div class="geo-section">
+      <div class="geo-section" id="geoDrillSection">
         <div class="geo-section-head">
           <div>
             <div class="geo-title">Booking Geo Performance</div>
-            <div class="idesc">All available markets, paginated for easier review</div>
+            <div class="idesc" id="geoDrillDesc">Country performance · click a market to drill down to region and city</div>
           </div>
           <div class="metric-toggle" id="geoToggle" aria-label="Geo Performance metric">
             <button type="button" class="active" data-metric="bookings">Bookings</button>
@@ -1302,27 +1630,20 @@
           </div>
         </div>
 
-        <div class="geo-grid">
-          <div class="card geo-card">
-            <div class="ititle">Country Performance</div>
-            <div class="idesc" id="geoCountryDesc">By bookings</div>
-            <div id="geoCountryRows"><div class="empty-state">Loading...</div></div>
-            <div class="pager-wrap compact-pager" id="geoCountryPager"></div>
+        <div class="card geo-drill-card" id="geoDrillCard">
+          <div class="geo-drill-top">
+            <div>
+              <div class="geo-breadcrumb" id="geoBreadcrumb"></div>
+              <div class="ititle" id="geoLevelTitle">Country Performance</div>
+            </div>
+            <div class="geo-drill-hint" id="geoDrillHint">Click a country to view its regions</div>
           </div>
 
-          <div class="card geo-card">
-            <div class="ititle">Region Performance</div>
-            <div class="idesc" id="geoRegionDesc">By bookings</div>
-            <div id="geoRegionRows"><div class="empty-state">Loading...</div></div>
-            <div class="pager-wrap compact-pager" id="geoRegionPager"></div>
+          <div class="geo-drill-chart" id="geoDrillChart">
+            <div class="empty-state">Loading...</div>
           </div>
 
-          <div class="card geo-card">
-            <div class="ititle">City Performance</div>
-            <div class="idesc" id="geoCityDesc">By bookings</div>
-            <div id="geoCityRows"><div class="empty-state">Loading...</div></div>
-            <div class="pager-wrap compact-pager" id="geoCityPager"></div>
-          </div>
+          <div class="pager-wrap" id="geoDrillPager"></div>
         </div>
       </div>
     </section>
@@ -1586,11 +1907,28 @@
     }).filter(r => r.bookingId || r.bookingDate || r.value || r.country || r.checkIn);
   }
 
-  const BOOKING_PAGE_SIZE = 10;
+  let bookingPageSize = 10;
   let bookingPage = 1;
   let currentFilteredRows = [];
 
-  function renderPager(containerId,page,totalPages,totalItems,onPageChange){
+  function pagerSequence(current,total){
+    if(total<=7)return Array.from({length:total},(_,i)=>i+1);
+
+    const out=[1];
+    let start=Math.max(2,current-1);
+    let end=Math.min(total-1,current+1);
+
+    if(current<=4){start=2;end=5;}
+    if(current>=total-3){start=total-4;end=total-1;}
+
+    if(start>2)out.push('…');
+    for(let i=start;i<=end;i++)out.push(i);
+    if(end<total-1)out.push('…');
+    out.push(total);
+    return out;
+  }
+
+  function renderXpoPager(containerId,page,pageSize,totalItems,itemLabel,onPageChange,onPageSizeChange,pageSizeOptions=[5,10,20,50]){
     const el=document.getElementById(containerId);
     if(!el)return;
 
@@ -1599,21 +1937,55 @@
       return;
     }
 
-    const safePages=Math.max(1,totalPages);
-    const safePage=Math.min(Math.max(1,page),safePages);
+    const totalPages=Math.max(1,Math.ceil(totalItems/pageSize));
+    const safePage=Math.min(Math.max(1,page),totalPages);
+    const from=(safePage-1)*pageSize+1;
+    const to=Math.min(safePage*pageSize,totalItems);
+    const pages=pagerSequence(safePage,totalPages);
 
     el.innerHTML=`
-      <div class="pager">
-        <button class="pager-btn" type="button" data-dir="prev" ${safePage<=1?'disabled':''}>← Previous</button>
-        <div class="pager-meta">Page ${safePage.toLocaleString('en-US')} of ${safePages.toLocaleString('en-US')} · ${totalItems.toLocaleString('en-US')} records</div>
-        <button class="pager-btn" type="button" data-dir="next" ${safePage>=safePages?'disabled':''}>Next →</button>
+      <div class="xpo-pager">
+        <div class="xpo-pager-display">
+          Displaying ${from.toLocaleString('en-US')}-${to.toLocaleString('en-US')} of ${totalItems.toLocaleString('en-US')} ${esc(itemLabel)}.
+        </div>
+
+        <div class="xpo-pager-controls">
+          <label class="xpo-per-page">
+            <select data-role="page-size" aria-label="Rows per page">
+              ${pageSizeOptions.map(n=>`<option value="${n}" ${n===pageSize?'selected':''}>${n}</option>`).join('')}
+            </select>
+            <span>Per page</span>
+          </label>
+
+          <div class="xpo-pages" aria-label="Pagination">
+            <button class="xpo-page-btn" type="button" data-page="${safePage-1}" ${safePage<=1?'disabled':''}>‹</button>
+            ${pages.map(p=>p==='…'
+              ? '<span class="xpo-page-ellipsis">…</span>'
+              : `<button class="xpo-page-btn ${p===safePage?'active':''}" type="button" data-page="${p}">${p}</button>`
+            ).join('')}
+            <button class="xpo-page-btn" type="button" data-page="${safePage+1}" ${safePage>=totalPages?'disabled':''}>›</button>
+          </div>
+        </div>
       </div>
     `;
 
-    const prev=el.querySelector('[data-dir="prev"]');
-    const next=el.querySelector('[data-dir="next"]');
-    if(prev && !prev.disabled)prev.addEventListener('click',()=>onPageChange(safePage-1));
-    if(next && !next.disabled)next.addEventListener('click',()=>onPageChange(safePage+1));
+    el.querySelectorAll('.xpo-page-btn[data-page]').forEach(btn=>{
+      if(btn.disabled)return;
+      btn.addEventListener('click',()=>{
+        const next=Number(btn.dataset.page);
+        if(Number.isFinite(next) && next>=1 && next<=totalPages && next!==safePage){
+          onPageChange(next);
+        }
+      });
+    });
+
+    const sizeSelect=el.querySelector('[data-role="page-size"]');
+    if(sizeSelect){
+      sizeSelect.addEventListener('change',()=>{
+        const nextSize=Number(sizeSelect.value);
+        if(Number.isFinite(nextSize) && nextSize>0)onPageSizeChange(nextSize);
+      });
+    }
   }
 
   function renderTable(rows){
@@ -1624,21 +1996,21 @@
     if(!rows.length){
       tb.innerHTML = '<tr><td colspan="11" style="text-align:center;color:#aaa;padding:28px">No booking data found</td></tr>';
       if(countEl)countEl.textContent='No bookings for the selected period';
-      renderPager('bookingPager',1,1,0,()=>{});
+      renderXpoPager('bookingPager',1,bookingPageSize,0,'Bookings',()=>{},()=>{});
       return;
     }
 
     const ordered = [...rows].sort((a,b)=>(b.bookingDate?.getTime()||0)-(a.bookingDate?.getTime()||0));
-    const totalPages=Math.max(1,Math.ceil(ordered.length/BOOKING_PAGE_SIZE));
+    const totalPages=Math.max(1,Math.ceil(ordered.length/bookingPageSize));
     bookingPage=Math.min(Math.max(1,bookingPage),totalPages);
 
-    const start=(bookingPage-1)*BOOKING_PAGE_SIZE;
-    const visible=ordered.slice(start,start+BOOKING_PAGE_SIZE);
+    const start=(bookingPage-1)*bookingPageSize;
+    const visible=ordered.slice(start,start+bookingPageSize);
 
     if(countEl){
       const from=start+1;
-      const to=Math.min(start+BOOKING_PAGE_SIZE,ordered.length);
-      countEl.textContent=`Showing ${from.toLocaleString('en-US')}–${to.toLocaleString('en-US')} of ${ordered.length.toLocaleString('en-US')} bookings · selected period`;
+      const to=Math.min(start+bookingPageSize,ordered.length);
+      countEl.textContent=`${ordered.length.toLocaleString('en-US')} bookings · selected period`;
     }
 
     tb.innerHTML = visible.map(r => `
@@ -1656,10 +2028,22 @@
         <td>${esc(r.channel || '—')}</td>
       </tr>`).join('');
 
-    renderPager('bookingPager',bookingPage,totalPages,ordered.length,(page)=>{
-      bookingPage=page;
-      renderTable(currentFilteredRows);
-    });
+    renderXpoPager(
+      'bookingPager',
+      bookingPage,
+      bookingPageSize,
+      ordered.length,
+      'Bookings',
+      (page)=>{
+        bookingPage=page;
+        renderTable(currentFilteredRows);
+      },
+      (size)=>{
+        bookingPageSize=size;
+        bookingPage=1;
+        renderTable(currentFilteredRows);
+      }
+    );
   }
 
   function renderKPIs(rows){
@@ -1852,54 +2236,182 @@
 
   let geoMetric='bookings';
   let pipelineMetric='nights';
-  const GEO_PAGE_SIZE=10;
-  const geoPages={country:1,region:1,city:1};
+  const geoDrill={
+    country:'',
+    region:'',
+    page:1,
+    pageSize:10
+  };
 
-  function renderGeoLevel(rows,level){
-    const key=level.toLowerCase();
-    const containerLevel=level.charAt(0).toUpperCase()+level.slice(1);
-    const entries=aggregateBy(rows,key,geoMetric,Number.MAX_SAFE_INTEGER);
-    const total=geoMetric==='revenue'
-      ? rows.reduce((a,r)=>a+r.value,0)
-      : geoMetric==='bookings'
-        ? rows.length
-        : 0;
+  function geoMetricLabel(metric){
+    return metric==='revenue' ? 'Revenue' : metric==='abv' ? 'Avg. Booking Value' : 'Bookings';
+  }
 
-    const totalPages=Math.max(1,Math.ceil(entries.length/GEO_PAGE_SIZE));
-    geoPages[key]=Math.min(Math.max(1,geoPages[key]),totalPages);
+  function geoMetricValue(item){
+    return geoMetric==='revenue'
+      ? money(item.value)
+      : geoMetric==='abv'
+        ? money(item.value)
+        : Math.round(item.value).toLocaleString('en-US');
+  }
 
-    const start=(geoPages[key]-1)*GEO_PAGE_SIZE;
-    const pageEntries=entries.slice(start,start+GEO_PAGE_SIZE);
-    const metricLabel=geoMetric==='revenue'?'revenue':geoMetric==='abv'?'ABV':'bookings';
+  function renderGeoBreadcrumb(){
+    const el=document.getElementById('geoBreadcrumb');
+    if(!el)return;
 
-    document.getElementById(`geo${containerLevel}Desc`).textContent =
-      `${entries.length.toLocaleString('en-US')} ${level}${entries.length===1?'':'s'} · by ${metricLabel}`;
+    const parts=[];
+    parts.push(`<button type="button" class="geo-crumb ${!geoDrill.country?'current':''}" data-geo-reset="country">All Countries</button>`);
 
-    renderRankedRows(
-      `geo${containerLevel}Rows`,
-      pageEntries,
-      total,
-      geoMetric,
-      entries.length ? entries[0].value : 1
-    );
+    if(geoDrill.country){
+      parts.push('<span class="geo-crumb-sep">›</span>');
+      parts.push(`<button type="button" class="geo-crumb ${!geoDrill.region?'current':''}" data-geo-country="${esc(geoDrill.country)}">${esc(geoDrill.country)}</button>`);
+    }
 
-    renderPager(
-      `geo${containerLevel}Pager`,
-      geoPages[key],
-      totalPages,
+    if(geoDrill.region){
+      parts.push('<span class="geo-crumb-sep">›</span>');
+      parts.push(`<button type="button" class="geo-crumb current">${esc(geoDrill.region)}</button>`);
+    }
+
+    el.innerHTML=parts.join('');
+
+    const allBtn=el.querySelector('[data-geo-reset="country"]');
+    if(allBtn && geoDrill.country){
+      allBtn.addEventListener('click',()=>{
+        geoDrill.country='';
+        geoDrill.region='';
+        geoDrill.page=1;
+        renderGeoDrilldown(filteredByPeriod());
+      });
+    }
+
+    const countryBtn=el.querySelector('[data-geo-country]');
+    if(countryBtn && geoDrill.region){
+      countryBtn.addEventListener('click',()=>{
+        geoDrill.region='';
+        geoDrill.page=1;
+        renderGeoDrilldown(filteredByPeriod());
+      });
+    }
+  }
+
+  function renderGeoDrilldown(rows){
+    const chart=document.getElementById('geoDrillChart');
+    const title=document.getElementById('geoLevelTitle');
+    const desc=document.getElementById('geoDrillDesc');
+    const hint=document.getElementById('geoDrillHint');
+    if(!chart || !title || !desc || !hint)return;
+
+    let scoped=rows.slice();
+    let level='country';
+
+    if(geoDrill.country){
+      const countryKey=normalizedCountryKey(geoDrill.country);
+      scoped=scoped.filter(r=>normalizedCountryKey(r.country)===countryKey);
+      level='region';
+    }
+
+    if(geoDrill.region){
+      const regionKey=String(geoDrill.region||'').trim().toLowerCase();
+      scoped=scoped.filter(r=>String(r.region||'').trim().toLowerCase()===regionKey);
+      level='city';
+    }
+
+    const entries=aggregateBy(scoped,level,geoMetric,Number.MAX_SAFE_INTEGER);
+    const totalPages=Math.max(1,Math.ceil(entries.length/geoDrill.pageSize));
+    geoDrill.page=Math.min(Math.max(1,geoDrill.page),totalPages);
+    const start=(geoDrill.page-1)*geoDrill.pageSize;
+    const pageEntries=entries.slice(start,start+geoDrill.pageSize);
+    const overallMax=entries.length ? Math.max(entries[0].value,1) : 1;
+
+    if(level==='country'){
+      title.textContent='Country Performance';
+      desc.textContent=`All source markets · ${geoMetricLabel(geoMetric)}`;
+      hint.textContent='Click a country to view its region breakdown';
+    }else if(level==='region'){
+      title.textContent=`Region Performance — ${geoDrill.country}`;
+      desc.textContent=`Regions within ${geoDrill.country} · ${geoMetricLabel(geoMetric)}`;
+      hint.textContent='Click a region to view its city breakdown';
+    }else{
+      title.textContent=`City Performance — ${geoDrill.region}`;
+      desc.textContent=`Cities within ${geoDrill.region}, ${geoDrill.country} · ${geoMetricLabel(geoMetric)}`;
+      hint.textContent='City is the deepest available booking geo level';
+    }
+
+    renderGeoBreadcrumb();
+
+    if(!pageEntries.length){
+      chart.innerHTML='<div class="geo-drill-empty">No booking geo data for this selection and period.</div>';
+      renderXpoPager('geoDrillPager',1,geoDrill.pageSize,0,'Markets',()=>{},()=>{});
+      return;
+    }
+
+    chart.innerHTML=pageEntries.map(item=>{
+      const pct=Math.max(3,item.value/overallMax*100);
+      const metadata=`${item.bookings.toLocaleString('en-US')} bookings · ${money(item.revenue)} revenue · ${money(item.abv)} ABV`;
+      const isLeaf=level==='city';
+      return `
+        <button type="button"
+          class="geo-bar-row ${isLeaf?'is-leaf':''}"
+          ${isLeaf?'':'data-geo-label="'+esc(item.label)+'"'}
+          aria-label="${esc(item.label)}">
+          <span class="geo-bar-label">
+            <strong>${esc(item.label)}</strong>
+            <small>${metadata}</small>
+          </span>
+          <span class="geo-bar-track"><span class="geo-bar-fill" style="width:${pct.toFixed(1)}%"></span></span>
+          <span class="geo-bar-value">${geoMetricValue(item)}</span>
+          <span class="geo-bar-chevron">${isLeaf?'':'›'}</span>
+        </button>
+      `;
+    }).join('');
+
+    if(level!=='city'){
+      chart.querySelectorAll('[data-geo-label]').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          const label=btn.dataset.geoLabel||'';
+          if(level==='country'){
+            geoDrill.country=label;
+            geoDrill.region='';
+          }else{
+            geoDrill.region=label;
+          }
+          geoDrill.page=1;
+          renderGeoDrilldown(filteredByPeriod());
+        });
+      });
+    }
+
+    const labelPlural=level==='country'?'Countries':level==='region'?'Regions':'Cities';
+    renderXpoPager(
+      'geoDrillPager',
+      geoDrill.page,
+      geoDrill.pageSize,
       entries.length,
+      labelPlural,
       (page)=>{
-        geoPages[key]=page;
-        renderGeoPerformance(filteredByPeriod());
-        bindInteractions();
-      }
+        geoDrill.page=page;
+        renderGeoDrilldown(filteredByPeriod());
+      },
+      (size)=>{
+        geoDrill.pageSize=size;
+        geoDrill.page=1;
+        renderGeoDrilldown(filteredByPeriod());
+      },
+      [5,10,20,50]
     );
   }
 
-  function renderGeoPerformance(rows){
-    renderGeoLevel(rows,'country');
-    renderGeoLevel(rows,'region');
-    renderGeoLevel(rows,'city');
+  function openGeoCountry(country){
+    if(!country)return;
+    geoDrill.country=country;
+    geoDrill.region='';
+    geoDrill.page=1;
+    renderGeoDrilldown(filteredByPeriod());
+
+    requestAnimationFrame(()=>{
+      const target=document.getElementById('geoDrillSection');
+      if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+    });
   }
 
   function monthStartUTC(d){
@@ -1988,7 +2500,7 @@
 
 
   let ALL_ROWS = [];
-  const INTEGRATED_PAGE_SIZE = 10;
+  let integratedMarketPageSize = 10;
   let integratedMarketPage = 1;
   let integratedMarketRequestSeq = 0;
 
@@ -2175,14 +2687,22 @@
     const el=document.getElementById('integratedMarketContent');
     if(!el)return;
 
-    const totalPages=Math.max(1,Math.ceil(mergedRows.length/INTEGRATED_PAGE_SIZE));
+    const totalPages=Math.max(1,Math.ceil(mergedRows.length/integratedMarketPageSize));
     integratedMarketPage=Math.min(Math.max(1,integratedMarketPage),totalPages);
-    const start=(integratedMarketPage-1)*INTEGRATED_PAGE_SIZE;
-    const rowsToShow=mergedRows.slice(start,start+INTEGRATED_PAGE_SIZE);
+    const start=(integratedMarketPage-1)*integratedMarketPageSize;
+    const rowsToShow=mergedRows.slice(start,start+integratedMarketPageSize);
 
     const body=rowsToShow.map(r=>`
       <tr>
-        <td>${esc(r.country)}</td>
+        <td>
+          <button type="button"
+            class="market-drill-link ${r.bookings>0?'':'is-disabled'}"
+            data-country="${esc(r.country)}"
+            data-drillable="${r.bookings>0?'1':'0'}">
+            <span>${esc(r.country)}</span>
+            <span class="market-drill-arrow">›</span>
+          </button>
+        </td>
         <td>${money(r.spend)}</td>
         <td>${Math.round(r.bookings).toLocaleString('en-US')}</td>
         <td>${money(r.revenue)}</td>
@@ -2236,13 +2756,26 @@
       </div>
     `;
 
-    renderPager(
+    el.querySelectorAll('.market-drill-link[data-country]').forEach(btn=>{
+      if(btn.dataset.drillable!=='1')return;
+      btn.addEventListener('click',()=>{
+        openGeoCountry(btn.dataset.country||'');
+      });
+    });
+
+    renderXpoPager(
       'integratedMarketPager',
       integratedMarketPage,
-      totalPages,
+      integratedMarketPageSize,
       mergedRows.length,
+      'Markets',
       (page)=>{
         integratedMarketPage=page;
+        renderIntegratedMarketTable(mergedRows,totals,meta);
+      },
+      (size)=>{
+        integratedMarketPageSize=size;
+        integratedMarketPage=1;
         renderIntegratedMarketTable(mergedRows,totals,meta);
       }
     );
@@ -2368,9 +2901,7 @@
   function renderDashboard(){
     const rows=filteredByPeriod();
     bookingPage=1;
-    geoPages.country=1;
-    geoPages.region=1;
-    geoPages.city=1;
+    geoDrill.page=1;
     integratedMarketPage=1;
     renderTable(rows);
     renderKPIs(rows);
@@ -2380,7 +2911,7 @@
     renderStayDemand(rows);
     renderLOS(rows);
     renderChannelPerformance(rows);
-    renderGeoPerformance(rows);
+    renderGeoDrilldown(rows);
     renderFuturePipeline(rows);
     renderIntegratedMarketPerformance(rows);
     bindInteractions();
@@ -2451,12 +2982,9 @@
 
   document.querySelectorAll('#geoToggle button').forEach(btn=>btn.addEventListener('click',()=>{
     geoMetric=btn.dataset.metric;
-    geoPages.country=1;
-    geoPages.region=1;
-    geoPages.city=1;
+    geoDrill.page=1;
     setToggleState('geoToggle',geoMetric);
-    renderGeoPerformance(filteredByPeriod());
-    bindInteractions();
+    renderGeoDrilldown(filteredByPeriod());
   }));
   document.querySelectorAll('#pipelineToggle button').forEach(btn=>btn.addEventListener('click',()=>{
     pipelineMetric=btn.dataset.metric;
@@ -2628,7 +3156,7 @@
       console.error(err);
       document.getElementById('bookingTbody').innerHTML =
         `<tr><td colspan="11" style="text-align:center;color:#c66;padding:28px">Failed to load Google Sheet data: ${esc(err.message)}</td></tr>`;
-      ['marketRows','bookingWindowLegend','channelRows','geoCountryRows','geoRegionRows','geoCityRows','pipelineWrap'].forEach(id=>{
+      ['marketRows','bookingWindowLegend','channelRows','geoDrillChart','pipelineWrap'].forEach(id=>{
         const el=document.getElementById(id); if(el)el.innerHTML='<div style="color:#c66;font-size:11px;padding-top:18px">Unable to load data</div>';
       });
       document.getElementById('lastUpdated').textContent='Load failed';
