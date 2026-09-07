@@ -3882,9 +3882,9 @@
 
   /* ================= v25: TOGGLES + GEO ALIGNMENT + PIPELINE REDESIGN ================= */
 
-  /* Keep Bookings / Revenue / ABV in the same x positions for all geo levels.
+  /* Keep Bookings / Revenue / Avg. Booking Value in the same x positions for all geo levels.
      The first 52% is reserved for geo descriptors; the last 48% is always
-     Bookings / Revenue / ABV at 16% each. */
+     Bookings / Revenue / Avg. Booking Value at 16% each. */
   #bookingsTab #marketPerformanceTable[data-level="country"] thead th:nth-child(1),
   #bookingsTab #marketPerformanceTable[data-level="country"] tbody td:nth-child(1){
     width:26%!important;
@@ -6209,6 +6209,105 @@
   #bookingsTab .booking-chart-series-toggle:not(.active){
     opacity:.45!important;
   }
+
+
+  /* ================= v53: MONTHLY PERFORMANCE ================= */
+
+  #bookingsTab .monthly-performance-card{
+    margin:0 0 18px!important;
+    border:1px solid #dedbe3!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+    background:#fff!important;
+  }
+
+  #bookingsTab .monthly-performance-table-wrap{
+    width:100%;
+    overflow-x:auto;
+    background:#fff;
+  }
+
+  #bookingsTab .monthly-performance-table{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+  }
+
+  #bookingsTab .monthly-performance-table th{
+    height:48px;
+    padding:0 18px;
+    border-bottom:1px solid #dad7dd;
+    background:#fff;
+    color:#5e5961;
+    font-size:11px!important;
+    font-weight:500!important;
+    text-transform:uppercase;
+    letter-spacing:0;
+    text-align:left;
+    white-space:nowrap;
+  }
+
+  #bookingsTab .monthly-performance-table td{
+    height:48px;
+    padding:0 18px;
+    border-bottom:1px solid #e8e5ea;
+    color:#29262c;
+    font-size:13px!important;
+    font-weight:400!important;
+    vertical-align:middle;
+    white-space:nowrap;
+  }
+
+  #bookingsTab .monthly-performance-table th.num,
+  #bookingsTab .monthly-performance-table td.num{
+    text-align:right;
+  }
+
+  #bookingsTab .monthly-performance-table tbody tr:nth-child(odd):not(.monthly-total-row) td{
+    background:#fafafa;
+  }
+
+  #bookingsTab .monthly-performance-table .month-label{
+    font-weight:500!important;
+  }
+
+  #bookingsTab .monthly-performance-table .monthly-total-row td{
+    height:52px;
+    border-top:1px solid #d8d4dc;
+    border-bottom:0;
+    background:#fff!important;
+    color:#211e25;
+    font-weight:600!important;
+  }
+
+  #bookingsTab .monthly-empty{
+    padding:24px 18px!important;
+    text-align:center!important;
+    color:#9a949e!important;
+    font-size:12px!important;
+  }
+
+  @media(max-width:760px){
+    #bookingsTab .monthly-performance-table{
+      min-width:720px;
+    }
+  }
+
+
+  /* v55: Keep this metric label in one exact casing everywhere. */
+  #bookingsTab .avg-booking-value-label{
+    text-transform:none!important;
+    letter-spacing:normal!important;
+  }
+
+
+  /* v56: Context-specific casing.
+     KPI/toggle = "Avg. Booking Value"
+     Monthly/Market table header = "Avg. BOOKING VALUE" */
+  #bookingsTab .avg-booking-value-table-label{
+    text-transform:none!important;
+    letter-spacing:normal!important;
+  }
 </style>
 </head>
 <body>
@@ -6373,7 +6472,7 @@
           <div><div class="klabel">REVENUE</div><div class="kvalue" id="kRevenue">—</div><div class="trend" id="kRevenueNote">Total transaction value</div></div>
         </div>
         <div class="card kpi">
-          <div><div class="klabel">AVG. BOOKING VALUE</div><div class="kvalue" id="kABV">—</div><div class="trend" id="kABVNote">Average per booking</div></div>
+          <div><div class="klabel avg-booking-value-label">Avg. Booking Value</div><div class="kvalue" id="kABV">—</div><div class="trend" id="kABVNote">Average per booking</div></div>
         </div>
         <div class="card kpi">
           <div><div class="klabel">TOP SOURCE MARKET</div><div class="kvalue" id="kTopMarket">—</div><div class="trend" id="kTopMarketNote">By booking count</div></div>
@@ -6408,6 +6507,47 @@
             <span>Revenue</span>
           </div>
         </aside>
+      </div>
+
+      <div class="card collapsible-card monthly-performance-card">
+        <div class="collapsible-head">
+          <div>
+            <div class="ititle">Monthly Performance</div>
+            <div class="idesc" id="monthlyPerformanceCount">Monthly summary for the selected period</div>
+          </div>
+
+          <div class="section-action-group">
+            <button class="export-excel-btn" id="exportMonthlyPerformanceBtn" type="button" title="Export Monthly Performance to Excel">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/>
+              </svg>
+              <span>Export Excel</span>
+            </button>
+
+            <button class="collapse-btn" id="monthlyPerformanceCollapseBtn" type="button" aria-expanded="true" aria-controls="monthlyPerformanceBody">
+              <span>Collapse</span><span class="collapse-chevron">⌃</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="collapsible-body" id="monthlyPerformanceBody">
+          <div class="monthly-performance-table-wrap">
+            <table class="monthly-performance-table">
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th class="num">Spend</th>
+                  <th class="num">Bookings</th>
+                  <th class="num">Revenue</th>
+                  <th class="num avg-booking-value-table-label">Avg. BOOKING VALUE</th>
+                </tr>
+              </thead>
+              <tbody id="monthlyPerformanceTbody">
+                <tr><td colspan="5" class="monthly-empty">Loading monthly performance...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
 
       <div class="card collapsible-card booking-details-card">
@@ -6486,7 +6626,7 @@
               <button type="button" class="active" data-metric="spend">Spend</button>
               <button type="button" data-metric="bookings">Bookings</button>
               <button type="button" data-metric="revenue">Revenue</button>
-              <button type="button" data-metric="abv">ABV</button>
+              <button type="button" data-metric="abv" class="avg-booking-value-label">Avg. Booking Value</button>
             </div>
           </div>
 
@@ -6512,7 +6652,7 @@
                 <th>SPEND</th>
                 <th>BOOKINGS</th>
                 <th>REVENUE</th>
-                <th>ABV</th>
+                <th class="avg-booking-value-table-label">Avg. BOOKING VALUE</th>
               </tr>
             </thead>
             <tbody id="marketPerformanceTbody">
@@ -7015,7 +7155,7 @@
     let aoa;
     if(level==='city'){
       aoa=[
-        ['City','Region','Country','Bookings','Revenue','ABV'],
+        ['City','Region','Country','Bookings','Revenue','Avg. BOOKING VALUE'],
         ...data.map(r=>[
           r.city || r.label || '',
           r.region || '',
@@ -7027,7 +7167,7 @@
       ];
     }else if(level==='region'){
       aoa=[
-        ['Region','Country','Bookings','Revenue','ABV'],
+        ['Region','Country','Bookings','Revenue','Avg. BOOKING VALUE'],
         ...data.map(r=>[
           r.label || '',
           r.country || '',
@@ -7038,7 +7178,7 @@
       ];
     }else{
       aoa=[
-        ['Country','Spend','Bookings','Revenue','ABV'],
+        ['Country','Spend','Bookings','Revenue','Avg. BOOKING VALUE'],
         ...data.map(r=>[
           r.label || '',
           r.spend || 0,
@@ -7152,8 +7292,46 @@
     writeExcelWorkbook(filename,'Future Pipeline',aoa);
   }
 
+
+  function exportMonthlyPerformance(){
+    const data=monthlyPerformanceData(currentPeriodRows());
+    const totalBookings=data.reduce((sum,r)=>sum+r.bookings,0);
+    const totalRevenue=data.reduce((sum,r)=>sum+r.revenue,0);
+    const dailySpendTotal=data.reduce((sum,r)=>sum+r.spend,0);
+    const totalSpend=Number.isFinite(XPO_OVERVIEW_SPEND)
+      ? XPO_OVERVIEW_SPEND
+      : dailySpendTotal;
+    const totalAbv=totalBookings ? totalRevenue/totalBookings : 0;
+
+    const aoa=[
+      ['Month','Spend','Bookings','Revenue','Avg. BOOKING VALUE'],
+      ...data.map(r=>[
+        monthlyPerformanceMonthLabel(r.date),
+        XPO_DAILY_SPEND.size ? r.spend : '',
+        r.bookings,
+        r.revenue,
+        r.bookings ? r.abv : ''
+      ]),
+      ['TOTAL',
+        Number.isFinite(totalSpend) ? totalSpend : '',
+        totalBookings,
+        totalRevenue,
+        totalBookings ? totalAbv : ''
+      ]
+    ];
+
+    const filename=[
+      safeExportPart(DASHBOARD_CONFIG.clientName),
+      'Monthly_Performance',
+      currentPeriodExportLabel()
+    ].join('_')+'.xlsx';
+
+    writeExcelWorkbook(filename,'Monthly Performance',aoa);
+  }
+
   function bindExcelExports(){
     document.getElementById('exportBookingDetailsBtn')?.addEventListener('click',exportBookingDetails);
+    document.getElementById('exportMonthlyPerformanceBtn')?.addEventListener('click',exportMonthlyPerformance);
     document.getElementById('exportMarketPerformanceBtn')?.addEventListener('click',exportMarketPerformance);
     document.getElementById('exportFuturePipelineBtn')?.addEventListener('click',exportFuturePipeline);
   }
@@ -7684,6 +7862,135 @@
     bindBookingChartHover();
   }
 
+
+  function monthlyPerformanceData(rows){
+    const {start,end}=integratedPeriodRange();
+    if(!start || !end || end<start)return [];
+
+    const byMonth=new Map();
+
+    // Build every calendar month in the selected period so months with Spend
+    // but no attributed bookings still remain visible.
+    let cursor=monthStartUTC(start);
+    const last=monthStartUTC(end);
+
+    while(cursor<=last){
+      const key=`${cursor.getUTCFullYear()}-${String(cursor.getUTCMonth()+1).padStart(2,'0')}`;
+      byMonth.set(key,{
+        key,
+        date:new Date(cursor.getTime()),
+        spend:0,
+        bookings:0,
+        revenue:0,
+        abv:0
+      });
+      cursor=addMonthsUTC(cursor,1);
+    }
+
+    rows.forEach(r=>{
+      if(!r.bookingDate)return;
+
+      const key=`${r.bookingDate.getUTCFullYear()}-${String(r.bookingDate.getUTCMonth()+1).padStart(2,'0')}`;
+      const item=byMonth.get(key);
+      if(!item)return;
+
+      item.bookings+=1;
+      item.revenue+=Number(r.value||0);
+    });
+
+    // Daily XPO Spend is already filtered to exactly the selected date range,
+    // so partial first/last months remain partial here as intended.
+    XPO_DAILY_SPEND.forEach((spend,dateKey)=>{
+      const d=parseXpoDailyDate(dateKey);
+      if(!d || d<start || d>end)return;
+
+      const key=`${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}`;
+      const item=byMonth.get(key);
+      if(!item)return;
+
+      item.spend+=Number(spend||0);
+    });
+
+    const out=[...byMonth.values()].sort((a,b)=>a.date-b.date);
+
+    out.forEach(item=>{
+      item.abv=item.bookings ? item.revenue/item.bookings : 0;
+    });
+
+    return out;
+  }
+
+  function monthlyPerformanceMonthLabel(d){
+    return d.toLocaleDateString('en-US',{
+      month:'short',
+      year:'numeric',
+      timeZone:'UTC'
+    });
+  }
+
+  function renderMonthlyPerformance(rows){
+    const tbody=document.getElementById('monthlyPerformanceTbody');
+    const countEl=document.getElementById('monthlyPerformanceCount');
+    if(!tbody)return;
+
+    const data=monthlyPerformanceData(rows);
+
+    if(countEl){
+      countEl.textContent=data.length
+        ? `${data.length.toLocaleString('en-US')} month${data.length===1?'':'s'} · selected period`
+        : 'No monthly data for the selected period';
+    }
+
+    if(!data.length){
+      tbody.innerHTML='<tr><td colspan="5" class="monthly-empty">No monthly data found</td></tr>';
+      return;
+    }
+
+    const spendPending=XPO_DAILY_SPEND_LOADING && !XPO_DAILY_SPEND.size;
+    const spendUnavailable=XPO_DAILY_SPEND_ERROR && !XPO_DAILY_SPEND.size;
+
+    const monthRows=data.map(item=>{
+      const spendText=spendPending
+        ? 'Loading…'
+        : spendUnavailable
+          ? '—'
+          : money(item.spend);
+
+      return `
+        <tr>
+          <td class="month-label">${monthlyPerformanceMonthLabel(item.date)}</td>
+          <td class="num">${spendText}</td>
+          <td class="num">${item.bookings.toLocaleString('en-US')}</td>
+          <td class="num">${money(item.revenue)}</td>
+          <td class="num">${item.bookings ? money(item.abv) : '—'}</td>
+        </tr>`;
+    }).join('');
+
+    const totalBookings=data.reduce((sum,r)=>sum+r.bookings,0);
+    const totalRevenue=data.reduce((sum,r)=>sum+r.revenue,0);
+    const dailySpendTotal=data.reduce((sum,r)=>sum+r.spend,0);
+    const totalSpend=Number.isFinite(XPO_OVERVIEW_SPEND)
+      ? XPO_OVERVIEW_SPEND
+      : dailySpendTotal;
+    const totalAbv=totalBookings ? totalRevenue/totalBookings : 0;
+
+    const totalSpendText=spendPending
+      ? 'Loading…'
+      : spendUnavailable && !Number.isFinite(XPO_OVERVIEW_SPEND)
+        ? '—'
+        : money(totalSpend);
+
+    tbody.innerHTML=`
+      ${monthRows}
+      <tr class="monthly-total-row">
+        <td>TOTAL</td>
+        <td class="num">${totalSpendText}</td>
+        <td class="num">${totalBookings.toLocaleString('en-US')}</td>
+        <td class="num">${money(totalRevenue)}</td>
+        <td class="num">${totalBookings ? money(totalAbv) : '—'}</td>
+      </tr>`;
+  }
+
   function renderKPIs(rows){
     const bookings = rows.length;
     const revenue = rows.reduce((a,r)=>a+Number(r.value||0),0);
@@ -8140,7 +8447,7 @@
           <th class="market-text market-region-view-col-country">COUNTRY</th>
           <th>BOOKINGS</th>
           <th>REVENUE</th>
-          <th>ABV</th>
+          <th class="avg-booking-value-table-label">Avg. BOOKING VALUE</th>
         </tr>`;
     }
 
@@ -8152,7 +8459,7 @@
           <th class="market-text market-city-view-col-country">COUNTRY</th>
           <th>BOOKINGS</th>
           <th>REVENUE</th>
-          <th>ABV</th>
+          <th class="avg-booking-value-table-label">Avg. BOOKING VALUE</th>
         </tr>`;
     }
 
@@ -8162,7 +8469,7 @@
         <th>SPEND</th>
         <th>BOOKINGS</th>
         <th>REVENUE</th>
-        <th>ABV</th>
+        <th class="avg-booking-value-table-label">Avg. BOOKING VALUE</th>
       </tr>`;
   }
 
@@ -8833,11 +9140,13 @@
       XPO_OVERVIEW_SPEND=spend;
       spendEl.textContent=money(spend);
       if(noteEl)noteEl.textContent='Live XPO spend · selected period';
+      renderMonthlyPerformance(currentPeriodRows());
     }catch(err){
       if(seq!==overviewSpendRequestSeq)return;
       XPO_OVERVIEW_SPEND=null;
       spendEl.textContent='—';
       if(noteEl)noteEl.textContent='Update Shared GAS to enable live SPENT';
+      renderMonthlyPerformance(currentPeriodRows());
       console.warn('XPO overview spend unavailable:',err);
     }
   }
@@ -8846,6 +9155,7 @@
     XPO_DAILY_SPEND_LOADING=true;
     XPO_DAILY_SPEND_ERROR=false;
     renderBookingPerformanceChart(currentPeriodRows());
+    renderMonthlyPerformance(currentPeriodRows());
 
     const gasUrl=String(DASHBOARD_CONFIG.ads.gasBridgeUrl||'').trim();
     const token=extractXpoToken();
@@ -8856,6 +9166,7 @@
       XPO_DAILY_SPEND_LOADING=false;
       XPO_DAILY_SPEND_ERROR=true;
       renderBookingPerformanceChart(currentPeriodRows());
+      renderMonthlyPerformance(currentPeriodRows());
       return;
     }
 
@@ -8889,6 +9200,7 @@
       XPO_DAILY_SPEND_LOADING=false;
       XPO_DAILY_SPEND_ERROR=!map.size;
       renderBookingPerformanceChart(currentPeriodRows());
+      renderMonthlyPerformance(currentPeriodRows());
 
     }catch(err){
       if(seq!==dailySpendRequestSeq)return;
@@ -8898,6 +9210,7 @@
       XPO_DAILY_SPEND_LOADING=false;
       XPO_DAILY_SPEND_ERROR=true;
       renderBookingPerformanceChart(currentPeriodRows());
+      renderMonthlyPerformance(currentPeriodRows());
       console.warn('XPO daily spend unavailable:',err);
     }
   }
@@ -9006,6 +9319,7 @@
 
     renderTable(rows);
     renderKPIs(rows);
+    renderMonthlyPerformance(rows);
     renderMarkets(rows);
     renderBookingWindow(rows);
     renderABV(rows);
@@ -9426,6 +9740,7 @@
     });
   }
 
+  bindCollapseButton('monthlyPerformanceCollapseBtn','monthlyPerformanceBody');
   bindCollapseButton('bookingCollapseBtn','bookingDetailsBody');
   bindCollapseButton('marketPerformanceCollapseBtn','marketPerformanceBody');
   bindCollapseButton('futurePipelineCollapseBtn','futurePipelineBody');
