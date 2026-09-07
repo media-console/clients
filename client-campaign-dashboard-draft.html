@@ -987,6 +987,127 @@
     .ads-kpis{grid-template-columns:1fr 1fr}
   }
 
+
+
+  /* v12: Bookings tab section order, collapsible tables and pagination */
+  .collapsible-card{overflow:hidden}
+  .booking-details-card{padding:0}
+  .collapsible-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:16px;
+    padding:18px 22px;
+    border-bottom:1px solid #efedf5;
+  }
+  .booking-details-card .collapsible-head .idesc{margin-bottom:0}
+  .collapsible-body.is-collapsed{display:none}
+  .collapse-btn{
+    border:1px solid #e6e2f4;
+    background:#faf9ff;
+    color:#6558c5;
+    border-radius:10px;
+    padding:7px 10px;
+    font-family:inherit;
+    font-size:10px;
+    font-weight:700;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    flex:0 0 auto;
+  }
+  .collapse-btn:hover{background:#f2efff}
+  .collapse-btn:focus-visible,
+  .pager-btn:focus-visible{
+    outline:2px solid var(--purple);
+    outline-offset:2px;
+  }
+  .collapse-chevron{
+    display:inline-block;
+    font-size:12px;
+    line-height:1;
+    transition:transform .15s ease;
+  }
+  .collapse-btn[aria-expanded="false"] .collapse-chevron{transform:rotate(180deg)}
+  .table-scroll{
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
+    padding:0 22px;
+  }
+  .pager-wrap{
+    min-height:52px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:12px 18px 14px;
+    border-top:1px solid #f0eef5;
+  }
+  .pager{
+    width:100%;
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    gap:10px;
+  }
+  .pager-btn{
+    border:1px solid #e6e2f4;
+    background:#fff;
+    color:#6254bd;
+    border-radius:9px;
+    padding:7px 10px;
+    font-family:inherit;
+    font-size:10px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .pager-btn:first-child{justify-self:start}
+  .pager-btn:last-child{justify-self:end}
+  .pager-btn:disabled{
+    opacity:.35;
+    cursor:default;
+    background:#fafafa;
+  }
+  .pager-meta{
+    text-align:center;
+    color:#8e899a;
+    font-size:10px;
+    white-space:nowrap;
+  }
+  .compact-pager{
+    padding:10px 0 0;
+    margin-top:12px;
+    min-height:42px;
+  }
+  .compact-pager .pager-btn{
+    padding:6px 8px;
+    font-size:9px;
+  }
+  .compact-pager .pager-meta{font-size:9px}
+  .geo-card{
+    display:flex;
+    flex-direction:column;
+  }
+  .geo-card > [id$="Rows"]{flex:1}
+  .head-actions{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  #marketPerformanceSection .integrated-market-card{margin-top:0}
+  #marketPerformanceSection .geo-section{margin-top:24px}
+  #bookingsInsightsSection .insights-grid{margin-top:0}
+  #marketFuturePipelineSection .pipeline-card{margin-top:0}
+  #marketFuturePipelineSection .pipeline-head{margin-bottom:14px}
+  @media(max-width:720px){
+    .collapsible-head{flex-direction:column;align-items:stretch}
+    .collapsible-head .collapse-btn{align-self:flex-start}
+    .head-actions{justify-content:flex-start}
+    .pager{grid-template-columns:auto 1fr auto}
+    .pager-meta{white-space:normal}
+  }
 </style>
 </head>
 <body>
@@ -1065,7 +1186,9 @@
     </div>
 
     <div id="bookingsTab" class="tab-panel" role="tabpanel" aria-labelledby="bookingsTabBtn">
-    <section class="section">
+
+    <!-- 1. BOOKINGS REPORT -->
+    <section class="section" id="bookingsReportSection">
       <div class="section-head">
         <div>
           <h2 class="section-title">Bookings <span class="accent">Report</span></h2>
@@ -1092,34 +1215,120 @@
         </div>
       </div>
 
-      <div class="card table-card">
-        <table>
-          <thead>
-            <tr>
-              <th>Booking Date</th>
-              <th>Booking ID</th>
-              <th>Transaction Value</th>
-              <th>City</th>
-              <th>Region</th>
-              <th>Country</th>
-              <th>Check in date</th>
-              <th>Check out date</th>
-              <th>Nights</th>
-              <th>BLT</th>
-              <th>Channel</th>
-            </tr>
-          </thead>
-          <tbody id="bookingTbody">
-            <tr><td colspan="11" style="text-align:center;color:#aaa;padding:28px">Loading booking data...</td></tr>
-          </tbody>
-        </table>
-        <div class="table-footer">
-          <button class="view-all-btn" id="viewAllBtn" type="button" style="display:none">View all</button>
+      <div class="card collapsible-card booking-details-card">
+        <div class="collapsible-head">
+          <div>
+            <div class="ititle">Booking Details</div>
+            <div class="idesc" id="bookingDetailsCount">Latest bookings for the selected period</div>
+          </div>
+          <button class="collapse-btn" id="bookingCollapseBtn" type="button" aria-expanded="true" aria-controls="bookingDetailsBody">
+            <span>Collapse</span><span class="collapse-chevron">⌃</span>
+          </button>
+        </div>
+
+        <div class="collapsible-body" id="bookingDetailsBody">
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Booking Date</th>
+                  <th>Booking ID</th>
+                  <th>Transaction Value</th>
+                  <th>City</th>
+                  <th>Region</th>
+                  <th>Country</th>
+                  <th>Check in date</th>
+                  <th>Check out date</th>
+                  <th>Nights</th>
+                  <th>BLT</th>
+                  <th>Channel</th>
+                </tr>
+              </thead>
+              <tbody id="bookingTbody">
+                <tr><td colspan="11" style="text-align:center;color:#aaa;padding:28px">Loading booking data...</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pager-wrap" id="bookingPager"></div>
         </div>
       </div>
     </section>
 
-    <section class="section">
+    <!-- 2. MARKET PERFORMANCE -->
+    <section class="section" id="marketPerformanceSection">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Market <span class="accent">Performance</span></h2>
+          <p class="section-sub">Ad spend and validated booking outcomes by market for the selected period.</p>
+        </div>
+      </div>
+
+      <div class="card integrated-market-card collapsible-card">
+        <div class="integrated-market-head collapsible-head">
+          <div>
+            <div class="integrated-market-title">Integrated Market Performance</div>
+            <div class="integrated-market-desc">
+              Live ad spend by country matched with validated bookings and revenue for the selected booking period.
+            </div>
+          </div>
+          <div class="head-actions">
+            <div class="integrated-live-pill">
+              <span class="integrated-live-dot"></span>
+              <span>Live Ad Spend</span>
+            </div>
+            <button class="collapse-btn" id="integratedCollapseBtn" type="button" aria-expanded="true" aria-controls="integratedMarketBody">
+              <span>Collapse</span><span class="collapse-chevron">⌃</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="collapsible-body" id="integratedMarketBody">
+          <div id="integratedMarketContent">
+            <div class="integrated-status">Loading integrated market data...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="geo-section">
+        <div class="geo-section-head">
+          <div>
+            <div class="geo-title">Booking Geo Performance</div>
+            <div class="idesc">All available markets, paginated for easier review</div>
+          </div>
+          <div class="metric-toggle" id="geoToggle" aria-label="Geo Performance metric">
+            <button type="button" class="active" data-metric="bookings">Bookings</button>
+            <button type="button" data-metric="revenue">Revenue</button>
+            <button type="button" data-metric="abv">ABV</button>
+          </div>
+        </div>
+
+        <div class="geo-grid">
+          <div class="card geo-card">
+            <div class="ititle">Country Performance</div>
+            <div class="idesc" id="geoCountryDesc">By bookings</div>
+            <div id="geoCountryRows"><div class="empty-state">Loading...</div></div>
+            <div class="pager-wrap compact-pager" id="geoCountryPager"></div>
+          </div>
+
+          <div class="card geo-card">
+            <div class="ititle">Region Performance</div>
+            <div class="idesc" id="geoRegionDesc">By bookings</div>
+            <div id="geoRegionRows"><div class="empty-state">Loading...</div></div>
+            <div class="pager-wrap compact-pager" id="geoRegionPager"></div>
+          </div>
+
+          <div class="card geo-card">
+            <div class="ititle">City Performance</div>
+            <div class="idesc" id="geoCityDesc">By bookings</div>
+            <div id="geoCityRows"><div class="empty-state">Loading...</div></div>
+            <div class="pager-wrap compact-pager" id="geoCityPager"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. BOOKINGS INSIGHTS -->
+    <section class="section" id="bookingsInsightsSection">
       <div class="section-head">
         <div>
           <h2 class="section-title">Bookings <span class="accent">Insights</span></h2>
@@ -1195,70 +1404,28 @@
           <div id="channelRows"><div style="color:#aaa;font-size:11px;padding-top:24px">Loading...</div></div>
         </div>
       </div>
+    </section>
 
-      <div class="geo-section">
-        <div class="geo-section-head">
-          <div class="geo-title">Geo Performance</div>
-          <div class="metric-toggle" id="geoToggle" aria-label="Geo Performance metric">
-            <button type="button" class="active" data-metric="bookings">Bookings</button>
+    <!-- 4. MARKET FUTURE PIPELINE -->
+    <section class="section" id="marketFuturePipelineSection">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">Market Future <span class="accent">Pipeline</span></h2>
+        </div>
+      </div>
+
+      <div class="card pipeline-card">
+        <div class="pipeline-head">
+          <div>
+            <div class="idesc" id="pipelineDesc">Future check-ins by room nights</div>
+          </div>
+          <div class="metric-toggle" id="pipelineToggle" aria-label="Market Future Pipeline metric">
+            <button type="button" class="active" data-metric="nights">Room Nights</button>
             <button type="button" data-metric="revenue">Revenue</button>
-            <button type="button" data-metric="abv">ABV</button>
           </div>
         </div>
-
-        <div class="card integrated-market-card">
-          <div class="integrated-market-head">
-            <div>
-              <div class="integrated-market-title">Integrated Market Performance</div>
-              <div class="integrated-market-desc">
-                Live ad spend by country matched with validated bookings and revenue for the selected booking period.
-              </div>
-            </div>
-            <div class="integrated-live-pill">
-              <span class="integrated-live-dot"></span>
-              <span>Live Ad Spend</span>
-            </div>
-          </div>
-
-          <div id="integratedMarketContent">
-            <div class="integrated-status">Loading integrated market data...</div>
-          </div>
-        </div>
-
-        <div class="geo-grid">
-          <div class="card geo-card">
-            <div class="ititle">Country Performance</div>
-            <div class="idesc" id="geoCountryDesc">By bookings</div>
-            <div id="geoCountryRows"><div class="empty-state">Loading...</div></div>
-          </div>
-
-          <div class="card geo-card">
-            <div class="ititle">Region Performance</div>
-            <div class="idesc" id="geoRegionDesc">By bookings</div>
-            <div id="geoRegionRows"><div class="empty-state">Loading...</div></div>
-          </div>
-
-          <div class="card geo-card">
-            <div class="ititle">City Performance</div>
-            <div class="idesc" id="geoCityDesc">By bookings</div>
-            <div id="geoCityRows"><div class="empty-state">Loading...</div></div>
-          </div>
-        </div>
-
-        <div class="card pipeline-card">
-          <div class="pipeline-head">
-            <div>
-              <div class="ititle">Market Future Pipeline</div>
-              <div class="idesc" id="pipelineDesc">Future check-ins by room nights</div>
-            </div>
-            <div class="metric-toggle" id="pipelineToggle" aria-label="Market Future Pipeline metric">
-              <button type="button" class="active" data-metric="nights">Room Nights</button>
-              <button type="button" data-metric="revenue">Revenue</button>
-            </div>
-          </div>
-          <div class="pipeline-wrap" id="pipelineWrap">
-            <div class="empty-state">Loading...</div>
-          </div>
+        <div class="pipeline-wrap" id="pipelineWrap">
+          <div class="empty-state">Loading...</div>
         </div>
       </div>
 
@@ -1419,21 +1586,60 @@
     }).filter(r => r.bookingId || r.bookingDate || r.value || r.country || r.checkIn);
   }
 
-  let tableExpanded = false;
+  const BOOKING_PAGE_SIZE = 10;
+  let bookingPage = 1;
   let currentFilteredRows = [];
+
+  function renderPager(containerId,page,totalPages,totalItems,onPageChange){
+    const el=document.getElementById(containerId);
+    if(!el)return;
+
+    if(!totalItems){
+      el.innerHTML='';
+      return;
+    }
+
+    const safePages=Math.max(1,totalPages);
+    const safePage=Math.min(Math.max(1,page),safePages);
+
+    el.innerHTML=`
+      <div class="pager">
+        <button class="pager-btn" type="button" data-dir="prev" ${safePage<=1?'disabled':''}>← Previous</button>
+        <div class="pager-meta">Page ${safePage.toLocaleString('en-US')} of ${safePages.toLocaleString('en-US')} · ${totalItems.toLocaleString('en-US')} records</div>
+        <button class="pager-btn" type="button" data-dir="next" ${safePage>=safePages?'disabled':''}>Next →</button>
+      </div>
+    `;
+
+    const prev=el.querySelector('[data-dir="prev"]');
+    const next=el.querySelector('[data-dir="next"]');
+    if(prev && !prev.disabled)prev.addEventListener('click',()=>onPageChange(safePage-1));
+    if(next && !next.disabled)next.addEventListener('click',()=>onPageChange(safePage+1));
+  }
 
   function renderTable(rows){
     currentFilteredRows = rows;
     const tb = document.getElementById('bookingTbody');
-    const btn = document.getElementById('viewAllBtn');
+    const countEl=document.getElementById('bookingDetailsCount');
+
     if(!rows.length){
       tb.innerHTML = '<tr><td colspan="11" style="text-align:center;color:#aaa;padding:28px">No booking data found</td></tr>';
-      btn.style.display='none';
+      if(countEl)countEl.textContent='No bookings for the selected period';
+      renderPager('bookingPager',1,1,0,()=>{});
       return;
     }
 
     const ordered = [...rows].sort((a,b)=>(b.bookingDate?.getTime()||0)-(a.bookingDate?.getTime()||0));
-    const visible = tableExpanded ? ordered : ordered.slice(0,10);
+    const totalPages=Math.max(1,Math.ceil(ordered.length/BOOKING_PAGE_SIZE));
+    bookingPage=Math.min(Math.max(1,bookingPage),totalPages);
+
+    const start=(bookingPage-1)*BOOKING_PAGE_SIZE;
+    const visible=ordered.slice(start,start+BOOKING_PAGE_SIZE);
+
+    if(countEl){
+      const from=start+1;
+      const to=Math.min(start+BOOKING_PAGE_SIZE,ordered.length);
+      countEl.textContent=`Showing ${from.toLocaleString('en-US')}–${to.toLocaleString('en-US')} of ${ordered.length.toLocaleString('en-US')} bookings · selected period`;
+    }
 
     tb.innerHTML = visible.map(r => `
       <tr>
@@ -1450,12 +1656,10 @@
         <td>${esc(r.channel || '—')}</td>
       </tr>`).join('');
 
-    if(ordered.length > 10){
-      btn.style.display='';
-      btn.textContent = tableExpanded ? 'Show less' : `View all (${ordered.length.toLocaleString('en-US')})`;
-    }else{
-      btn.style.display='none';
-    }
+    renderPager('bookingPager',bookingPage,totalPages,ordered.length,(page)=>{
+      bookingPage=page;
+      renderTable(currentFilteredRows);
+    });
   }
 
   function renderKPIs(rows){
@@ -1500,10 +1704,10 @@
     return entries.sort((a,b)=>b.value-a.value).slice(0,limit);
   }
 
-  function renderRankedRows(containerId, entries, total, metric='bookings'){
+  function renderRankedRows(containerId, entries, total, metric='bookings', overallMax=null){
     const el=document.getElementById(containerId);
     if(!entries.length){el.innerHTML='<div class="empty-state">No data</div>';return;}
-    const max=entries[0].value||1;
+    const max=overallMax || entries[0].value || 1;
     el.innerHTML=entries.map(item=>{
       const label=item.label, val=item.value;
       const pct=metric==='abv' ? null : (total ? (val/total*100) : 0);
@@ -1648,16 +1852,54 @@
 
   let geoMetric='bookings';
   let pipelineMetric='nights';
+  const GEO_PAGE_SIZE=10;
+  const geoPages={country:1,region:1,city:1};
+
+  function renderGeoLevel(rows,level){
+    const key=level.toLowerCase();
+    const containerLevel=level.charAt(0).toUpperCase()+level.slice(1);
+    const entries=aggregateBy(rows,key,geoMetric,Number.MAX_SAFE_INTEGER);
+    const total=geoMetric==='revenue'
+      ? rows.reduce((a,r)=>a+r.value,0)
+      : geoMetric==='bookings'
+        ? rows.length
+        : 0;
+
+    const totalPages=Math.max(1,Math.ceil(entries.length/GEO_PAGE_SIZE));
+    geoPages[key]=Math.min(Math.max(1,geoPages[key]),totalPages);
+
+    const start=(geoPages[key]-1)*GEO_PAGE_SIZE;
+    const pageEntries=entries.slice(start,start+GEO_PAGE_SIZE);
+    const metricLabel=geoMetric==='revenue'?'revenue':geoMetric==='abv'?'ABV':'bookings';
+
+    document.getElementById(`geo${containerLevel}Desc`).textContent =
+      `${entries.length.toLocaleString('en-US')} ${level}${entries.length===1?'':'s'} · by ${metricLabel}`;
+
+    renderRankedRows(
+      `geo${containerLevel}Rows`,
+      pageEntries,
+      total,
+      geoMetric,
+      entries.length ? entries[0].value : 1
+    );
+
+    renderPager(
+      `geo${containerLevel}Pager`,
+      geoPages[key],
+      totalPages,
+      entries.length,
+      (page)=>{
+        geoPages[key]=page;
+        renderGeoPerformance(filteredByPeriod());
+        bindInteractions();
+      }
+    );
+  }
 
   function renderGeoPerformance(rows){
-    const metricLabel=geoMetric==='revenue'?'revenue':geoMetric==='abv'?'ABV':'bookings';
-    ['Country','Region','City'].forEach(level=>{
-      const key=level.toLowerCase();
-      const entries=aggregateBy(rows,key,geoMetric,6);
-      const total=geoMetric==='revenue' ? rows.reduce((a,r)=>a+r.value,0) : geoMetric==='bookings' ? rows.length : 0;
-      document.getElementById(`geo${level}Desc`).textContent=`By ${metricLabel}`;
-      renderRankedRows(`geo${level}Rows`,entries,total,geoMetric);
-    });
+    renderGeoLevel(rows,'country');
+    renderGeoLevel(rows,'region');
+    renderGeoLevel(rows,'city');
   }
 
   function monthStartUTC(d){
@@ -1746,7 +1988,8 @@
 
 
   let ALL_ROWS = [];
-  let integratedMarketExpanded = false;
+  const INTEGRATED_PAGE_SIZE = 10;
+  let integratedMarketPage = 1;
   let integratedMarketRequestSeq = 0;
 
   let DATA_MIN_DATE=null;
@@ -1932,7 +2175,10 @@
     const el=document.getElementById('integratedMarketContent');
     if(!el)return;
 
-    const rowsToShow=integratedMarketExpanded ? mergedRows : mergedRows.slice(0,20);
+    const totalPages=Math.max(1,Math.ceil(mergedRows.length/INTEGRATED_PAGE_SIZE));
+    integratedMarketPage=Math.min(Math.max(1,integratedMarketPage),totalPages);
+    const start=(integratedMarketPage-1)*INTEGRATED_PAGE_SIZE;
+    const rowsToShow=mergedRows.slice(start,start+INTEGRATED_PAGE_SIZE);
 
     const body=rowsToShow.map(r=>`
       <tr>
@@ -1942,13 +2188,6 @@
         <td>${money(r.revenue)}</td>
       </tr>
     `).join('');
-
-    const more=mergedRows.length>20 ? `
-      <div class="integrated-market-actions">
-        <button type="button" class="integrated-view-btn" id="integratedViewBtn">
-          ${integratedMarketExpanded ? 'Show top 20' : `View all (${mergedRows.length})`}
-        </button>
-      </div>` : '';
 
     el.innerHTML=`
       <div class="integrated-market-summary">
@@ -1987,7 +2226,9 @@
           </tfoot>
         </table>
       </div>
-      ${more}
+
+      <div class="pager-wrap" id="integratedMarketPager"></div>
+
       <div class="integrated-source-note">
         Ad Spend: live from ${esc(DASHBOARD_CONFIG.ads.provider || 'ad platform')} ·
         Bookings & Revenue: validated booking data ·
@@ -1995,11 +2236,16 @@
       </div>
     `;
 
-    const btn=document.getElementById('integratedViewBtn');
-    if(btn)btn.addEventListener('click',()=>{
-      integratedMarketExpanded=!integratedMarketExpanded;
-      renderIntegratedMarketTable(mergedRows,totals,meta);
-    });
+    renderPager(
+      'integratedMarketPager',
+      integratedMarketPage,
+      totalPages,
+      mergedRows.length,
+      (page)=>{
+        integratedMarketPage=page;
+        renderIntegratedMarketTable(mergedRows,totals,meta);
+      }
+    );
   }
 
   async function renderIntegratedMarketPerformance(bookingRows){
@@ -2055,7 +2301,7 @@
       if(seq!==integratedMarketRequestSeq)return;
 
       if(!data || data.ok===false){
-        throw new Error(data?.error || 'Shared GAS GAS returned an error');
+        throw new Error(data?.error || 'Shared GAS returned an error');
       }
 
       const adRows=Array.isArray(data?.rows) ? data.rows : [];
@@ -2096,7 +2342,7 @@
         return acc;
       },{spend:0,bookings:0,revenue:0});
 
-      integratedMarketExpanded=false;
+      integratedMarketPage=1;
       renderIntegratedMarketTable(mergedRows,totals,{start,end});
     }catch(err){
       if(seq!==integratedMarketRequestSeq)return;
@@ -2121,7 +2367,11 @@
 
   function renderDashboard(){
     const rows=filteredByPeriod();
-    tableExpanded=false;
+    bookingPage=1;
+    geoPages.country=1;
+    geoPages.region=1;
+    geoPages.city=1;
+    integratedMarketPage=1;
     renderTable(rows);
     renderKPIs(rows);
     renderMarkets(rows);
@@ -2179,10 +2429,6 @@
       renderDashboard();
     }
   });
-  document.getElementById('viewAllBtn').addEventListener('click',()=>{
-    tableExpanded=!tableExpanded;
-    renderTable(currentFilteredRows);
-  });
 
   document.querySelectorAll('#marketToggle button').forEach(btn=>btn.addEventListener('click',()=>{
     marketMetric=btn.dataset.metric;
@@ -2205,6 +2451,9 @@
 
   document.querySelectorAll('#geoToggle button').forEach(btn=>btn.addEventListener('click',()=>{
     geoMetric=btn.dataset.metric;
+    geoPages.country=1;
+    geoPages.region=1;
+    geoPages.city=1;
     setToggleState('geoToggle',geoMetric);
     renderGeoPerformance(filteredByPeriod());
     bindInteractions();
@@ -2215,6 +2464,26 @@
     renderFuturePipeline(filteredByPeriod());
   }));
 
+
+
+  function bindCollapseButton(buttonId,bodyId){
+    const btn=document.getElementById(buttonId);
+    const body=document.getElementById(bodyId);
+    if(!btn || !body)return;
+
+    btn.addEventListener('click',()=>{
+      const isExpanded=btn.getAttribute('aria-expanded')!=='false';
+      const nextExpanded=!isExpanded;
+      btn.setAttribute('aria-expanded',String(nextExpanded));
+      body.classList.toggle('is-collapsed',!nextExpanded);
+
+      const label=btn.querySelector('span:first-child');
+      if(label)label.textContent=nextExpanded?'Collapse':'Expand';
+    });
+  }
+
+  bindCollapseButton('bookingCollapseBtn','bookingDetailsBody');
+  bindCollapseButton('integratedCollapseBtn','integratedMarketBody');
 
   function initDashboardConfig(){
     document.getElementById('clientName').textContent = DASHBOARD_CONFIG.clientName || 'Client';
