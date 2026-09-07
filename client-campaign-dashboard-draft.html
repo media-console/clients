@@ -1995,6 +1995,200 @@
     #bookingsTab .market-xpo-search-wrap{width:100%;min-width:0}
     #bookingsTab .market-xpo-tabs{gap:22px;overflow-x:auto}
   }
+
+
+  /* ================= v16: BOOKINGS APP HEADER + SAFE GEO LEVELS ================= */
+
+  #bookingsTab{
+    position:relative;
+  }
+
+  /* XPO-like top navigation structure, using the dashboard's own visual identity */
+  #bookingsTab .booking-app-header{
+    position:sticky;
+    top:0;
+    z-index:35;
+    min-height:62px;
+    display:grid;
+    grid-template-columns:260px minmax(0,1fr) minmax(180px,260px);
+    align-items:stretch;
+    margin:0 0 22px;
+    border:1px solid #ded9e8;
+    background:#24156f;
+    box-shadow:0 2px 8px rgba(26,19,69,.10);
+  }
+
+  #bookingsTab .booking-app-brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+    min-width:0;
+    padding:9px 15px;
+    background:#fff;
+    border-right:1px solid #e6e1ed;
+  }
+
+  #bookingsTab .booking-brand-mark{
+    width:40px;
+    height:40px;
+    flex:0 0 40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:7px;
+    background:#f0edff;
+    color:#5d45dc;
+    font-size:14px!important;
+    font-weight:800;
+    letter-spacing:-.02em;
+  }
+
+  #bookingsTab .booking-brand-copy{
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+  }
+
+  #bookingsTab .booking-brand-copy strong{
+    color:#2a2630;
+    font-size:13px!important;
+    font-weight:800;
+    line-height:1.2;
+    letter-spacing:.015em;
+    white-space:nowrap;
+  }
+
+  #bookingsTab .booking-brand-copy span{
+    color:#918a99;
+    font-size:11px!important;
+    line-height:1.25;
+    white-space:nowrap;
+  }
+
+  #bookingsTab .booking-app-nav{
+    min-width:0;
+    display:flex;
+    align-items:stretch;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  #bookingsTab .booking-app-nav::-webkit-scrollbar{display:none}
+
+  #bookingsTab .booking-app-nav button{
+    min-width:max-content;
+    height:62px;
+    padding:0 18px;
+    border:0;
+    border-bottom:3px solid transparent;
+    background:transparent;
+    color:#cfc9f2;
+    font-size:13px!important;
+    font-weight:700;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+
+  #bookingsTab .booking-app-nav button:hover{
+    color:#fff;
+    background:rgba(255,255,255,.055);
+  }
+
+  #bookingsTab .booking-app-nav button.active{
+    color:#fff;
+    border-bottom-color:#b9a9ff;
+    background:rgba(255,255,255,.07);
+  }
+
+  #bookingsTab .booking-app-client{
+    min-width:0;
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    padding:0 18px;
+    border-left:1px solid rgba(255,255,255,.18);
+    color:#fff;
+    font-size:13px!important;
+    font-weight:700;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  #bookingsTab .section{
+    scroll-margin-top:86px;
+  }
+
+  /* Market Performance: level-specific table structures */
+  #bookingsTab .market-xpo-table th.market-text,
+  #bookingsTab .market-xpo-table td.market-text{
+    text-align:left!important;
+  }
+
+  #bookingsTab .market-xpo-table .market-country-view-col-geo{width:32%}
+  #bookingsTab .market-xpo-table .market-region-view-col-region{width:28%}
+  #bookingsTab .market-xpo-table .market-region-view-col-country{width:20%}
+  #bookingsTab .market-xpo-table .market-city-view-col-city{width:24%}
+  #bookingsTab .market-xpo-table .market-city-view-col-region{width:22%}
+  #bookingsTab .market-xpo-table .market-city-view-col-country{width:18%}
+
+  #bookingsTab .market-metric-toggle button.metric-hidden{
+    display:none!important;
+  }
+
+  #bookingsTab .market-xpo-note.show{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  #bookingsTab .market-xpo-note.show:before{
+    content:"i";
+    width:18px;
+    height:18px;
+    flex:0 0 18px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:#efecfb;
+    color:#6653c8;
+    font-size:11px!important;
+    font-weight:800;
+  }
+
+  @media(max-width:1050px){
+    #bookingsTab .booking-app-header{
+      grid-template-columns:210px minmax(0,1fr);
+    }
+    #bookingsTab .booking-app-client{
+      display:none;
+    }
+    #bookingsTab .booking-app-nav button{
+      padding:0 14px;
+    }
+  }
+
+  @media(max-width:720px){
+    #bookingsTab .booking-app-header{
+      position:relative;
+      grid-template-columns:1fr;
+    }
+    #bookingsTab .booking-app-brand{
+      border-right:0;
+      border-bottom:1px solid #e6e1ed;
+    }
+    #bookingsTab .booking-app-nav{
+      background:#24156f;
+    }
+    #bookingsTab .booking-app-nav button{
+      height:54px;
+      padding:0 14px;
+    }
+    #bookingsTab .section{
+      scroll-margin-top:20px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -2073,6 +2267,25 @@
     </div>
 
     <div id="bookingsTab" class="tab-panel" role="tabpanel" aria-labelledby="bookingsTabBtn">
+      <div class="booking-app-header" id="bookingAppHeader">
+        <div class="booking-app-brand">
+          <div class="booking-brand-mark">MC</div>
+          <div class="booking-brand-copy">
+            <strong>BOOKING INTELLIGENCE</strong>
+            <span>Client Performance Dashboard</span>
+          </div>
+        </div>
+
+        <nav class="booking-app-nav" id="bookingAppNav" aria-label="Bookings dashboard navigation">
+          <button type="button" class="active" data-target="bookingsReportSection">BOOKINGS REPORT</button>
+          <button type="button" data-target="marketPerformanceSection">MARKET PERFORMANCE</button>
+          <button type="button" data-target="bookingsInsightsSection">BOOKING INSIGHTS</button>
+          <button type="button" data-target="marketFuturePipelineSection">FUTURE PIPELINE</button>
+        </nav>
+
+        <div class="booking-app-client" id="bookingHeaderClient">—</div>
+      </div>
+
 
     <!-- 1. BOOKINGS REPORT -->
     <section class="section" id="bookingsReportSection">
@@ -2178,9 +2391,9 @@
 
         <div class="market-xpo-table-wrap">
           <table class="market-xpo-table">
-            <thead>
+            <thead id="marketPerformanceThead">
               <tr>
-                <th>GEO <span class="market-sort-indicator">↕</span></th>
+                <th>GEO</th>
                 <th>SPEND</th>
                 <th>BOOKINGS</th>
                 <th>REVENUE</th>
@@ -2794,33 +3007,45 @@
     pageSize:10
   };
 
-  let MARKET_COUNTRY_SPEND=new Map();
+  // Country-level XPO media data.
+  // Region / City intentionally remain booking-only views because the two geo sources
+  // should not be forced together unless they have been explicitly validated.
+  let MARKET_COUNTRY_ADS=new Map();
 
   function marketLevelLabel(level){
     return level==='region'?'Regions':level==='city'?'Cities':'Geos';
   }
 
-  function marketSpendForCountry(country){
-    return MARKET_COUNTRY_SPEND.get(normalizedCountryKey(country))||0;
-  }
-
   function aggregateMarketPerformance(rows,level){
     const map=new Map();
+
+    // Country view must retain markets that exist only in XPO spend,
+    // even if there are no validated bookings from that country.
+    if(level==='country'){
+      MARKET_COUNTRY_ADS.forEach((ad,key)=>{
+        map.set(key,{
+          key,
+          label:ad.country,
+          country:ad.country,
+          spend:Number(ad.spend||0),
+          bookings:0,
+          revenue:0
+        });
+      });
+    }
 
     rows.forEach(r=>{
       const country=canonicalCountryName(r.country||'Unknown');
       const region=(String(r.region||'Other').trim()||'Other');
       const city=(String(r.city||'Other').trim()||'Other');
 
-      let key,label,sub='';
+      let key,label;
       if(level==='region'){
         key=normalizedCountryKey(country)+'||'+region.toLowerCase();
         label=region;
-        sub=country;
       }else if(level==='city'){
         key=normalizedCountryKey(country)+'||'+region.toLowerCase()+'||'+city.toLowerCase();
         label=city;
-        sub=`${region} · ${country}`;
       }else{
         key=normalizedCountryKey(country);
         label=country;
@@ -2828,14 +3053,28 @@
 
       if(!map.has(key)){
         map.set(key,{
-          key,label,sub,country,
-          spend:level==='country'?marketSpendForCountry(country):null,
-          bookings:0,revenue:0
+          key,
+          label,
+          country,
+          region:level==='city'?region:'',
+          city:level==='city'?city:'',
+          spend:level==='country'?(MARKET_COUNTRY_ADS.get(key)?.spend||0):null,
+          bookings:0,
+          revenue:0
         });
       }
+
       const x=map.get(key);
       x.bookings+=1;
       x.revenue+=Number(r.value||0);
+
+      if(level==='region'){
+        x.country=country;
+      }else if(level==='city'){
+        x.country=country;
+        x.region=region;
+        x.city=city;
+      }
     });
 
     return [...map.values()].map(r=>({
@@ -2855,7 +3094,6 @@
     if(metric==='bookings')return Math.round(row.bookings||0).toLocaleString('en-US');
     if(metric==='revenue')return money(row.revenue||0);
     if(metric==='abv')return money(row.abv||0);
-    if(row.spend===null || row.spend===undefined)return '—';
     return money(row.spend||0);
   }
 
@@ -2864,7 +3102,10 @@
     const note=document.getElementById('marketPerformanceNote');
     const isCountry=MARKET_PERF_STATE.level==='country';
 
-    if(spendBtn)spendBtn.disabled=!isCountry;
+    if(spendBtn){
+      spendBtn.disabled=false;
+      spendBtn.classList.toggle('metric-hidden',!isCountry);
+    }
 
     if(!isCountry && MARKET_PERF_STATE.metric==='spend'){
       MARKET_PERF_STATE.metric='bookings';
@@ -2878,28 +3119,146 @@
       if(isCountry){
         note.textContent='';
         note.classList.remove('show');
+      }else if(MARKET_PERF_STATE.level==='region'){
+        note.textContent='Region is a booking-demand breakdown. Spend is intentionally kept at Country level to avoid implying media spend where XPO and booking geo may not map one-to-one.';
+        note.classList.add('show');
       }else{
-        note.textContent='Spend is currently available from XPO at Country level. Region and City use validated Booking, Revenue and ABV data.';
+        note.textContent='City is a booking-demand breakdown. Spend is intentionally kept at Country level to avoid implying media spend where XPO and booking geo may not map one-to-one.';
         note.classList.add('show');
       }
     }
   }
 
+  function marketTableHeadHtml(level){
+    if(level==='region'){
+      return `
+        <tr>
+          <th class="market-text market-region-view-col-region">REGION</th>
+          <th class="market-text market-region-view-col-country">COUNTRY</th>
+          <th>BOOKINGS</th>
+          <th>REVENUE</th>
+          <th>ABV</th>
+        </tr>`;
+    }
+
+    if(level==='city'){
+      return `
+        <tr>
+          <th class="market-text market-city-view-col-city">CITY</th>
+          <th class="market-text market-city-view-col-region">REGION</th>
+          <th class="market-text market-city-view-col-country">COUNTRY</th>
+          <th>BOOKINGS</th>
+          <th>REVENUE</th>
+          <th>ABV</th>
+        </tr>`;
+    }
+
+    return `
+      <tr>
+        <th class="market-text market-country-view-col-geo">GEO</th>
+        <th>SPEND</th>
+        <th>BOOKINGS</th>
+        <th>REVENUE</th>
+        <th>ABV</th>
+      </tr>`;
+  }
+
+  function marketRowHtml(r,level,metric){
+    if(level==='region'){
+      return `
+        <tr>
+          <td class="market-text"><div class="market-geo-name">${esc(r.label)}</div></td>
+          <td class="market-text">${esc(r.country||'—')}</td>
+          <td class="${metric==='bookings'?'market-primary-cell':''}">${marketCellValue(r,'bookings')}</td>
+          <td class="${metric==='revenue'?'market-primary-cell':''}">${marketCellValue(r,'revenue')}</td>
+          <td class="${metric==='abv'?'market-primary-cell':''}">${marketCellValue(r,'abv')}</td>
+        </tr>`;
+    }
+
+    if(level==='city'){
+      return `
+        <tr>
+          <td class="market-text"><div class="market-geo-name">${esc(r.city||r.label)}</div></td>
+          <td class="market-text">${esc(r.region||'Other')}</td>
+          <td class="market-text">${esc(r.country||'—')}</td>
+          <td class="${metric==='bookings'?'market-primary-cell':''}">${marketCellValue(r,'bookings')}</td>
+          <td class="${metric==='revenue'?'market-primary-cell':''}">${marketCellValue(r,'revenue')}</td>
+          <td class="${metric==='abv'?'market-primary-cell':''}">${marketCellValue(r,'abv')}</td>
+        </tr>`;
+    }
+
+    return `
+      <tr>
+        <td class="market-text"><div class="market-geo-name">${esc(r.label)}</div></td>
+        <td class="${metric==='spend'?'market-primary-cell':''}">${marketCellValue(r,'spend')}</td>
+        <td class="${metric==='bookings'?'market-primary-cell':''}">${marketCellValue(r,'bookings')}</td>
+        <td class="${metric==='revenue'?'market-primary-cell':''}">${marketCellValue(r,'revenue')}</td>
+        <td class="${metric==='abv'?'market-primary-cell':''}">${marketCellValue(r,'abv')}</td>
+      </tr>`;
+  }
+
+  function marketTotalHtml(data,level){
+    const totals=data.reduce((acc,r)=>{
+      acc.bookings+=r.bookings||0;
+      acc.revenue+=r.revenue||0;
+      if(level==='country')acc.spend+=Number(r.spend||0);
+      return acc;
+    },{bookings:0,revenue:0,spend:0});
+
+    const totalAbv=totals.bookings?totals.revenue/totals.bookings:0;
+    const label=`Total from ${data.length.toLocaleString('en-US')} ${marketLevelLabel(level)}`;
+
+    if(level==='region'){
+      return `
+        <tr>
+          <td class="market-text" colspan="2">${label}</td>
+          <td>${Math.round(totals.bookings).toLocaleString('en-US')}</td>
+          <td>${money(totals.revenue)}</td>
+          <td>${money(totalAbv)}</td>
+        </tr>`;
+    }
+
+    if(level==='city'){
+      return `
+        <tr>
+          <td class="market-text" colspan="3">${label}</td>
+          <td>${Math.round(totals.bookings).toLocaleString('en-US')}</td>
+          <td>${money(totals.revenue)}</td>
+          <td>${money(totalAbv)}</td>
+        </tr>`;
+    }
+
+    return `
+      <tr>
+        <td class="market-text">${label}</td>
+        <td>${money(totals.spend)}</td>
+        <td>${Math.round(totals.bookings).toLocaleString('en-US')}</td>
+        <td>${money(totals.revenue)}</td>
+        <td>${money(totalAbv)}</td>
+      </tr>`;
+  }
+
   function renderMarketPerformance(rows){
+    const thead=document.getElementById('marketPerformanceThead');
     const tbody=document.getElementById('marketPerformanceTbody');
     const tfoot=document.getElementById('marketPerformanceTfoot');
-    if(!tbody || !tfoot)return;
+    if(!thead || !tbody || !tfoot)return;
 
     updateMarketPerformanceControls();
 
-    let data=aggregateMarketPerformance(rows,MARKET_PERF_STATE.level);
+    const level=MARKET_PERF_STATE.level;
+    let data=aggregateMarketPerformance(rows,level);
     const q=MARKET_PERF_STATE.search.trim().toLowerCase();
 
     if(q){
-      data=data.filter(r=>
-        String(r.label||'').toLowerCase().includes(q) ||
-        String(r.sub||'').toLowerCase().includes(q)
-      );
+      data=data.filter(r=>{
+        const haystack=level==='city'
+          ? `${r.city||r.label} ${r.region||''} ${r.country||''}`
+          : level==='region'
+            ? `${r.label} ${r.country||''}`
+            : `${r.label}`;
+        return haystack.toLowerCase().includes(q);
+      });
     }
 
     const metric=MARKET_PERF_STATE.metric;
@@ -2917,51 +3276,25 @@
     const start=(MARKET_PERF_STATE.page-1)*MARKET_PERF_STATE.pageSize;
     const pageRows=data.slice(start,start+MARKET_PERF_STATE.pageSize);
 
+    thead.innerHTML=marketTableHeadHtml(level);
+
     if(!pageRows.length){
-      tbody.innerHTML='<tr><td colspan="5" class="market-empty-cell">No market data found for this selection.</td></tr>';
+      const colspan=level==='city'?6:5;
+      tbody.innerHTML=`<tr><td colspan="${colspan}" class="market-empty-cell">No market data found for this selection.</td></tr>`;
       tfoot.innerHTML='';
-      renderXpoPager('marketPerformancePager',1,MARKET_PERF_STATE.pageSize,0,marketLevelLabel(MARKET_PERF_STATE.level),()=>{},()=>{});
+      renderXpoPager('marketPerformancePager',1,MARKET_PERF_STATE.pageSize,0,marketLevelLabel(level),()=>{},()=>{});
       return;
     }
 
-    tbody.innerHTML=pageRows.map(r=>`
-      <tr>
-        <td>
-          <div class="market-geo-name">${esc(r.label)}</div>
-          ${r.sub?`<div class="market-geo-sub">${esc(r.sub)}</div>`:''}
-        </td>
-        <td class="${metric==='spend'?'market-primary-cell':(r.spend==null?'market-muted-cell':'')}">${marketCellValue(r,'spend')}</td>
-        <td class="${metric==='bookings'?'market-primary-cell':''}">${marketCellValue(r,'bookings')}</td>
-        <td class="${metric==='revenue'?'market-primary-cell':''}">${marketCellValue(r,'revenue')}</td>
-        <td class="${metric==='abv'?'market-primary-cell':''}">${marketCellValue(r,'abv')}</td>
-      </tr>
-    `).join('');
-
-    const totals=data.reduce((acc,r)=>{
-      acc.bookings+=r.bookings||0;
-      acc.revenue+=r.revenue||0;
-      if(r.spend!=null)acc.spend+=Number(r.spend||0);
-      return acc;
-    },{bookings:0,revenue:0,spend:0});
-
-    const totalAbv=totals.bookings?totals.revenue/totals.bookings:0;
-
-    tfoot.innerHTML=`
-      <tr>
-        <td>Total from ${totalItems.toLocaleString('en-US')} ${marketLevelLabel(MARKET_PERF_STATE.level)}</td>
-        <td>${MARKET_PERF_STATE.level==='country'?money(totals.spend):'—'}</td>
-        <td>${Math.round(totals.bookings).toLocaleString('en-US')}</td>
-        <td>${money(totals.revenue)}</td>
-        <td>${money(totalAbv)}</td>
-      </tr>
-    `;
+    tbody.innerHTML=pageRows.map(r=>marketRowHtml(r,level,metric)).join('');
+    tfoot.innerHTML=marketTotalHtml(data,level);
 
     renderXpoPager(
       'marketPerformancePager',
       MARKET_PERF_STATE.page,
       MARKET_PERF_STATE.pageSize,
       totalItems,
-      marketLevelLabel(MARKET_PERF_STATE.level),
+      marketLevelLabel(level),
       page=>{
         MARKET_PERF_STATE.page=page;
         renderMarketPerformance(filteredByPeriod());
@@ -2991,7 +3324,7 @@
 
     document.querySelectorAll('#marketPerformanceMetricToggle button').forEach(btn=>{
       btn.addEventListener('click',()=>{
-        if(btn.disabled)return;
+        if(btn.classList.contains('metric-hidden'))return;
         MARKET_PERF_STATE.metric=btn.dataset.metric||'bookings';
         MARKET_PERF_STATE.page=1;
 
@@ -3282,7 +3615,7 @@
     const {start,end}=integratedPeriodRange();
 
     if(!gasUrl || gasUrl.includes('PASTE_SHARED_MC_XPO_GAS_WEB_APP_URL_HERE') || !token || !start || !end){
-      MARKET_COUNTRY_SPEND=new Map();
+      MARKET_COUNTRY_ADS=new Map();
       renderMarketPerformance(bookingRows);
       return;
     }
@@ -3305,21 +3638,24 @@
         throw new Error(data?.error || 'Shared GAS returned an error');
       }
 
-      const spendMap=new Map();
+      const adsMap=new Map();
       const adRows=Array.isArray(data?.rows)?data.rows:[];
 
       adRows.forEach(a=>{
         const country=canonicalCountryName(a.countryName||a.country||a.countryCode||'Unknown');
         const key=normalizedCountryKey(country);
-        spendMap.set(key,(spendMap.get(key)||0)+Number(a.spend||0));
+        const previous=adsMap.get(key)||{country,spend:0};
+        previous.country=country;
+        previous.spend+=Number(a.spend||0);
+        adsMap.set(key,previous);
       });
 
-      MARKET_COUNTRY_SPEND=spendMap;
+      MARKET_COUNTRY_ADS=adsMap;
       renderMarketPerformance(bookingRows);
     }catch(err){
       if(seq!==integratedMarketRequestSeq)return;
 
-      MARKET_COUNTRY_SPEND=new Map();
+      MARKET_COUNTRY_ADS=new Map();
       renderMarketPerformance(bookingRows);
 
       const note=document.getElementById('marketPerformanceNote');
@@ -3449,6 +3785,61 @@
   bindCollapseButton('bookingCollapseBtn','bookingDetailsBody');
 
   bindMarketPerformanceControls();
+
+  function bindBookingsAppNavigation(){
+    const nav=document.getElementById('bookingAppNav');
+    const client=document.getElementById('bookingHeaderClient');
+    if(client)client.textContent=DASHBOARD_CONFIG.clientName||'Client';
+    if(!nav)return;
+
+    const buttons=[...nav.querySelectorAll('button[data-target]')];
+    const sections=buttons
+      .map(btn=>document.getElementById(btn.dataset.target))
+      .filter(Boolean);
+
+    buttons.forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const target=document.getElementById(btn.dataset.target);
+        if(!target)return;
+
+        buttons.forEach(b=>b.classList.toggle('active',b===btn));
+
+        const header=document.getElementById('bookingAppHeader');
+        const headerH=header?header.getBoundingClientRect().height:0;
+        const y=window.scrollY+target.getBoundingClientRect().top-headerH-16;
+        window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+      });
+    });
+
+    let navTicking=false;
+    const updateActive=()=>{
+      navTicking=false;
+      const header=document.getElementById('bookingAppHeader');
+      const offset=(header?header.getBoundingClientRect().height:0)+34;
+
+      let active=sections[0]||null;
+      for(const section of sections){
+        const top=section.getBoundingClientRect().top;
+        if(top<=offset)active=section;
+      }
+
+      if(active){
+        buttons.forEach(btn=>{
+          btn.classList.toggle('active',btn.dataset.target===active.id);
+        });
+      }
+    };
+
+    window.addEventListener('scroll',()=>{
+      if(navTicking)return;
+      navTicking=true;
+      requestAnimationFrame(updateActive);
+    },{passive:true});
+
+    updateActive();
+  }
+
+  bindBookingsAppNavigation();
 
   function initDashboardConfig(){
     document.getElementById('clientName').textContent = DASHBOARD_CONFIG.clientName || 'Client';
