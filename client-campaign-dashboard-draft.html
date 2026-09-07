@@ -4953,6 +4953,171 @@
   #bookingsTab .pipeline-focus-hint{
     display:none!important;
   }
+
+
+  /* ================= v36: FLUID LARGE-SCREEN LAYOUT ================= */
+
+  /* Remove the old 1440px cap. The shell now fills the browser viewport
+     on both laptop and large external monitors while retaining the body gutter. */
+  .shell{
+    width:100%!important;
+    max-width:none!important;
+  }
+
+  .page{
+    width:100%!important;
+    max-width:none!important;
+  }
+
+  /* Preserve comfortable gutters but scale them slightly on large displays. */
+  @media(min-width:1600px){
+    body{
+      padding:24px!important;
+    }
+
+    .page{
+      padding-left:36px!important;
+      padding-right:36px!important;
+    }
+  }
+
+  /* The Focused months helper row is intentionally removed.
+     MATRIX PERIOD + highlighted month headers carry the selection state. */
+  #bookingsTab .pipeline-focus-bar{
+    display:none!important;
+  }
+
+
+  /* ================= v37: SINGLE VERTICAL SCROLLBAR =================
+     Desktop behavior:
+     - Outer browser page is fixed to the viewport.
+     - Ads scrolls only inside the embedded XPO report.
+     - Bookings scrolls only inside bookingReportScroll.
+     This removes the second vertical scrollbar on the far right.
+  */
+
+  @media(min-width:761px){
+    html,
+    body{
+      width:100%;
+      height:100%;
+      min-height:0!important;
+      overflow:hidden!important;
+    }
+
+    body{
+      box-sizing:border-box!important;
+      display:flex!important;
+      flex-direction:column!important;
+    }
+
+    .shell{
+      width:100%!important;
+      max-width:none!important;
+      height:100%!important;
+      min-height:0!important;
+      flex:1 1 auto!important;
+      margin:0 auto!important;
+      overflow:hidden!important;
+      box-sizing:border-box!important;
+    }
+
+    .page{
+      width:100%!important;
+      height:100%!important;
+      min-height:0!important;
+      display:flex!important;
+      flex-direction:column!important;
+      overflow:hidden!important;
+      box-sizing:border-box!important;
+      padding-bottom:24px!important;
+    }
+
+    /* Top Ads / Bookings switch remains outside the scrolling report. */
+    .report-switch-row{
+      flex:0 0 auto!important;
+    }
+
+    /* Active report consumes the rest of the viewport. */
+    .tab-panel.active{
+      display:flex!important;
+      flex:1 1 auto!important;
+      min-height:0!important;
+      flex-direction:column!important;
+      overflow:hidden!important;
+    }
+
+    /* ---------------- Ads Report ---------------- */
+    #adsTab > .section{
+      flex:1 1 auto!important;
+      min-height:0!important;
+      display:flex!important;
+      flex-direction:column!important;
+      overflow:hidden!important;
+    }
+
+    #adsTab .report-page-heading{
+      flex:0 0 auto!important;
+    }
+
+    #adsTab .xpo-embed-card{
+      flex:1 1 auto!important;
+      min-height:0!important;
+      display:flex!important;
+      flex-direction:column!important;
+      overflow:hidden!important;
+    }
+
+    #adsTab .xpo-embed-head,
+    #adsTab .xpo-embed-note{
+      flex:0 0 auto!important;
+    }
+
+    #adsTab .xpo-frame-wrap{
+      flex:1 1 auto!important;
+      min-height:0!important;
+      height:auto!important;
+      overflow:hidden!important;
+    }
+
+    #adsTab .xpo-frame{
+      width:100%!important;
+      height:100%!important;
+      min-height:0!important;
+      display:block!important;
+    }
+
+    /* ---------------- Bookings Report ---------------- */
+    #bookingsTab .report-page-heading,
+    #bookingsTab .booking-report-insights-head{
+      flex:0 0 auto!important;
+    }
+
+    #bookingsTab .booking-report-scroll{
+      flex:1 1 auto!important;
+      min-height:0!important;
+      height:auto!important;
+      max-height:none!important;
+      overflow-y:auto!important;
+      overflow-x:hidden!important;
+    }
+  }
+
+  /* Mobile keeps normal document scrolling; nested report scrolling is removed. */
+  @media(max-width:760px){
+    html,
+    body{
+      height:auto!important;
+      overflow-x:hidden!important;
+      overflow-y:auto!important;
+    }
+
+    .shell,
+    .page{
+      height:auto!important;
+      overflow:visible!important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -6788,24 +6953,13 @@
       </td>
     </tr>`;
 
-    const focusToolbar=pipelineSelectedMonths.length
-      ? `<div class="pipeline-focus-bar">
-          <span>Focused months: <strong>${esc(pipelinePeriodLabel(pipelineSelectedMonths))}</strong></span>
-          <button type="button" id="clearPipelineMonthsBtn">Clear</button>
-        </div>`
-      : ``;
-
     wrap.innerHTML=`
-      ${focusToolbar}
       <table class="pipeline-table">${head}<tbody>${body}${foot}</tbody></table>
     `;
 
     wrap.querySelectorAll('[data-pipeline-month-btn]').forEach(btn=>{
       btn.addEventListener('click',()=>togglePipelineMonth(btn.dataset.pipelineMonthBtn));
     });
-
-    const clearBtn=document.getElementById('clearPipelineMonthsBtn');
-    if(clearBtn)clearBtn.addEventListener('click',clearPipelineMonths);
 
     renderXpoPager(
       'pipelinePager',
