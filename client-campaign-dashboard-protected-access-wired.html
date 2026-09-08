@@ -7032,11 +7032,13 @@
 
 
   function portalUrlsConfigured(){
+    const auth=String(PORTAL_ACCESS.authUrl||'').trim();
+    const api=String(PORTAL_ACCESS.apiUrl||'').trim();
+
     return Boolean(
-      PORTAL_ACCESS.authUrl &&
-      PORTAL_ACCESS.apiUrl &&
-      !PORTAL_ACCESS.authUrl.includes('https://script.google.com/macros/s/AKfycbwd3EfrnFheu0SgAHnh29-pHYvWsEtEXI5F1v4E823fOYRNx1m4-vlpk2wJruECBEE-oA/exec') &&
-      !PORTAL_ACCESS.apiUrl.includes('https://script.google.com/macros/s/AKfycbyC6fY1MO2ItDOIQLlqIYUfCZWEsBlNgYqq5IJlUFjdgOgN54MS7n9LMQekLSAPGJDzTQ/exec')
+      /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(auth) &&
+      /^https:\/\/script\.google\.com\/macros\/s\/[A-Za-z0-9_-]+\/exec$/.test(api) &&
+      auth !== api
     );
   }
 
