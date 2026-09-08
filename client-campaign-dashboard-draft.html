@@ -10507,6 +10507,239 @@
       grid-template-columns:minmax(150px,1fr) 72px 120px 105px!important;
     }
   }
+
+
+  /* ================= TYPOGRAPHY SYSTEM — CONSISTENCY PASS ================= */
+
+  :root{
+    --mc-type-page-title:30px;
+    --mc-type-section-title:24px;
+    --mc-type-card-title:15px;
+    --mc-type-body:13px;
+    --mc-type-desc:12px;
+    --mc-type-meta:11px;
+    --mc-type-table-head:13px;
+    --mc-type-control:12px;
+    --mc-type-kpi-label:13px;
+    --mc-type-kpi-value:24px;
+  }
+
+  /* ---------- PAGE TITLES ---------- */
+  .report-page-heading .section-title,
+  #adsTab .section-title,
+  #bookingsTab .section-title,
+  #bookingsBiTab .section-title{
+    font-size:var(--mc-type-page-title)!important;
+    line-height:1.1!important;
+    font-weight:600!important;
+  }
+
+  /* ---------- REPORT SECTION TITLES ---------- */
+  #bookingsTab .report-subsection-head h2{
+    font-size:var(--mc-type-section-title)!important;
+    line-height:1.25!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .report-subsection-head p{
+    margin-top:5px!important;
+    font-size:var(--mc-type-desc)!important;
+    line-height:1.45!important;
+    font-weight:400!important;
+  }
+
+  /* ---------- CARD / CHART TITLES ---------- */
+  #bookingsTab .ititle,
+  #bookingsTab .booking-performance-title,
+  #bookingsTab .market-xpo-label,
+  #bookingsTab .compare-movers-title,
+  #bookingsTab .compare-market-move-title,
+  #bookingsTab .card-title,
+  #adsTab .ititle,
+  #bookingsBiTab .ititle{
+    font-size:var(--mc-type-card-title)!important;
+    line-height:1.3!important;
+    font-weight:600!important;
+  }
+
+  /* ---------- DESCRIPTIONS / SUBTEXT ---------- */
+  #bookingsTab .idesc,
+  #bookingsTab .compare-market-move-desc,
+  #bookingsTab .portfolio-empty-note,
+  #adsTab .idesc,
+  #bookingsBiTab .idesc{
+    font-size:var(--mc-type-desc)!important;
+    line-height:1.4!important;
+    font-weight:400!important;
+  }
+
+  /* ---------- GENERAL BODY CONTENT ---------- */
+  #bookingsTab .booking-overview-metric span,
+  #bookingsTab .portfolio-performance-context strong,
+  #bookingsTab .compare-market-move-name,
+  #bookingsTab .compare-market-move-bookings,
+  #bookingsTab .compare-market-move-revenue,
+  #bookingsTab .compare-market-move-abv,
+  #bookingsTab .compare-kpi-list-row > strong,
+  #bookingsTab .compare-kpi-list-row > span{
+    font-size:var(--mc-type-body)!important;
+    line-height:1.4!important;
+  }
+
+  /* ---------- TABLE HEADERS ---------- */
+  #bookingsTab .monthly-performance-table th,
+  #bookingsTab .market-xpo-table th,
+  #bookingsTab .detail-breakdown-table th,
+  #bookingsTab .pipeline-table th,
+  #bookingsTab .portfolio-performance-table th,
+  #bookingsTab #bookingDetailsBody table th{
+    font-size:var(--mc-type-table-head)!important;
+    line-height:1.35!important;
+    font-weight:500!important;
+    letter-spacing:0!important;
+  }
+
+  /* ---------- TABLE BODY ---------- */
+  #bookingsTab .monthly-performance-table td,
+  #bookingsTab .market-xpo-table td,
+  #bookingsTab .detail-breakdown-table td,
+  #bookingsTab .pipeline-table td,
+  #bookingsTab .portfolio-performance-table td,
+  #bookingsTab #bookingDetailsBody table td{
+    font-size:var(--mc-type-body)!important;
+    line-height:1.4!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .detail-primary{
+    font-size:var(--mc-type-body)!important;
+    font-weight:500!important;
+  }
+
+  /* ---------- SECONDARY INLINE VALUES ---------- */
+  #bookingsTab .metric-share,
+  #bookingsTab .compare-market-move-count > span,
+  #bookingsTab .portfolio-sort-note,
+  #bookingsTab .portfolio-performance-context span,
+  #bookingsTab .pager-info,
+  #bookingsTab .xpo-pager-display{
+    font-size:var(--mc-type-meta)!important;
+    line-height:1.35!important;
+    font-weight:400!important;
+  }
+
+  /* ---------- KPI ---------- */
+  #bookingsTab .klabel{
+    font-size:var(--mc-type-kpi-label)!important;
+    line-height:1.25!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .kvalue{
+    font-size:var(--mc-type-kpi-value)!important;
+    line-height:1.1!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab .booking-overview-metric strong{
+    font-size:var(--mc-type-kpi-value)!important;
+    line-height:1.1!important;
+    font-weight:600!important;
+  }
+
+  /* Pipeline summary keeps value hierarchy, but labels match KPI labels. */
+  #bookingsTab .pipeline-summary-item span{
+    font-size:var(--mc-type-kpi-label)!important;
+    line-height:1.25!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab .pipeline-summary-item strong{
+    font-size:20px!important;
+    line-height:1.15!important;
+    font-weight:500!important;
+  }
+
+  /* ---------- MARKET MOVEMENT CARDS ---------- */
+  #bookingsInsightsSection .compare-market-move-title{
+    font-size:var(--mc-type-card-title)!important;
+  }
+
+  #bookingsInsightsSection .compare-market-move-desc{
+    font-size:var(--mc-type-desc)!important;
+  }
+
+  #bookingsInsightsSection .compare-market-move-stats span,
+  #bookingsInsightsSection .compare-market-move-list-head{
+    font-size:var(--mc-type-meta)!important;
+  }
+
+  #bookingsInsightsSection .compare-market-move-stats strong{
+    font-size:var(--mc-type-card-title)!important;
+  }
+
+  #bookingsInsightsSection .compare-market-move-name,
+  #bookingsInsightsSection .compare-market-move-bookings,
+  #bookingsInsightsSection .compare-market-move-revenue,
+  #bookingsInsightsSection .compare-market-move-abv{
+    font-size:var(--mc-type-body)!important;
+  }
+
+  /* ---------- PORTFOLIO PERFORMANCE ---------- */
+  #portfolioPerformanceSection .portfolio-performance-context strong{
+    font-size:var(--mc-type-body)!important;
+  }
+
+  #portfolioPerformanceSection .portfolio-performance-context span,
+  #portfolioPerformanceSection .portfolio-sort-note{
+    font-size:var(--mc-type-desc)!important;
+  }
+
+  /* ---------- CONTROLS ---------- */
+  .metric-toggle button,
+  .export-excel-btn,
+  .collapse-btn,
+  #bookingsTab select,
+  #bookingsTab input[type="search"],
+  #bookingsTab input[type="text"]{
+    font-size:var(--mc-type-control)!important;
+    line-height:1.2!important;
+    font-weight:500!important;
+  }
+
+  /* Main 3 report tabs are a primary navigation element, intentionally 1 step larger. */
+  .report-switch-row .tab-btn{
+    font-size:13px!important;
+    font-weight:600!important;
+  }
+
+  /* Internal Bookings navigation uses one consistent control size. */
+  #bookingsTab .booking-app-nav button{
+    font-size:var(--mc-type-control)!important;
+    line-height:1.2!important;
+    font-weight:500!important;
+  }
+
+  /* ---------- SMALL UI META ---------- */
+  .report-meta-chip,
+  .report-meta-live{
+    font-size:var(--mc-type-control)!important;
+  }
+
+  /* ---------- REMOVE LEGACY OUTLIERS ---------- */
+  #bookingsTab .market-xpo-table td{
+    font-size:var(--mc-type-body)!important;
+  }
+
+  #bookingsTab .pipeline-table th{
+    font-size:var(--mc-type-table-head)!important;
+  }
+
+  #bookingsTab .booking-performance-title{
+    margin-bottom:10px!important;
+  }
+
+
 </style>
 </head>
 <body>
@@ -11048,7 +11281,7 @@
       <div class="report-subsection-head report-subsection-head-actions">
         <div>
           <h2>Future Pipeline</h2>
-          <p>Check-in distribution from bookings captured in the selected booking period.</p>
+          <p>Check-in distribution across all booking data. The Booking Period filter does not apply to this section.</p>
         </div>
         <div class="section-action-group">
           <button class="export-excel-btn" id="exportFuturePipelineBtn" type="button" title="Export Future Pipeline to Excel">
@@ -11173,14 +11406,14 @@
     <section class="section" id="attributionReportSection">
       <div class="report-subsection-head">
         <h2>Attribution Report</h2>
-        <p>Booking-level records used to validate booking value, source market, stay dates, lead time, and channel attribution.</p>
+        <p>All booking-level records used to validate booking value, source market, stay dates, lead time, and channel attribution. The Booking Period filter does not apply to this section.</p>
       </div>
 
       <div class="card collapsible-card booking-details-card">
         <div class="collapsible-head">
           <div>
             <div class="ititle">Booking Details</div>
-            <div class="idesc" id="bookingDetailsCount">Latest bookings for the selected period</div>
+            <div class="idesc" id="bookingDetailsCount">All booking records</div>
           </div>
           <div class="section-action-group">
             <button class="export-excel-btn" id="exportBookingDetailsBtn" type="button" title="Export Booking Details to Excel">
@@ -11556,7 +11789,7 @@
   }
 
   function exportBookingDetails(){
-    const rows=[...currentPeriodRows()]
+    const rows=[...ALL_ROWS]
       .sort((a,b)=>(b.bookingDate?.getTime()||0)-(a.bookingDate?.getTime()||0));
 
     const aoa=[
@@ -11578,8 +11811,7 @@
 
     const filename=[
       safeExportPart(DASHBOARD_CONFIG.clientName),
-      'Booking_Details',
-      currentPeriodExportLabel()
+      'Booking_Details_All_Data'
     ].join('_')+'.xlsx';
 
     writeExcelWorkbook(filename,'Booking Details',aoa);
@@ -11666,7 +11898,7 @@
   }
 
   function buildPipelineExportRows(){
-    const stayRows=currentPeriodRows().filter(r=>
+    const stayRows=ALL_ROWS.filter(r=>
       r.checkIn &&
       pipelineYear &&
       r.checkIn.getUTCFullYear()===pipelineYear
@@ -11738,7 +11970,7 @@
 
     const aoa=[
       ['Client',DASHBOARD_CONFIG.clientName],
-      ['Booking Period',currentPeriodExportLabel().replace(/_/g,' ')],
+      ['Scope','All booking dates'],
       ['Stay Year',pipelineYear || ''],
       ['Metric',metricLabel],
       ['Focused Months',pipelinePeriodLabel(pipelineSelectedMonths)],
@@ -11752,7 +11984,7 @@
       'Future_Pipeline',
       safeExportPart(pipelineYear),
       safeExportPart(metricLabel),
-      currentPeriodExportLabel()
+      'All_Booking_Dates'
     ].join('_')+'.xlsx';
 
     writeExcelWorkbook(filename,'Future Pipeline',aoa);
@@ -11904,7 +12136,7 @@
 
     if(!rows.length){
       tb.innerHTML = '<tr><td colspan="11" style="text-align:center;color:#aaa;padding:28px">No booking data found</td></tr>';
-      if(countEl)countEl.textContent='No bookings for the selected period';
+      if(countEl)countEl.textContent='No booking records available';
       renderXpoPager('bookingPager',1,bookingPageSize,0,'Bookings',()=>{},()=>{});
       return;
     }
@@ -11919,7 +12151,7 @@
     if(countEl){
       const from=start+1;
       const to=Math.min(start+bookingPageSize,ordered.length);
-      countEl.textContent=`${ordered.length.toLocaleString('en-US')} bookings · selected period`;
+      countEl.textContent=`${ordered.length.toLocaleString('en-US')} bookings · all booking data`;
     }
 
     tb.innerHTML = visible.map(r => `
@@ -11945,12 +12177,12 @@
       'Bookings',
       (page)=>{
         bookingPage=page;
-        renderTable(currentPeriodRows());
+        renderTable(ALL_ROWS);
       },
       (size)=>{
         bookingPageSize=size;
         bookingPage=1;
-        renderTable(currentPeriodRows());
+        renderTable(ALL_ROWS);
       }
     );
   }
@@ -14023,14 +14255,14 @@
     );
 
     pipelinePage=1;
-    renderFuturePipeline(currentPeriodRows());
+    renderFuturePipeline(ALL_ROWS);
   }
 
   function clearPipelineMonths(){
     if(!pipelineSelectedMonths.length)return;
     pipelineSelectedMonths=[];
     pipelinePage=1;
-    renderFuturePipeline(currentPeriodRows());
+    renderFuturePipeline(ALL_ROWS);
   }
 
   function availablePipelineYears(){
@@ -14360,6 +14592,8 @@
       </tr>`;
   }
 
+
+
   function renderMarketPerformance(rows){
     const thead=document.getElementById('marketPerformanceThead');
     const tbody=document.getElementById('marketPerformanceTbody');
@@ -14369,6 +14603,7 @@
     updateMarketPerformanceControls();
 
     const level=MARKET_PERF_STATE.level;
+
     const marketTable=document.getElementById('marketPerformanceTable');
     if(marketTable)marketTable.dataset.level=level;
 
@@ -14552,9 +14787,9 @@
 
     if(summaryYear)summaryYear.textContent=String(pipelineYear);
 
-    // rows has already been filtered by the selected Booking Date period.
-    // Here we filter only by Check-in year.
-    const stayRows=rows.filter(r=>
+    // Future Pipeline intentionally ignores the global Booking Period filter.
+    // It uses all booking records, then filters only by Check-in year.
+    const stayRows=ALL_ROWS.filter(r=>
       r.checkIn &&
       r.checkIn.getUTCFullYear()===pipelineYear
     );
@@ -14747,12 +14982,12 @@
       'Source Markets',
       page=>{
         pipelinePage=page;
-        renderFuturePipeline(currentPeriodRows());
+        renderFuturePipeline(ALL_ROWS);
       },
       size=>{
         pipelinePageSize=size;
         pipelinePage=1;
-        renderFuturePipeline(currentPeriodRows());
+        renderFuturePipeline(ALL_ROWS);
       },
       [5,10,20,50,100]
     );
@@ -15523,11 +15758,11 @@
   }
 
   function renderBookingSectionsForPeriod(rows){
-    // Single source of truth for every Bookings Report section.
-    // `rows` is ALWAYS filtered by the selected Booking Date period.
+    // Global Booking Period applies to the performance / insights sections.
+    // Future Pipeline and Attribution Report intentionally use ALL_ROWS.
     CURRENT_PERIOD_ROWS = rows;
 
-    renderTable(rows);
+    renderTable(ALL_ROWS);
     renderKPIs(rows);
     renderMonthlyPerformance(rows);
     renderChannelPerformance(rows);
@@ -15537,7 +15772,7 @@
     renderAverageBLT(rows);
     renderStayDemand(rows);
     renderMarketPerformance(rows);
-    renderFuturePipeline(rows);
+    renderFuturePipeline(ALL_ROWS);
     renderPortfolioPerformance(rows);
 
     // Keep stable XPO loading independent from supplemental client-detail tables.
@@ -15564,10 +15799,8 @@
 
     const rows=filteredByPeriod();
 
-    bookingPage=1;
     MARKET_PERF_STATE.page=1;
     BOOKING_MARKET_TABLE_STATE.page=1;
-    pipelinePage=1;
     PORTFOLIO_PERF_STATE.page=1;
 
     // Prevent previous-period XPO data from appearing while the new period is loading.
@@ -15937,7 +16170,7 @@
     pipelineMetric=btn.dataset.metric;
     pipelinePage=1;
     setToggleState('pipelineToggle',pipelineMetric);
-    renderFuturePipeline(currentPeriodRows());
+    renderFuturePipeline(ALL_ROWS);
   }));
 
   const pipelineYearSelect=document.getElementById('pipelineYearSelect');
@@ -15946,7 +16179,7 @@
       pipelineYear=Number(pipelineYearSelect.value)||pipelineYear;
       pipelineSelectedMonths=[];
       pipelinePage=1;
-      renderFuturePipeline(currentPeriodRows());
+      renderFuturePipeline(ALL_ROWS);
     });
   }
 
