@@ -6356,6 +6356,127 @@
   #bookingsTab #marketPerformanceTable[data-level="city"] tbody td:nth-child(n+4){
     width:15%!important;
   }
+
+
+  /* ================= BOOKING BI CLIENT TAB ================= */
+
+  #bookingsBiTab{
+    border:0!important;
+    background:transparent!important;
+  }
+
+  #bookingsBiTab > .bookings-bi-section{
+    padding-top:28px!important;
+    margin:0!important;
+  }
+
+  #bookingsBiTab .report-page-heading{
+    height:auto!important;
+    min-height:0!important;
+    display:flex!important;
+    align-items:flex-end!important;
+    justify-content:space-between!important;
+    margin:0 0 18px!important;
+    padding:0!important;
+  }
+
+  #bookingsBiTab .report-page-heading .section-title{
+    margin:0!important;
+    padding:0!important;
+    font-size:30px!important;
+    line-height:1.1!important;
+    font-weight:600!important;
+    letter-spacing:-.02em!important;
+  }
+
+  #bookingsBiTab .bookings-bi-embed-card{
+    width:100%!important;
+    max-width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    border:1px solid #e0dde5!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+    background:#fff!important;
+    overflow:hidden!important;
+    box-sizing:border-box!important;
+  }
+
+  #bookingsBiTab .bookings-bi-embed-head{
+    min-height:62px;
+    padding:14px 18px!important;
+    border-bottom:1px solid #e6e3e9!important;
+    flex:0 0 auto!important;
+  }
+
+  #bookingsBiTab .bookings-bi-embed-head .ititle{
+    font-size:15px!important;
+    font-weight:600!important;
+  }
+
+  #bookingsBiTab .bookings-bi-embed-head .idesc{
+    font-size:12px!important;
+  }
+
+  #bookingsBiTab .bookings-bi-frame-wrap{
+    width:100%;
+    min-height:900px;
+    background:#fff;
+    overflow:hidden;
+  }
+
+  #bookingsBiTab .bookings-bi-frame{
+    width:100%;
+    height:900px;
+    min-height:900px;
+    border:0;
+    display:block;
+    background:#fff;
+  }
+
+  @media(min-width:761px){
+    #bookingsBiTab > .bookings-bi-section{
+      flex:1 1 auto!important;
+      min-height:0!important;
+      display:flex!important;
+      flex-direction:column!important;
+      overflow:hidden!important;
+    }
+
+    #bookingsBiTab .report-page-heading{
+      flex:0 0 auto!important;
+    }
+
+    #bookingsBiTab .bookings-bi-embed-card{
+      flex:1 1 auto!important;
+      min-height:0!important;
+      display:flex!important;
+      flex-direction:column!important;
+      overflow:hidden!important;
+    }
+
+    #bookingsBiTab .bookings-bi-frame-wrap{
+      flex:1 1 auto!important;
+      min-height:0!important;
+      height:auto!important;
+      overflow:hidden!important;
+    }
+
+    #bookingsBiTab .bookings-bi-frame{
+      width:100%!important;
+      height:100%!important;
+      min-height:0!important;
+      display:block!important;
+    }
+  }
+
+  @media(max-width:760px){
+    #bookingsBiTab .bookings-bi-frame-wrap,
+    #bookingsBiTab .bookings-bi-frame{
+      min-height:900px!important;
+      height:900px!important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -6397,6 +6518,7 @@
       <div class="tabs" role="tablist" aria-label="Dashboard reports">
         <button class="tab-btn active" id="adsTabBtn" type="button" role="tab" aria-selected="true" aria-controls="adsTab">Ads Report</button>
         <button class="tab-btn" id="bookingsTabBtn" type="button" role="tab" aria-selected="false" aria-controls="bookingsTab">Bookings Report</button>
+        <button class="tab-btn" id="bookingsBiTabBtn" type="button" role="tab" aria-selected="false" aria-controls="bookingsBiTab">Bookings BI</button>
       </div>
 
       <div class="report-switch-meta">
@@ -6406,6 +6528,7 @@
           <span id="switchAdsLiveText">Live from XPO</span>
         </div>
         <div class="chip report-meta-chip" id="switchBookingsUpdated">Data as of: <b id="switchDataAsOfText">—</b></div>
+        <div class="chip report-meta-chip" id="switchBookingsBiMode" style="display:none">Client Intelligence</div>
       </div>
     </div>
 
@@ -6868,6 +6991,37 @@
       </div><!-- /booking-report-scroll -->
     </div>
 
+    <div id="bookingsBiTab" class="tab-panel" role="tabpanel" aria-labelledby="bookingsBiTabBtn">
+      <section class="section bookings-bi-section">
+        <div class="section-head report-page-heading">
+          <div>
+            <h2 class="section-title">Bookings <span class="accent">BI</span></h2>
+          </div>
+        </div>
+
+        <div class="card bookings-bi-embed-card">
+          <div class="xpo-embed-head bookings-bi-embed-head">
+            <div>
+              <div class="ititle">Booking Intelligence</div>
+              <div class="idesc">Client booking intelligence, market trends and benchmark insights.</div>
+            </div>
+          </div>
+
+          <div class="bookings-bi-frame-wrap">
+            <iframe
+              id="bookingsBiFrame"
+              class="bookings-bi-frame"
+              src="about:blank"
+              data-src="https://media-console.github.io/clients/bookings-bi-client.html"
+              title="Bookings BI Client Intelligence"
+              loading="lazy"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      </section>
+    </div>
+
   </div>
 </div>
 
@@ -6911,6 +7065,11 @@
       // Shared Media Console GAS GAS.
       // Deploy the GAS web app ONCE, then keep the SAME URL for every client dashboard.
       gasBridgeUrl: "https://script.google.com/macros/s/AKfycbxC_bO8oIC7PhuBFROi8Ck3AmCRK0v5BGL_ENa6N8BJs7qpMmdyWLbF6fuqaZbkMlId/exec"
+    },
+
+    bookingsBi: {
+      mode: "embed",
+      reportUrl: "https://media-console.github.io/clients/bookings-bi-client.html"
     }
   };
   /* ====================== END CONFIG ====================== */
@@ -9972,6 +10131,8 @@
 
   function activateTab(name){
     const ads=name==='ads';
+    const bookings=name==='bookings';
+    const bookingsBi=name==='bookingsBi';
 
     if(ads){
       const frame=document.getElementById('xpoFrame');
@@ -9980,20 +10141,37 @@
         frame.setAttribute('src',configuredUrl);
       }
     }
+
+    // Lazy-load Bookings BI only on first visit so it adds almost no initial page weight.
+    if(bookingsBi){
+      const frame=document.getElementById('bookingsBiFrame');
+      const configuredUrl=String((DASHBOARD_CONFIG.bookingsBi||{}).reportUrl||frame?.dataset?.src||'').trim();
+      if(frame && configuredUrl && (!frame.getAttribute('src') || frame.getAttribute('src')==='about:blank')){
+        frame.setAttribute('src',configuredUrl);
+      }
+    }
+
     document.getElementById('adsTab').classList.toggle('active',ads);
-    document.getElementById('bookingsTab').classList.toggle('active',!ads);
+    document.getElementById('bookingsTab').classList.toggle('active',bookings);
+    document.getElementById('bookingsBiTab').classList.toggle('active',bookingsBi);
+
     document.getElementById('adsTabBtn').classList.toggle('active',ads);
-    document.getElementById('bookingsTabBtn').classList.toggle('active',!ads);
+    document.getElementById('bookingsTabBtn').classList.toggle('active',bookings);
+    document.getElementById('bookingsBiTabBtn').classList.toggle('active',bookingsBi);
+
     document.getElementById('adsTabBtn').setAttribute('aria-selected',String(ads));
-    document.getElementById('bookingsTabBtn').setAttribute('aria-selected',String(!ads));
+    document.getElementById('bookingsTabBtn').setAttribute('aria-selected',String(bookings));
+    document.getElementById('bookingsBiTabBtn').setAttribute('aria-selected',String(bookingsBi));
 
     const adsLive=document.getElementById('switchAdsLive');
     const bookingUpdated=document.getElementById('switchBookingsUpdated');
+    const bookingsBiMode=document.getElementById('switchBookingsBiMode');
 
     if(adsLive)adsLive.style.display=ads?'inline-flex':'none';
-    if(bookingUpdated)bookingUpdated.style.display=ads?'none':'inline-flex';
+    if(bookingUpdated)bookingUpdated.style.display=bookings?'inline-flex':'none';
+    if(bookingsBiMode)bookingsBiMode.style.display=bookingsBi?'inline-flex':'none';
 
-    if(!ads){
+    if(bookings){
       bindBookingChartSeriesControls();
       scheduleBookingChartRender();
     }
@@ -10001,6 +10179,7 @@
 
   document.getElementById('adsTabBtn').addEventListener('click',()=>activateTab('ads'));
   document.getElementById('bookingsTabBtn').addEventListener('click',()=>activateTab('bookings'));
+  document.getElementById('bookingsBiTabBtn').addEventListener('click',()=>activateTab('bookingsBi'));
 
   function bindInteractions(){
     const items=Array.from(document.querySelectorAll('.interactive'));
