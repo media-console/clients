@@ -6308,6 +6308,54 @@
     text-transform:none!important;
     letter-spacing:normal!important;
   }
+
+
+  /* ================= v58: MARKET AVG BLT + INSIGHTS ORDER ================= */
+
+  /* Keep the four booking metrics aligned across Country / Region / City.
+     Descriptive geo columns occupy the first 40%; metrics occupy 15% each. */
+  #bookingsTab #marketPerformanceTable[data-level="country"] thead th:nth-child(1),
+  #bookingsTab #marketPerformanceTable[data-level="country"] tbody td:nth-child(1){
+    width:24%!important;
+  }
+  #bookingsTab #marketPerformanceTable[data-level="country"] thead th:nth-child(2),
+  #bookingsTab #marketPerformanceTable[data-level="country"] tbody td:nth-child(2){
+    width:16%!important;
+  }
+  #bookingsTab #marketPerformanceTable[data-level="country"] thead th:nth-child(n+3),
+  #bookingsTab #marketPerformanceTable[data-level="country"] tbody td:nth-child(n+3){
+    width:15%!important;
+  }
+
+  #bookingsTab #marketPerformanceTable[data-level="region"] thead th:nth-child(1),
+  #bookingsTab #marketPerformanceTable[data-level="region"] tbody td:nth-child(1){
+    width:22%!important;
+  }
+  #bookingsTab #marketPerformanceTable[data-level="region"] thead th:nth-child(2),
+  #bookingsTab #marketPerformanceTable[data-level="region"] tbody td:nth-child(2){
+    width:18%!important;
+  }
+  #bookingsTab #marketPerformanceTable[data-level="region"] thead th:nth-child(n+3),
+  #bookingsTab #marketPerformanceTable[data-level="region"] tbody td:nth-child(n+3){
+    width:15%!important;
+  }
+
+  #bookingsTab #marketPerformanceTable[data-level="city"] thead th:nth-child(1),
+  #bookingsTab #marketPerformanceTable[data-level="city"] tbody td:nth-child(1){
+    width:16%!important;
+  }
+  #bookingsTab #marketPerformanceTable[data-level="city"] thead th:nth-child(2),
+  #bookingsTab #marketPerformanceTable[data-level="city"] tbody td:nth-child(2){
+    width:13%!important;
+  }
+  #bookingsTab #marketPerformanceTable[data-level="city"] thead th:nth-child(3),
+  #bookingsTab #marketPerformanceTable[data-level="city"] tbody td:nth-child(3){
+    width:11%!important;
+  }
+  #bookingsTab #marketPerformanceTable[data-level="city"] thead th:nth-child(n+4),
+  #bookingsTab #marketPerformanceTable[data-level="city"] tbody td:nth-child(n+4){
+    width:15%!important;
+  }
 </style>
 </head>
 <body>
@@ -6653,10 +6701,11 @@
                 <th>BOOKINGS</th>
                 <th>REVENUE</th>
                 <th class="avg-booking-value-table-label">Avg. BOOKING VALUE</th>
+                <th>Avg. BLT</th>
               </tr>
             </thead>
             <tbody id="marketPerformanceTbody">
-              <tr><td colspan="5" class="market-loading-cell">Loading market performance...</td></tr>
+              <tr><td colspan="6" class="market-loading-cell">Loading market performance...</td></tr>
             </tbody>
             <tfoot id="marketPerformanceTfoot"></tfoot>
           </table>
@@ -6675,6 +6724,22 @@
       </div>
 
       <div class="insights-grid">
+        <!-- 1. Channel Performance -->
+        <div class="card insight">
+          <div class="card-head">
+            <div>
+              <div class="ititle">Channel Performance</div>
+              <div class="idesc" id="channelDesc">By bookings</div>
+            </div>
+            <div class="metric-toggle" id="channelToggle" aria-label="Channel Performance metric">
+              <button type="button" class="active" data-metric="bookings">Bookings</button>
+              <button type="button" data-metric="revenue">Revenue</button>
+            </div>
+          </div>
+          <div id="channelRows"><div style="color:#aaa;font-size:11px;padding-top:24px">Loading...</div></div>
+        </div>
+
+        <!-- 2. Top Source Markets -->
         <div class="card insight">
           <div class="card-head">
             <div>
@@ -6689,15 +6754,7 @@
           <div id="marketRows"><div style="color:#aaa;font-size:11px;padding-top:24px">Loading...</div></div>
         </div>
 
-        <div class="card insight">
-          <div class="ititle">Booking Window</div>
-          <div class="idesc">Days between booking and check-in</div>
-          <div class="donut-wrap">
-            <svg id="bookingWindowDonut" class="donut-svg" viewBox="0 0 120 120" role="img" aria-label="Booking window distribution"></svg>
-            <div class="legend" id="bookingWindowLegend"><div style="color:#aaa">Loading...</div></div>
-          </div>
-        </div>
-
+        <!-- 3. Average Booking Value -->
         <div class="card insight">
           <div class="ititle">Average Booking Value</div>
           <div class="idesc">Average transaction value by booking date</div>
@@ -6706,6 +6763,25 @@
           <svg id="abvChart" class="chart" viewBox="0 0 300 110" preserveAspectRatio="none" role="img" aria-label="Average booking value trend"></svg>
         </div>
 
+        <!-- 4. Average Length of Stay -->
+        <div class="card insight">
+          <div class="ititle">Average Length of Stay</div>
+          <div class="idesc">Nights per booking</div>
+          <div class="bigvalue" id="losInsight">—</div>
+          <div class="mini-note" id="losInsightNote">Loading...</div>
+          <svg id="losChart" class="chart" viewBox="0 0 300 110" preserveAspectRatio="none" role="img" aria-label="Average length of stay trend"></svg>
+        </div>
+
+        <!-- 5. Average Booking Lead Time -->
+        <div class="card insight">
+          <div class="ititle">Average Booking Lead Time</div>
+          <div class="idesc">Days between booking and check-in</div>
+          <div class="bigvalue" id="bltInsight">—</div>
+          <div class="mini-note" id="bltInsightNote">Loading...</div>
+          <svg id="bltChart" class="chart" viewBox="0 0 300 110" preserveAspectRatio="none" role="img" aria-label="Average booking lead time trend"></svg>
+        </div>
+
+        <!-- 6. Stay Period Demand -->
         <div class="card insight">
           <div class="card-head">
             <div>
@@ -6718,28 +6794,6 @@
             </div>
           </div>
           <div class="bars" id="stayDemandBars"><div style="color:#aaa;font-size:11px;align-self:center">Loading...</div></div>
-        </div>
-
-        <div class="card insight">
-          <div class="ititle">Average Length of Stay</div>
-          <div class="idesc">Nights per booking</div>
-          <div class="bigvalue" id="losInsight">—</div>
-          <div class="mini-note" id="losInsightNote">Loading...</div>
-          <svg id="losChart" class="chart" viewBox="0 0 300 110" preserveAspectRatio="none" role="img" aria-label="Average length of stay trend"></svg>
-        </div>
-
-        <div class="card insight">
-          <div class="card-head">
-            <div>
-              <div class="ititle">Channel Performance</div>
-              <div class="idesc" id="channelDesc">By bookings</div>
-            </div>
-            <div class="metric-toggle" id="channelToggle" aria-label="Channel Performance metric">
-              <button type="button" class="active" data-metric="bookings">Bookings</button>
-              <button type="button" data-metric="revenue">Revenue</button>
-            </div>
-          </div>
-          <div id="channelRows"><div style="color:#aaa;font-size:11px;padding-top:24px">Loading...</div></div>
         </div>
       </div>
     </section>
@@ -7155,36 +7209,39 @@
     let aoa;
     if(level==='city'){
       aoa=[
-        ['City','Region','Country','Bookings','Revenue','Avg. BOOKING VALUE'],
+        ['City','Region','Country','Bookings','Revenue','Avg. BOOKING VALUE','Avg. BLT'],
         ...data.map(r=>[
           r.city || r.label || '',
           r.region || '',
           r.country || '',
           r.bookings || 0,
           r.revenue || 0,
-          r.abv || 0
+          r.abv || 0,
+          Number.isFinite(r.avgBlt) ? r.avgBlt : ''
         ])
       ];
     }else if(level==='region'){
       aoa=[
-        ['Region','Country','Bookings','Revenue','Avg. BOOKING VALUE'],
+        ['Region','Country','Bookings','Revenue','Avg. BOOKING VALUE','Avg. BLT'],
         ...data.map(r=>[
           r.label || '',
           r.country || '',
           r.bookings || 0,
           r.revenue || 0,
-          r.abv || 0
+          r.abv || 0,
+          Number.isFinite(r.avgBlt) ? r.avgBlt : ''
         ])
       ];
     }else{
       aoa=[
-        ['Country','Spend','Bookings','Revenue','Avg. BOOKING VALUE'],
+        ['Country','Spend','Bookings','Revenue','Avg. BOOKING VALUE','Avg. BLT'],
         ...data.map(r=>[
           r.label || '',
           r.spend || 0,
           r.bookings || 0,
           r.revenue || 0,
-          r.abv || 0
+          r.abv || 0,
+          Number.isFinite(r.avgBlt) ? r.avgBlt : ''
         ])
       ];
     }
@@ -8192,6 +8249,35 @@
     renderLineChart('losChart',pts,v=>`${v.toFixed(1)} nights`);
   }
 
+  function renderAverageBLT(rows){
+    const valid=rows
+      .map(r=>r.blt)
+      .filter(v=>v!==null && Number.isFinite(v) && v>=0);
+
+    const avg=valid.length
+      ? valid.reduce((sum,v)=>sum+Number(v),0)/valid.length
+      : 0;
+
+    const valueEl=document.getElementById('bltInsight');
+    const noteEl=document.getElementById('bltInsightNote');
+
+    if(valueEl){
+      valueEl.textContent=valid.length ? `${avg.toFixed(1)} days` : '—';
+    }
+
+    if(noteEl){
+      noteEl.textContent=valid.length
+        ? `Average across ${valid.length.toLocaleString('en-US')} bookings`
+        : 'No valid BLT data';
+    }
+
+    const pts=groupAvgByMonth(rows,'bookingDate',r=>{
+      return r.blt!==null && Number.isFinite(r.blt) && r.blt>=0 ? r.blt : null;
+    });
+
+    renderLineChart('bltChart',pts,v=>`${v.toFixed(1)} days`);
+  }
+
   function renderChannelPerformance(rows){
     const total = channelMetric==='revenue' ? rows.reduce((a,r)=>a+r.value,0) : rows.length;
     const entries = aggregateBy(rows,'channel',channelMetric,5);
@@ -8347,7 +8433,9 @@
           country:ad.country,
           spend:Number(ad.spend||0),
           bookings:0,
-          revenue:0
+          revenue:0,
+          bltSum:0,
+          bltCount:0
         });
       });
     }
@@ -8378,13 +8466,20 @@
           city:level==='city'?city:'',
           spend:level==='country'?(MARKET_COUNTRY_ADS.get(key)?.spend||0):null,
           bookings:0,
-          revenue:0
+          revenue:0,
+          bltSum:0,
+          bltCount:0
         });
       }
 
       const x=map.get(key);
       x.bookings+=1;
       x.revenue+=Number(r.value||0);
+
+      if(r.blt!==null && Number.isFinite(r.blt) && r.blt>=0){
+        x.bltSum+=Number(r.blt);
+        x.bltCount+=1;
+      }
 
       if(level==='region'){
         x.country=country;
@@ -8397,7 +8492,8 @@
 
     return [...map.values()].map(r=>({
       ...r,
-      abv:r.bookings?r.revenue/r.bookings:0
+      abv:r.bookings?r.revenue/r.bookings:0,
+      avgBlt:r.bltCount?r.bltSum/r.bltCount:null
     }));
   }
 
@@ -8412,6 +8508,11 @@
     if(metric==='bookings')return Math.round(row.bookings||0).toLocaleString('en-US');
     if(metric==='revenue')return money(row.revenue||0);
     if(metric==='abv')return money(row.abv||0);
+    if(metric==='avgBlt'){
+      return Number.isFinite(row.avgBlt)
+        ? `${row.avgBlt.toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1})} days`
+        : '—';
+    }
     return money(row.spend||0);
   }
 
@@ -8448,6 +8549,7 @@
           <th>BOOKINGS</th>
           <th>REVENUE</th>
           <th class="avg-booking-value-table-label">Avg. BOOKING VALUE</th>
+          <th>Avg. BLT</th>
         </tr>`;
     }
 
@@ -8460,6 +8562,7 @@
           <th>BOOKINGS</th>
           <th>REVENUE</th>
           <th class="avg-booking-value-table-label">Avg. BOOKING VALUE</th>
+          <th>Avg. BLT</th>
         </tr>`;
     }
 
@@ -8470,6 +8573,7 @@
         <th>BOOKINGS</th>
         <th>REVENUE</th>
         <th class="avg-booking-value-table-label">Avg. BOOKING VALUE</th>
+        <th>Avg. BLT</th>
       </tr>`;
   }
 
@@ -8482,6 +8586,7 @@
           <td class="${metric==='bookings'?'market-primary-cell':''}">${marketCellValue(r,'bookings')}</td>
           <td class="${metric==='revenue'?'market-primary-cell':''}">${marketCellValue(r,'revenue')}</td>
           <td class="${metric==='abv'?'market-primary-cell':''}">${marketCellValue(r,'abv')}</td>
+          <td>${marketCellValue(r,'avgBlt')}</td>
         </tr>`;
     }
 
@@ -8494,6 +8599,7 @@
           <td class="${metric==='bookings'?'market-primary-cell':''}">${marketCellValue(r,'bookings')}</td>
           <td class="${metric==='revenue'?'market-primary-cell':''}">${marketCellValue(r,'revenue')}</td>
           <td class="${metric==='abv'?'market-primary-cell':''}">${marketCellValue(r,'abv')}</td>
+          <td>${marketCellValue(r,'avgBlt')}</td>
         </tr>`;
     }
 
@@ -8504,6 +8610,7 @@
         <td class="${metric==='bookings'?'market-primary-cell':''}">${marketCellValue(r,'bookings')}</td>
         <td class="${metric==='revenue'?'market-primary-cell':''}">${marketCellValue(r,'revenue')}</td>
         <td class="${metric==='abv'?'market-primary-cell':''}">${marketCellValue(r,'abv')}</td>
+        <td>${marketCellValue(r,'avgBlt')}</td>
       </tr>`;
   }
 
@@ -8511,11 +8618,17 @@
     const totals=data.reduce((acc,r)=>{
       acc.bookings+=r.bookings||0;
       acc.revenue+=r.revenue||0;
+      acc.bltSum+=Number(r.bltSum||0);
+      acc.bltCount+=Number(r.bltCount||0);
       if(level==='country')acc.spend+=Number(r.spend||0);
       return acc;
-    },{bookings:0,revenue:0,spend:0});
+    },{bookings:0,revenue:0,spend:0,bltSum:0,bltCount:0});
 
     const totalAbv=totals.bookings?totals.revenue/totals.bookings:0;
+    const totalAvgBlt=totals.bltCount?totals.bltSum/totals.bltCount:null;
+    const totalAvgBltText=Number.isFinite(totalAvgBlt)
+      ? `${totalAvgBlt.toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1})} days`
+      : '—';
     const label=`Total from ${data.length.toLocaleString('en-US')} ${marketLevelLabel(level)}`;
 
     if(level==='region'){
@@ -8525,6 +8638,7 @@
           <td>${Math.round(totals.bookings).toLocaleString('en-US')}</td>
           <td>${money(totals.revenue)}</td>
           <td>${money(totalAbv)}</td>
+          <td>${totalAvgBltText}</td>
         </tr>`;
     }
 
@@ -8535,6 +8649,7 @@
           <td>${Math.round(totals.bookings).toLocaleString('en-US')}</td>
           <td>${money(totals.revenue)}</td>
           <td>${money(totalAbv)}</td>
+          <td>${totalAvgBltText}</td>
         </tr>`;
     }
 
@@ -8545,6 +8660,7 @@
         <td>${Math.round(totals.bookings).toLocaleString('en-US')}</td>
         <td>${money(totals.revenue)}</td>
         <td>${money(totalAbv)}</td>
+        <td>${totalAvgBltText}</td>
       </tr>`;
   }
 
@@ -8592,7 +8708,7 @@
     thead.innerHTML=marketTableHeadHtml(level);
 
     if(!pageRows.length){
-      const colspan=level==='city'?6:5;
+      const colspan=level==='city'?7:6;
       tbody.innerHTML=`<tr><td colspan="${colspan}" class="market-empty-cell">No market data found for this selection.</td></tr>`;
       tfoot.innerHTML='';
       renderXpoPager('marketPerformancePager',1,MARKET_PERF_STATE.pageSize,0,marketLevelLabel(level),()=>{},()=>{});
@@ -9320,12 +9436,12 @@
     renderTable(rows);
     renderKPIs(rows);
     renderMonthlyPerformance(rows);
-    renderMarkets(rows);
-    renderBookingWindow(rows);
-    renderABV(rows);
-    renderStayDemand(rows);
-    renderLOS(rows);
     renderChannelPerformance(rows);
+    renderMarkets(rows);
+    renderABV(rows);
+    renderLOS(rows);
+    renderAverageBLT(rows);
+    renderStayDemand(rows);
     renderMarketPerformance(rows);
     renderFuturePipeline(rows);
     renderXpoOverviewSpend();
@@ -10053,7 +10169,7 @@
       console.error(err);
       document.getElementById('bookingTbody').innerHTML =
         `<tr><td colspan="11" style="text-align:center;color:#c66;padding:28px">Failed to load Google Sheet data: ${esc(err.message)}</td></tr>`;
-      ['marketRows','bookingWindowLegend','channelRows','marketPerformanceTbody','pipelineWrap'].forEach(id=>{
+      ['marketRows','channelRows','marketPerformanceTbody','pipelineWrap'].forEach(id=>{
         const el=document.getElementById(id); if(el)el.innerHTML='<div style="color:#c66;font-size:11px;padding-top:18px">Unable to load data</div>';
       });
       document.getElementById('lastUpdated').textContent='Load failed';
