@@ -6488,6 +6488,34 @@
   #adsProviderNote[hidden]{
     display:none!important;
   }
+
+
+  /* ================= BOOKING INSIGHTS LINE CHART BALANCE ================= */
+
+  #bookingsInsightsSection .insight-line-chart{
+    width:100%!important;
+    height:116px!important;
+    min-height:116px!important;
+    display:block!important;
+    overflow:visible!important;
+    margin-top:4px!important;
+  }
+
+  /* Keep the three value/trend cards aligned even when a note is blank (ABV). */
+  #bookingsInsightsSection .mini-note{
+    min-height:12px;
+    line-height:12px;
+  }
+
+  #bookingsInsightsSection .insight-line-chart .line,
+  #bookingsInsightsSection .insight-line-chart .axis,
+  #bookingsInsightsSection .insight-line-chart .dot{
+    vector-effect:non-scaling-stroke;
+  }
+
+  #bookingsInsightsSection .insight-line-chart .chart-x-label{
+    font-size:9px!important;
+  }
 </style>
 </head>
 <body>
@@ -6892,7 +6920,7 @@
           <div class="idesc">Average transaction value by booking date</div>
           <div class="bigvalue" id="abvInsight">—</div>
           <div class="mini-note" id="abvInsightNote">Loading...</div>
-          <svg id="abvChart" class="chart" viewBox="0 0 300 110" preserveAspectRatio="none" role="img" aria-label="Average booking value trend"></svg>
+          <svg id="abvChart" class="chart insight-line-chart" role="img" aria-label="Average booking value trend"></svg>
         </div>
 
         <!-- 4. Average Length of Stay -->
@@ -6901,7 +6929,7 @@
           <div class="idesc">Nights per booking</div>
           <div class="bigvalue" id="losInsight">—</div>
           <div class="mini-note" id="losInsightNote">Loading...</div>
-          <svg id="losChart" class="chart" viewBox="0 0 300 110" preserveAspectRatio="none" role="img" aria-label="Average length of stay trend"></svg>
+          <svg id="losChart" class="chart insight-line-chart" role="img" aria-label="Average length of stay trend"></svg>
         </div>
 
         <!-- 5. Average Booking Lead Time -->
@@ -6910,7 +6938,7 @@
           <div class="idesc">Days between booking and check-in</div>
           <div class="bigvalue" id="bltInsight">—</div>
           <div class="mini-note" id="bltInsightNote">Loading...</div>
-          <svg id="bltChart" class="chart" viewBox="0 0 300 110" preserveAspectRatio="none" role="img" aria-label="Average booking lead time trend"></svg>
+          <svg id="bltChart" class="chart insight-line-chart" role="img" aria-label="Average booking lead time trend"></svg>
         </div>
 
         <!-- 6. Stay Period Demand -->
@@ -8360,18 +8388,66 @@
 
   function renderLineChart(id, points, formatter){
     const svg=document.getElementById(id);
-    if(!points.length){svg.innerHTML='<text x="150" y="60" class="chart-x-label">No data</text>';return;}
-    const W=300,H=110,L=7,R=7,T=16,B=30;
-    const vals=points.map(p=>p.value), min=Math.min(...vals), max=Math.max(...vals);
+    if(!svg)return;
+
+    const rect=svg.getBoundingClientRect();
+    const W=Math.max(320,Math.round(rect.width||svg.clientWidth||320));
+    const H=Math.max(116,Math.round(rect.height||svg.clientHeight||116));
+
+    svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    svg.setAttribute('preserveAspectRatio','none');
+
+    if(!points.length){
+      svg.innerHTML=`<text x="${W/2}" y="${H/2}" class="chart-x-label">No data</text>`;
+      return;
+    }
+
+    const L=14,R=14,T=12,B=28;
+    const vals=points.map(p=>p.value);
+    const min=Math.min(...vals);
+    const max=Math.max(...vals);
     const span=(max-min)||1;
+
     const x=i=>L+(W-L-R)*(points.length===1?.5:i/(points.length-1));
     const y=v=>T+(H-T-B)*(1-(v-min)/span);
-    const coords=points.map((p,i)=>`${x(i).toFixed(1)},${y(p.value).toFixed(1)}`).join(' ');
-    const area=`M ${x(0)} ${H-B} L `+points.map((p,i)=>`${x(i)} ${y(p.value)}`).join(' L ')+` L ${x(points.length-1)} ${H-B} Z`;
-    const dots=points.map((p,i)=>`<circle class="hit-dot interactive" tabindex="0" cx="${x(i)}" cy="${y(p.value)}" r="10" data-tip="<strong>${p.label}</strong><small>${formatter(p.value)} · ${p.n} bookings</small>"/><circle class="dot" cx="${x(i)}" cy="${y(p.value)}" r="2.8"/>`).join('');
-    const labels=points.map((p,i)=> (points.length<=6 || i===0 || i===points.length-1 || i%Math.ceil(points.length/5)===0) ? `<text class="chart-x-label" x="${x(i)}" y="${H-5}">${p.label}</text>` : '').join('');
-    svg.innerHTML=`<line class="axis" x1="${L}" y1="${H-B}" x2="${W-R}" y2="${H-B}"/>
-      <path class="area" d="${area}"/><polyline class="line" points="${coords}"/><g>${dots}</g>${labels}`;
+
+    const coords=points
+      .map((p,i)=>`${x(i).toFixed(1)},${y(p.value).toFixed(1)}`)
+      .join(' ');
+
+    const area=`M ${x(0)} ${H-B} L `+
+      points.map((p,i)=>`${x(i)} ${y(p.value)}`).join(' L ')+
+      ` L ${x(points.length-1)} ${H-B} Z`;
+
+    const dots=points.map((p,i)=>`
+      <circle class="hit-dot interactive" tabindex="0"
+        cx="${x(i)}" cy="${y(p.value)}" r="9"
+        data-tip="<strong>${p.label}</strong><small>${formatter(p.value)} · ${p.n} bookings</small>"/>
+      <circle class="dot" cx="${x(i)}" cy="${y(p.value)}" r="3"/>
+    `).join('');
+
+    const targetLabels=Math.max(4,Math.min(6,Math.floor(W/105)));
+    const labelStep=Math.max(1,Math.ceil((points.length-1)/Math.max(1,targetLabels-1)));
+
+    const labels=points.map((p,i)=>{
+      const show=
+        points.length<=targetLabels ||
+        i===0 ||
+        i===points.length-1 ||
+        i%labelStep===0;
+
+      return show
+        ? `<text class="chart-x-label" x="${x(i)}" y="${H-5}">${p.label}</text>`
+        : '';
+    }).join('');
+
+    svg.innerHTML=`
+      <line class="axis" x1="${L}" y1="${H-B}" x2="${W-R}" y2="${H-B}"/>
+      <path class="area" d="${area}"/>
+      <polyline class="line" points="${coords}"/>
+      <g>${dots}</g>
+      ${labels}
+    `;
   }
 
   function renderABV(rows){
@@ -10183,6 +10259,13 @@
     if(bookings){
       bindBookingChartSeriesControls();
       scheduleBookingChartRender();
+
+      const rows=currentPeriodRows();
+      requestAnimationFrame(()=>{
+        renderABV(rows);
+        renderLOS(rows);
+        renderAverageBLT(rows);
+      });
     }
   }
 
