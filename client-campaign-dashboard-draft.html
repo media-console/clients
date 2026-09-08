@@ -6477,6 +6477,17 @@
       height:900px!important;
     }
   }
+
+
+  /* ================= SQUARE OUTER DASHBOARD =================
+     Keep the original top spacing, but remove the rounded outer shell. */
+  .shell{
+    border-radius:0!important;
+  }
+
+  #adsProviderNote[hidden]{
+    display:none!important;
+  }
 </style>
 </head>
 <body>
@@ -6528,7 +6539,7 @@
           <span id="switchAdsLiveText">Live from XPO</span>
         </div>
         <div class="chip report-meta-chip" id="switchBookingsUpdated">Data as of: <b id="switchDataAsOfText">—</b></div>
-        <div class="chip report-meta-chip" id="switchBookingsBiMode" style="display:none">Client Intelligence</div>
+        <div class="chip report-meta-chip" id="switchBookingsBiMode" style="display:none">Bookings BI</div>
       </div>
     </div>
 
@@ -6557,9 +6568,7 @@
               allowfullscreen>
             </iframe>
           </div>
-          <div class="xpo-embed-note" id="adsProviderNote">
-            Live report is embedded from the configured advertising platform. Date, channel and platform filters inside the report are controlled by that platform.
-          </div>
+<div class="xpo-embed-note" id="adsProviderNote" hidden></div>
         </div>
       </section>
     </div>
@@ -7003,7 +7012,7 @@
           <div class="xpo-embed-head bookings-bi-embed-head">
             <div>
               <div class="ititle">Booking Intelligence</div>
-              <div class="idesc">Client booking intelligence, market trends and benchmark insights.</div>
+              <div class="idesc">Market trends and benchmark insights.</div>
             </div>
           </div>
 
