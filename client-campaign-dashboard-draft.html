@@ -9937,6 +9937,576 @@
     font-size:9px;
     line-height:1.35;
   }
+
+
+  /* ================= KPI SUMMARY — NEW / LOST MARKETS ONLY ================= */
+
+  #bookingsInsightsSection .compare-kpi-summary-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:12px!important;
+  }
+
+  #bookingsInsightsSection .compare-market-move-card{
+    min-width:0;
+    border:1px solid #ded9e1;
+    background:#fff;
+    padding:15px 16px;
+    box-sizing:border-box;
+  }
+
+  #bookingsInsightsSection .compare-market-move-card.is-new{
+    border-top:3px solid #72aa8b;
+  }
+
+  #bookingsInsightsSection .compare-market-move-card.is-lost{
+    border-top:3px solid #c9828b;
+  }
+
+  #bookingsInsightsSection .compare-market-move-card-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:16px;
+  }
+
+  #bookingsInsightsSection .compare-market-move-title-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  #bookingsInsightsSection .compare-market-move-title{
+    color:#2e2932;
+    font-size:14px;
+    font-weight:650;
+    line-height:1.3;
+  }
+
+  #bookingsInsightsSection .compare-market-move-badge{
+    display:inline-flex;
+    align-items:center;
+    min-height:22px;
+    padding:0 7px;
+    border:1px solid #dcd7df;
+    background:#fafafa;
+    color:#6f6873;
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:.03em;
+  }
+
+  #bookingsInsightsSection .is-new .compare-market-move-badge{
+    border-color:#c9e0d3;
+    background:#f6fbf8;
+    color:#327a52;
+  }
+
+  #bookingsInsightsSection .is-lost .compare-market-move-badge{
+    border-color:#ebcdd1;
+    background:#fff7f8;
+    color:#aa4652;
+  }
+
+  #bookingsInsightsSection .compare-market-move-desc{
+    margin-top:3px;
+    color:#817b85;
+    font-size:11px;
+    line-height:1.4;
+  }
+
+  #bookingsInsightsSection .compare-market-move-count{
+    flex:0 0 auto;
+    min-width:58px;
+    text-align:right;
+  }
+
+  #bookingsInsightsSection .compare-market-move-count > strong{
+    display:block;
+    color:#6848df;
+    font-size:22px;
+    font-weight:650;
+    line-height:1;
+  }
+
+  #bookingsInsightsSection .compare-market-move-count > span{
+    display:block;
+    margin-top:3px;
+    color:#8b8490;
+    font-size:10px;
+  }
+
+  #bookingsInsightsSection .compare-market-move-stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    margin:13px 0 12px;
+    border-top:1px solid #e9e5eb;
+    border-bottom:1px solid #e9e5eb;
+  }
+
+  #bookingsInsightsSection .compare-market-move-stats > div{
+    padding:10px 0;
+  }
+
+  #bookingsInsightsSection .compare-market-move-stats > div + div{
+    padding-left:16px;
+    border-left:1px solid #e9e5eb;
+  }
+
+  #bookingsInsightsSection .compare-market-move-stats span{
+    display:block;
+    color:#817b85;
+    font-size:10px;
+    text-transform:uppercase;
+    font-weight:600;
+  }
+
+  #bookingsInsightsSection .compare-market-move-stats strong{
+    display:block;
+    margin-top:3px;
+    color:#302b34;
+    font-size:14px;
+    font-weight:650;
+  }
+
+  #bookingsInsightsSection .compare-market-move-list-head,
+  #bookingsInsightsSection .compare-market-move-row{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 90px 145px;
+    gap:12px;
+    align-items:center;
+  }
+
+  #bookingsInsightsSection .compare-market-move-list-head{
+    min-height:28px;
+    color:#817b85;
+    font-size:10px;
+    font-weight:600;
+    text-transform:uppercase;
+    border-bottom:1px solid #e6e2e8;
+  }
+
+  #bookingsInsightsSection .compare-market-move-list-head span:nth-child(n+2),
+  #bookingsInsightsSection .compare-market-move-row > div:nth-child(n+2){
+    text-align:right;
+  }
+
+  #bookingsInsightsSection .compare-market-move-list{
+    max-height:220px;
+    overflow:auto;
+  }
+
+  #bookingsInsightsSection .compare-market-move-row{
+    min-height:34px;
+    border-bottom:1px solid #efecf0;
+  }
+
+  #bookingsInsightsSection .compare-market-move-row:last-child{
+    border-bottom:0;
+  }
+
+  #bookingsInsightsSection .compare-market-move-name{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    color:#343039;
+    font-size:12px;
+    font-weight:600;
+  }
+
+  #bookingsInsightsSection .compare-market-move-bookings,
+  #bookingsInsightsSection .compare-market-move-revenue{
+    color:#655f69;
+    font-size:11px;
+    white-space:nowrap;
+  }
+
+  #bookingsInsightsSection .compare-market-move-empty{
+    min-height:54px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#918a96;
+    font-size:12px;
+  }
+
+  /* Old Performance Drops elements are no longer rendered. */
+  #bookingsInsightsSection .compare-kpi-card-drop{
+    display:none!important;
+  }
+
+  /* ================= PORTFOLIO PERFORMANCE ================= */
+
+  #portfolioPerformanceSection .portfolio-performance-card{
+    padding:0;
+    overflow:hidden;
+  }
+
+  #portfolioPerformanceSection .portfolio-performance-toolbar{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:16px;
+    padding:14px 16px;
+    border-bottom:1px solid #e3dfe5;
+    background:#fff;
+  }
+
+  #portfolioPerformanceSection .portfolio-dimension-toggle{
+    flex:0 0 auto;
+  }
+
+  #portfolioPerformanceSection .portfolio-dimension-toggle button[hidden]{
+    display:none!important;
+  }
+
+  #portfolioPerformanceSection .portfolio-performance-controls{
+    display:flex;
+    align-items:flex-end;
+    gap:10px;
+  }
+
+  #portfolioPerformanceSection .portfolio-search-control,
+  #portfolioPerformanceSection .portfolio-page-size-control{
+    display:grid;
+    gap:4px;
+  }
+
+  #portfolioPerformanceSection .portfolio-search-control span,
+  #portfolioPerformanceSection .portfolio-page-size-control span{
+    color:#756f79;
+    font-size:10px;
+    font-weight:600;
+    text-transform:uppercase;
+  }
+
+  #portfolioPerformanceSection .portfolio-search-control input,
+  #portfolioPerformanceSection .portfolio-page-size-control select{
+    height:34px;
+    border:1px solid #dcd8df;
+    background:#fff;
+    color:#332f36;
+    font-size:12px;
+    padding:0 10px;
+    outline:none;
+  }
+
+  #portfolioPerformanceSection .portfolio-search-control input{
+    width:210px;
+  }
+
+  #portfolioPerformanceSection .portfolio-performance-context{
+    min-height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:0 16px;
+    border-bottom:1px solid #ece8ed;
+    background:#fafafa;
+  }
+
+  #portfolioPerformanceSection .portfolio-performance-context > div:first-child{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+  }
+
+  #portfolioPerformanceSection .portfolio-performance-context strong{
+    color:#302c34;
+    font-size:12px;
+    font-weight:650;
+  }
+
+  #portfolioPerformanceSection .portfolio-performance-context span,
+  #portfolioPerformanceSection .portfolio-sort-note{
+    color:#837d86;
+    font-size:11px;
+  }
+
+  #portfolioPerformanceSection .portfolio-empty-note{
+    width:100%;
+    color:#817b85;
+    font-size:12px;
+    line-height:1.45;
+  }
+
+  #portfolioPerformanceSection .portfolio-performance-table-wrap{
+    border:0;
+  }
+
+  #portfolioPerformanceSection .portfolio-performance-table{
+    width:100%;
+    table-layout:fixed;
+    min-width:920px;
+  }
+
+  #portfolioPerformanceSection .portfolio-performance-table th{
+    font-size:13px!important;
+    font-weight:500!important;
+    text-transform:uppercase!important;
+    letter-spacing:0!important;
+  }
+
+  #portfolioPerformanceSection .portfolio-performance-table td{
+    font-size:12px;
+  }
+
+  #portfolioPerformanceSection .portfolio-performance-table .num{
+    text-align:right;
+  }
+
+  #portfolioPerformanceSection .portfolio-total-row td{
+    background:#fff!important;
+    border-top:1px solid #cec9d1!important;
+    font-weight:700!important;
+  }
+
+  #portfolioPerformanceSection .portfolio-performance-pager{
+    padding:10px 16px 12px;
+    border-top:1px solid #ece8ed;
+  }
+
+  @media(max-width:1000px){
+    #bookingsInsightsSection .compare-kpi-summary-grid{
+      grid-template-columns:1fr!important;
+    }
+
+    #portfolioPerformanceSection .portfolio-performance-toolbar{
+      align-items:flex-start;
+      flex-direction:column;
+    }
+
+    #portfolioPerformanceSection .portfolio-performance-controls{
+      width:100%;
+      flex-wrap:wrap;
+    }
+  }
+
+
+  /* ================= TOP REPORT ALIGNMENT REFINEMENT ================= */
+
+  @media(min-width:761px){
+
+    /* Move the whole dashboard upward without changing left/right geometry. */
+    body{
+      padding-top:12px!important;
+    }
+
+    .page{
+      padding-top:18px!important;
+    }
+
+    /* Remove the divider above Ads Report / Bookings Report / Bookings BI. */
+    .report-switch-row{
+      border-top:0!important;
+      padding-top:4px!important;
+    }
+
+    /* Keep the report switch itself at one consistent height. */
+    .report-switch-row .tabs{
+      margin-top:0!important;
+    }
+
+    /* All three report pages begin at the exact same vertical offset
+       below the main report switch. */
+    #adsTab > .section{
+      padding-top:20px!important;
+    }
+
+    #bookingsTab .bookings-page-title{
+      margin-top:20px!important;
+    }
+
+    #bookingsBiTab > .bookings-bi-section{
+      padding-top:20px!important;
+    }
+
+    /* Use the same heading rhythm on all three pages. */
+    #adsTab .report-page-heading,
+    #bookingsTab .report-page-heading,
+    #bookingsBiTab .report-page-heading{
+      margin-bottom:18px!important;
+    }
+  }
+
+
+  /* ================= BOOKING MARKET BREAKDOWN PAGER CLEANUP =================
+     Match Market Performance and the other report tables:
+     no separator line above the "Displaying 1–10..." footer.
+  */
+  #bookingsInsightsSection #bookingMarketBreakdownPager{
+    border-top:0!important;
+  }
+
+  #bookingsInsightsSection #bookingMarketBreakdownPager .xpo-pager{
+    border-top:0!important;
+  }
+
+
+  /* ================= BOOKING MARKET BREAKDOWN — CANONICAL PAGER =================
+     Same geometry and controls as Booking Details / Market Performance / Pipeline.
+  */
+
+  #bookingsTab #bookingMarketBreakdownPager{
+    width:100%;
+    height:66px!important;
+    min-height:66px!important;
+    padding:0 20px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:stretch!important;
+    box-sizing:border-box!important;
+    border-top:0!important;
+    background:#fff!important;
+  }
+
+  #bookingsTab #bookingMarketBreakdownPager .xpo-pager{
+    width:100%!important;
+    height:100%!important;
+    display:grid!important;
+    grid-template-columns:minmax(220px,1fr) auto!important;
+    align-items:center!important;
+    column-gap:24px!important;
+    margin:0!important;
+    border-top:0!important;
+  }
+
+  #bookingsTab #bookingMarketBreakdownPager .xpo-pager-display{
+    justify-self:start!important;
+    margin:0!important;
+    color:#96939d!important;
+    font-size:12px!important;
+    line-height:1!important;
+    font-weight:400!important;
+    white-space:nowrap!important;
+  }
+
+  #bookingsTab #bookingMarketBreakdownPager .xpo-pager-controls{
+    justify-self:end!important;
+    display:grid!important;
+    grid-template-columns:150px minmax(170px,max-content)!important;
+    align-items:center!important;
+    column-gap:18px!important;
+    margin:0!important;
+    flex-wrap:nowrap!important;
+  }
+
+  #bookingsTab #bookingMarketBreakdownPager .xpo-per-page{
+    width:150px!important;
+    display:grid!important;
+    grid-template-columns:80px 1fr!important;
+    align-items:center!important;
+    gap:8px!important;
+    margin:0!important;
+    color:#96939d!important;
+    font-size:12px!important;
+    font-weight:400!important;
+    white-space:nowrap!important;
+  }
+
+  #bookingsTab #bookingMarketBreakdownPager .xpo-per-page select{
+    width:80px!important;
+    min-width:80px!important;
+    height:36px!important;
+    padding:0 26px 0 12px!important;
+    border:1px solid #dedbe6!important;
+    border-radius:18px!important;
+    background:#fff!important;
+    color:#4f4b58!important;
+    font-size:12px!important;
+    line-height:36px!important;
+    font-weight:500!important;
+    text-align:left!important;
+    box-sizing:border-box!important;
+  }
+
+  #bookingsTab #bookingMarketBreakdownPager .xpo-pages{
+    justify-self:end!important;
+    min-height:36px!important;
+    display:flex!important;
+    align-items:center!important;
+    gap:2px!important;
+    padding:3px 6px!important;
+    border:1px solid #dedbe6!important;
+    border-radius:20px!important;
+    background:#fff!important;
+    box-sizing:border-box!important;
+    white-space:nowrap!important;
+  }
+
+  #bookingsTab #bookingMarketBreakdownPager .xpo-page-btn{
+    min-width:28px!important;
+    height:28px!important;
+    padding:0 7px!important;
+    border:0!important;
+    border-radius:14px!important;
+    background:transparent!important;
+    color:#27242d!important;
+    font-size:12px!important;
+    font-weight:400!important;
+  }
+
+  #bookingsTab #bookingMarketBreakdownPager .xpo-page-btn.active{
+    color:#5b4cf5!important;
+    font-weight:500!important;
+  }
+
+  #bookingsTab #bookingMarketBreakdownPager .xpo-page-ellipsis{
+    font-size:12px!important;
+    padding:0 3px!important;
+    color:#77727f!important;
+  }
+
+  /* ================= MARKET MOVEMENT — ABV ADDED ================= */
+
+  #bookingsInsightsSection .compare-market-move-stats{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+
+  #bookingsInsightsSection .compare-market-move-stats > div + div{
+    padding-left:14px!important;
+    border-left:1px solid #e9e5eb!important;
+  }
+
+  #bookingsInsightsSection .compare-market-move-list-head,
+  #bookingsInsightsSection .compare-market-move-row{
+    grid-template-columns:minmax(0,1fr) 72px 132px 112px!important;
+    gap:10px!important;
+  }
+
+  #bookingsInsightsSection .compare-market-move-list-head span:nth-child(n+2),
+  #bookingsInsightsSection .compare-market-move-row > div:nth-child(n+2){
+    text-align:right!important;
+  }
+
+  #bookingsInsightsSection .compare-market-move-abv{
+    color:#655f69;
+    font-size:11px;
+    white-space:nowrap;
+    text-align:right;
+  }
+
+  @media(max-width:900px){
+    #bookingsTab #bookingMarketBreakdownPager{
+      height:auto!important;
+      min-height:84px!important;
+    }
+
+    #bookingsTab #bookingMarketBreakdownPager .xpo-pager{
+      grid-template-columns:1fr!important;
+      row-gap:8px!important;
+      padding:8px 0!important;
+    }
+
+    #bookingsTab #bookingMarketBreakdownPager .xpo-pager-controls{
+      justify-self:start!important;
+    }
+
+    #bookingsInsightsSection .compare-market-move-list-head,
+    #bookingsInsightsSection .compare-market-move-row{
+      grid-template-columns:minmax(150px,1fr) 72px 120px 105px!important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -10047,6 +10617,7 @@
           <button type="button" data-target="marketPerformanceSection">MARKET PERFORMANCE</button>
           <button type="button" data-target="bookingsInsightsSection">BOOKING INSIGHTS</button>
           <button type="button" data-target="marketFuturePipelineSection">FUTURE PIPELINE</button>
+          <button type="button" data-target="portfolioPerformanceSection">PORTFOLIO PERFORMANCE</button>
           <button type="button" data-target="attributionReportSection">ATTRIBUTION REPORT</button>
         </nav>
 
@@ -10435,8 +11006,8 @@
             <div class="compare-kpi-summary-block">
               <div class="compare-kpi-summary-head">
                 <div>
-                  <div class="ititle">KPI Summary</div>
-                  <div class="idesc">Key drops, new markets, and lost markets between the selected booking months.</div>
+                  <div class="ititle">Market Movement</div>
+                  <div class="idesc">New and lost source markets between the selected booking months.</div>
                 </div>
               </div>
               <div class="compare-kpi-summary-grid" id="compareKpiSummary"></div>
@@ -10444,7 +11015,7 @@
 
             <div class="compare-movers-head">
               <div>
-                <div class="ititle compare-movers-title" id="compareMoversTitle">Market Movers — Top 20 Markets</div>
+                <div class="ititle compare-movers-title" id="compareMoversTitle">Market Movers</div>
                 <div class="idesc">Source-market changes between the selected booking months.</div>
               </div>
 
@@ -10539,7 +11110,66 @@
 
     </section>
 
-    <!-- 5. ATTRIBUTION REPORT -->
+    <!-- 5. PORTFOLIO PERFORMANCE -->
+    <section class="section" id="portfolioPerformanceSection">
+      <div class="report-subsection-head report-subsection-head-actions">
+        <div>
+          <h2>Portfolio Performance</h2>
+          <p>Booking performance by hotel, brand, or destination for corporate and portfolio campaigns.</p>
+        </div>
+
+        <div class="section-action-group">
+          <button class="export-excel-btn" id="exportPortfolioPerformanceBtn" type="button" title="Export Portfolio Performance to Excel">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v11m0 0 4-4m-4 4-4-4M5 17v3h14v-3"/>
+            </svg>
+            <span>Export Excel</span>
+          </button>
+
+          <button class="collapse-btn" id="portfolioPerformanceCollapseBtn" type="button" aria-expanded="true" aria-controls="portfolioPerformanceBody">
+            <span>Collapse</span><span class="collapse-chevron">⌃</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="collapsible-body" id="portfolioPerformanceBody">
+        <div class="card portfolio-performance-card">
+          <div class="portfolio-performance-toolbar">
+            <div class="metric-toggle portfolio-dimension-toggle" id="portfolioDimensionToggle" aria-label="Portfolio performance dimension">
+              <button type="button" data-portfolio-dimension="hotel">Hotels</button>
+              <button type="button" data-portfolio-dimension="brand">Brands</button>
+              <button type="button" data-portfolio-dimension="destination">Destinations</button>
+            </div>
+
+            <div class="portfolio-performance-controls">
+              <label class="portfolio-search-control">
+                <span>Search</span>
+                <input type="search" id="portfolioPerformanceSearch" placeholder="Search..." autocomplete="off">
+              </label>
+
+              <label class="portfolio-page-size-control">
+                <span>Rows</span>
+                <select id="portfolioPerformancePageSize">
+                  <option value="10" selected>10</option>
+                  <option value="20">20</option>
+                  <option value="50">50</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="portfolio-performance-context" id="portfolioPerformanceContext"></div>
+
+          <div class="detail-table-wrap portfolio-performance-table-wrap">
+            <table class="detail-breakdown-table portfolio-performance-table" id="portfolioPerformanceTable"></table>
+          </div>
+
+          <div class="pager-wrap portfolio-performance-pager" id="portfolioPerformancePager"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. ATTRIBUTION REPORT -->
     <section class="section" id="attributionReportSection">
       <div class="report-subsection-head">
         <h2>Attribution Report</h2>
@@ -10784,6 +11414,18 @@
       const blt = String(rawBlt ?? '').trim() !== '' ? bltParsed : diffDays(bookingDate,checkIn);
       const channel = getField(r,['Channel','Platform']);
 
+      // Optional corporate / portfolio dimensions.
+      // These fields are ignored by the rest of the dashboard unless present.
+      const hotel = getField(r,[
+        'Hotel','Hotel Name','Property','Property Name','Resort','Resort Name'
+      ]);
+      const brand = getField(r,[
+        'Brand','Brand Name','Hotel Brand'
+      ]);
+      const destination = getField(r,[
+        'Destination','Hotel Destination','Property Destination','Resort Destination'
+      ]);
+
       return {
         bookingDate,
         bookingId:String(bookingId ?? ''),
@@ -10795,7 +11437,10 @@
         checkOut,
         nights:Number.isFinite(nights) ? nights : null,
         blt:Number.isFinite(blt) ? blt : null,
-        channel:String(channel??'')
+        channel:String(channel??''),
+        hotel:String(hotel??'').trim(),
+        brand:String(brand??'').trim(),
+        destination:String(destination??'').trim()
       };
     }).filter(r => r.bookingId || r.bookingDate || r.value || r.country || r.checkIn);
   }
@@ -11300,12 +11945,12 @@
       'Bookings',
       (page)=>{
         bookingPage=page;
-        renderTable(currentFilteredRows);
+        renderTable(currentPeriodRows());
       },
       (size)=>{
         bookingPageSize=size;
         bookingPage=1;
-        renderTable(currentFilteredRows);
+        renderTable(currentPeriodRows());
       }
     );
   }
@@ -13040,8 +13685,6 @@
 
     const markets=compareMarketRows(rows,monthA,monthB);
 
-    const existing=markets.filter(r=>r.aBookings>0 && r.bBookings>0);
-
     const newMarkets=markets
       .filter(r=>r.aBookings===0 && r.bBookings>0)
       .sort((a,b)=>b.bRevenue-a.bRevenue);
@@ -13050,267 +13693,85 @@
       .filter(r=>r.aBookings>0 && r.bBookings===0)
       .sort((a,b)=>b.aRevenue-a.aRevenue);
 
-    const bookingsPct=comparePct(totalsA.bookings,totalsB.bookings,false);
-    const revenuePct=comparePct(totalsA.revenue,totalsB.revenue,false);
-    const abvPct=comparePct(totalsA.abv,totalsB.abv,false);
-
-    const bookingNetChange=Number(totalsB.bookings||0)-Number(totalsA.bookings||0);
-
-    const newBookings=newMarkets.reduce((sum,r)=>sum+Number(r.bBookings||0),0);
-    const lostBookings=lostMarkets.reduce((sum,r)=>sum+Number(r.aBookings||0),0);
-
-    const existingNetBookings=existing.reduce(
-      (sum,r)=>sum+(Number(r.bBookings||0)-Number(r.aBookings||0)),
-      0
-    );
-
-    const droppedMetrics=[
-      Number.isFinite(bookingsPct) && bookingsPct<0
-        ? `<span class="compare-kpi-drop-chip">
-            Bookings ▼ ${Math.abs(bookingsPct).toFixed(1)}%
-            <b>${totalsA.bookings.toLocaleString('en-US')} → ${totalsB.bookings.toLocaleString('en-US')} (${bookingNetChange.toLocaleString('en-US')})</b>
-          </span>`
-        : '',
-      Number.isFinite(revenuePct) && revenuePct<0
-        ? `<span class="compare-kpi-drop-chip">Revenue ▼ ${Math.abs(revenuePct).toFixed(1)}%</span>`
-        : '',
-      Number.isFinite(abvPct) && abvPct<0
-        ? `<span class="compare-kpi-drop-chip">ABV ▼ ${Math.abs(abvPct).toFixed(1)}%</span>`
-        : ''
-    ].filter(Boolean).join('');
-
-    const bookingDrops=existing
-      .filter(r=>r.bBookings<r.aBookings)
-      .sort((a,b)=>{
-        const ad=a.bBookings-a.aBookings;
-        const bd=b.bBookings-b.aBookings;
-        if(ad!==bd)return ad-bd;
-        return a.market.localeCompare(b.market);
-      });
-
-    const bookingGains=existing
-      .filter(r=>r.bBookings>r.aBookings)
-      .sort((a,b)=>{
-        const ad=a.bBookings-a.aBookings;
-        const bd=b.bBookings-b.aBookings;
-        if(ad!==bd)return bd-ad;
-        return a.market.localeCompare(b.market);
-      });
-
-    const abvDrops=existing
-      .filter(r=>r.bAbv<r.aAbv)
-      .sort((a,b)=>{
-        const ap=Number.isFinite(a.abvPct)?a.abvPct:0;
-        const bp=Number.isFinite(b.abvPct)?b.abvPct:0;
-        if(ap!==bp)return ap-bp;
-        return a.market.localeCompare(b.market);
-      });
-
-    const revenueDrops=existing
-      .filter(r=>r.bRevenue<r.aRevenue)
-      .sort((a,b)=>(a.bRevenue-a.aRevenue)-(b.bRevenue-b.aRevenue));
-
-    function signedBookings(n){
-      const value=Number(n||0);
-      if(value>0)return `+${value.toLocaleString('en-US')}`;
-      return value.toLocaleString('en-US');
-    }
-
-    function bookingDropRows(){
-      if(!(Number.isFinite(bookingsPct) && bookingsPct<0))return '';
-
-      const decompositionCheck=existingNetBookings + newBookings - lostBookings;
-
-      const movementRows=`
-        <div class="compare-booking-movement">
-          <div class="compare-booking-movement-row">
-            <span>Lost Markets</span>
-            <strong class="negative">−${lostBookings.toLocaleString('en-US')} bookings</strong>
-          </div>
-          <div class="compare-booking-movement-row">
-            <span>New Markets</span>
-            <strong class="positive">+${newBookings.toLocaleString('en-US')} bookings</strong>
-          </div>
-          <div class="compare-booking-movement-row">
-            <span>Existing Markets</span>
-            <strong class="${existingNetBookings>0?'positive':existingNetBookings<0?'negative':'neutral'}">
-              ${signedBookings(existingNetBookings)} net
-            </strong>
-          </div>
-          <div class="compare-booking-movement-row total">
-            <span>Overall Booking Change</span>
-            <strong class="${bookingNetChange<0?'negative':bookingNetChange>0?'positive':'neutral'}">
-              ${signedBookings(bookingNetChange)} bookings
-            </strong>
-          </div>
-        </div>`;
-
-      const existingDetail=bookingDrops.length
-        ? `<div class="compare-kpi-existing-detail">
-            <div class="compare-kpi-existing-detail-title">Existing Market Declines</div>
-            <div class="compare-kpi-list">
-              ${bookingDrops.slice(0,5).map(r=>`
-                <div class="compare-kpi-list-row">
-                  <strong>${esc(r.market)}</strong>
-                  <span>
-                    ${r.aBookings.toLocaleString('en-US')} → ${r.bBookings.toLocaleString('en-US')}
-                    <b class="negative">(${(r.bBookings-r.aBookings).toLocaleString('en-US')})</b>
-                  </span>
-                </div>
-              `).join('')}
-              ${bookingDrops.length>5
-                ? `<div class="compare-kpi-more">+${bookingDrops.length-5} more markets</div>`
-                : ''}
-            </div>
-          </div>`
-        : '';
-
-      const offsetNote=bookingGains.length
-        ? `<div class="compare-kpi-offset-note">
-            Existing-market gains offset some declines:
-            ${bookingGains.slice(0,3).map(r=>
-              `${esc(r.market)} ${r.aBookings.toLocaleString('en-US')} → ${r.bBookings.toLocaleString('en-US')} (+${r.bBookings-r.aBookings})`
-            ).join(' · ')}
-            ${bookingGains.length>3?` · +${bookingGains.length-3} more`:''}
-          </div>`
-        : '';
-
-      return `<div class="compare-kpi-subgroup">
-        <div class="compare-kpi-subtitle">Booking Volume</div>
-        ${movementRows}
-        ${existingDetail}
-        ${offsetNote}
-        <div class="compare-kpi-reconcile-note">
-          ${decompositionCheck===bookingNetChange
-            ? 'Lost + New + Existing market movements reconcile to the overall booking change.'
-            : ''}
-        </div>
-      </div>`;
-    }
-
-    function abvDropRows(){
-      if(!(Number.isFinite(abvPct) && abvPct<0))return '';
-
-      if(!abvDrops.length){
-        return `<div class="compare-kpi-subgroup">
-          <div class="compare-kpi-subtitle">ABV</div>
-          <div class="compare-kpi-empty">No decline among markets active in both months.</div>
-        </div>`;
-      }
-
-      return `<div class="compare-kpi-subgroup">
-        <div class="compare-kpi-subtitle">ABV</div>
-        <div class="compare-kpi-list">
-          ${abvDrops.slice(0,5).map(r=>`
-            <div class="compare-kpi-list-row">
-              <strong>${esc(r.market)}</strong>
-              <span>${money(r.aAbv)} → ${money(r.bAbv)}
-                <b class="negative">(${compareDropPctText(r.aAbv,r.bAbv)})</b>
-              </span>
-            </div>
-          `).join('')}
-          ${abvDrops.length>5
-            ? `<div class="compare-kpi-more">+${abvDrops.length-5} more markets</div>`
-            : ''}
-        </div>
-      </div>`;
-    }
-
-    function revenueFallbackRows(){
-      const hasBookingDrop=Number.isFinite(bookingsPct) && bookingsPct<0;
-      const hasAbvDrop=Number.isFinite(abvPct) && abvPct<0;
-      const revenueDown=Number.isFinite(revenuePct) && revenuePct<0;
-
-      if(!revenueDown || hasBookingDrop || hasAbvDrop)return '';
-      if(!revenueDrops.length)return '';
-
-      return `<div class="compare-kpi-subgroup">
-        <div class="compare-kpi-subtitle">Revenue</div>
-        <div class="compare-kpi-list">
-          ${revenueDrops.slice(0,5).map(r=>`
-            <div class="compare-kpi-list-row">
-              <strong>${esc(r.market)}</strong>
-              <span>${money(r.aRevenue)} → ${money(r.bRevenue)}
-                <b class="negative">(${compareDropPctText(r.aRevenue,r.bRevenue)})</b>
-              </span>
-            </div>
-          `).join('')}
-        </div>
-      </div>`;
-    }
-
-    const dropDetails=[
-      bookingDropRows(),
-      abvDropRows(),
-      revenueFallbackRows()
-    ].filter(Boolean).join('');
-
-    const dropCard=`
-      <div class="compare-kpi-card compare-kpi-card-drop">
-        <div class="compare-kpi-card-head">
-          <div>
-            <div class="compare-kpi-card-title">Performance Drops</div>
-            <div class="compare-kpi-card-desc">What changed and where the decline came from.</div>
-          </div>
-        </div>
-
-        <div class="compare-kpi-drop-chips">
-          ${droppedMetrics || '<span class="compare-kpi-no-drop">No Bookings / Revenue / ABV decline</span>'}
-        </div>
-
-        <div class="compare-kpi-card-body">
-          ${dropDetails || '<div class="compare-kpi-empty">No market-level drop to highlight.</div>'}
-        </div>
-      </div>`;
-
     function statusCard(type,data){
       const isNew=type==='new';
-      const bookings=data.reduce((sum,r)=>sum+(isNew?r.bBookings:r.aBookings),0);
-      const revenue=data.reduce((sum,r)=>sum+(isNew?r.bRevenue:r.aRevenue),0);
+      const bookings=data.reduce(
+        (sum,r)=>sum+(isNew?r.bBookings:r.aBookings),
+        0
+      );
+      const revenue=data.reduce(
+        (sum,r)=>sum+(isNew?r.bRevenue:r.aRevenue),
+        0
+      );
+      const abv=bookings ? revenue/bookings : 0;
 
       const title=isNew?'New Markets':'Lost Markets';
-
+      const badgeLabel=isNew?'NEW':'LOST';
       const desc=isNew
-        ? 'Markets with bookings in Month B but none in Month A.'
-        : 'Markets with bookings in Month A but none in Month B.';
+        ? 'Source markets that generated bookings in Month B but had none in Month A.'
+        : 'Source markets that generated bookings in Month A but had none in Month B.';
 
       const rowsHtml=data.length
         ? data.map(r=>{
-            const bookingsValue=isNew?r.bBookings:r.aBookings;
-            const revenueValue=isNew?r.bRevenue:r.aRevenue;
+            const b=isNew?r.bBookings:r.aBookings;
+            const rev=isNew?r.bRevenue:r.aRevenue;
+            const marketAbv=b ? rev/b : 0;
 
             return `
-              <div class="compare-kpi-list-row">
-                <strong>${esc(r.market)}</strong>
-                <span>${bookingsValue.toLocaleString('en-US')} booking${bookingsValue===1?'':'s'} · ${money(revenueValue)}</span>
+              <div class="compare-market-move-row">
+                <div class="compare-market-move-name">${esc(r.market)}</div>
+                <div class="compare-market-move-bookings">${b.toLocaleString('en-US')}</div>
+                <div class="compare-market-move-revenue">${money(rev)}</div>
+                <div class="compare-market-move-abv">${money(marketAbv)}</div>
               </div>`;
           }).join('')
-        : `<div class="compare-kpi-empty">None</div>`;
+        : `<div class="compare-market-move-empty">None</div>`;
 
       return `
-        <div class="compare-kpi-card">
-          <div class="compare-kpi-card-head">
+        <div class="compare-market-move-card ${isNew?'is-new':'is-lost'}">
+          <div class="compare-market-move-card-head">
             <div>
-              <div class="compare-kpi-card-title">${title}</div>
-              <div class="compare-kpi-card-desc">${desc}</div>
+              <div class="compare-market-move-title-row">
+                <div class="compare-market-move-title">${title}</div>
+                <span class="compare-market-move-badge">${badgeLabel}</span>
+              </div>
+              <div class="compare-market-move-desc">${desc}</div>
             </div>
-
-            <div class="compare-kpi-count">${data.length.toLocaleString('en-US')}</div>
+            <div class="compare-market-move-count">
+              <strong>${data.length.toLocaleString('en-US')}</strong>
+              <span>markets</span>
+            </div>
           </div>
 
-          <div class="compare-kpi-totals">
-            <span><b>${bookings.toLocaleString('en-US')}</b> bookings</span>
-            <span><b>${money(revenue)}</b> revenue</span>
+          <div class="compare-market-move-stats">
+            <div>
+              <span>Bookings</span>
+              <strong>${bookings.toLocaleString('en-US')}</strong>
+            </div>
+            <div>
+              <span>Revenue</span>
+              <strong>${money(revenue)}</strong>
+            </div>
+            <div>
+              <span>ABV</span>
+              <strong>${bookings ? money(abv) : '—'}</strong>
+            </div>
           </div>
 
-          <div class="compare-kpi-card-body compare-kpi-scroll-list">
+          <div class="compare-market-move-list-head">
+            <span>Market</span>
+            <span>Bookings</span>
+            <span>Revenue</span>
+            <span>ABV</span>
+          </div>
+
+          <div class="compare-market-move-list">
             ${rowsHtml}
           </div>
         </div>`;
     }
 
     el.innerHTML=[
-      dropCard,
       statusCard('new',newMarkets),
       statusCard('lost',lostMarkets)
     ].join('');
@@ -13330,10 +13791,10 @@
 
     if(title){
       title.textContent=COMPARE_MONTHS_STATE.manualSort
-        ? 'Market Movers — Top 20 Markets'
+        ? 'Market Movers'
         : overallDeclined
-          ? 'Market Movers — Top 20 Biggest Declines'
-          : 'Market Movers — Top 20 Biggest Gains';
+          ? 'Market Movers — Biggest Declines'
+          : 'Market Movers — Biggest Gains';
     }
 
     const cols=[
@@ -14305,7 +14766,12 @@
   let CURRENT_PERIOD_ROWS = [];
 
   function currentPeriodRows(){
-    return CURRENT_PERIOD_ROWS;
+    // Always derive from the live Booking Period controls.
+    // This prevents a toggle / pagination / tab interaction from reusing
+    // a snapshot created before the user changed the period.
+    const fresh=filteredByPeriod();
+    CURRENT_PERIOD_ROWS=fresh;
+    return fresh;
   }
   let integratedMarketRequestSeq = 0;
 
@@ -14605,7 +15071,7 @@
 
     if(!gasUrl || gasUrl.includes('PASTE_SHARED_MC_XPO_GAS_WEB_APP_URL_HERE') || !token || !start || !end){
       MARKET_COUNTRY_ADS=new Map();
-      renderMarketPerformance(bookingRows);
+      renderMarketPerformance(currentPeriodRows());
       return;
     }
 
@@ -14640,12 +15106,12 @@
       });
 
       MARKET_COUNTRY_ADS=adsMap;
-      renderMarketPerformance(bookingRows);
+      renderMarketPerformance(currentPeriodRows());
     }catch(err){
       if(seq!==integratedMarketRequestSeq)return;
 
       MARKET_COUNTRY_ADS=new Map();
-      renderMarketPerformance(bookingRows);
+      renderMarketPerformance(currentPeriodRows());
 
       const note=document.getElementById('marketPerformanceNote');
       if(note && MARKET_PERF_STATE.level==='country'){
@@ -14695,6 +15161,367 @@
     }
   }
 
+
+  const PORTFOLIO_PERF_STATE={
+    dimension:'hotel',
+    search:'',
+    page:1,
+    pageSize:10
+  };
+
+  const PORTFOLIO_DIMENSIONS={
+    hotel:{
+      singular:'Hotel',
+      plural:'Hotels',
+      field:'hotel'
+    },
+    brand:{
+      singular:'Brand',
+      plural:'Brands',
+      field:'brand'
+    },
+    destination:{
+      singular:'Destination',
+      plural:'Destinations',
+      field:'destination'
+    }
+  };
+
+  function portfolioAvailableDimensions(rows){
+    const out={};
+
+    Object.entries(PORTFOLIO_DIMENSIONS).forEach(([key,meta])=>{
+      const values=rows
+        .map(r=>String(r[meta.field]||'').trim())
+        .filter(Boolean);
+
+      out[key]={
+        available:values.length>0,
+        rows:values.length,
+        unique:new Set(values.map(v=>v.toLowerCase())).size
+      };
+    });
+
+    return out;
+  }
+
+  function ensurePortfolioDimension(rows){
+    const availability=portfolioAvailableDimensions(rows);
+
+    if(!availability[PORTFOLIO_PERF_STATE.dimension]?.available){
+      const first=Object.keys(PORTFOLIO_DIMENSIONS)
+        .find(key=>availability[key]?.available);
+
+      PORTFOLIO_PERF_STATE.dimension=first||'hotel';
+      PORTFOLIO_PERF_STATE.page=1;
+    }
+
+    return availability;
+  }
+
+  function aggregatePortfolioPerformance(rows,dimension){
+    const meta=PORTFOLIO_DIMENSIONS[dimension]||PORTFOLIO_DIMENSIONS.hotel;
+    const map=new Map();
+
+    rows.forEach(r=>{
+      const raw=String(r[meta.field]||'').trim();
+      if(!raw)return;
+
+      const key=raw.toLowerCase();
+
+      if(!map.has(key)){
+        map.set(key,{
+          label:raw,
+          bookings:0,
+          revenue:0,
+          nights:0,
+          bltSum:0,
+          bltCount:0
+        });
+      }
+
+      const item=map.get(key);
+      item.bookings+=1;
+      item.revenue+=Number(r.value||0);
+
+      if(r.nights!==null && Number.isFinite(r.nights) && r.nights>=0){
+        item.nights+=Number(r.nights);
+      }
+
+      if(r.blt!==null && Number.isFinite(r.blt) && r.blt>=0){
+        item.bltSum+=Number(r.blt);
+        item.bltCount+=1;
+      }
+    });
+
+    return [...map.values()].map(item=>({
+      ...item,
+      abv:item.bookings ? item.revenue/item.bookings : 0,
+      alos:item.bookings ? item.nights/item.bookings : 0,
+      blt:item.bltCount ? item.bltSum/item.bltCount : 0
+    }));
+  }
+
+  function portfolioFilteredRows(rows){
+    const availability=ensurePortfolioDimension(rows);
+    const dimension=PORTFOLIO_PERF_STATE.dimension;
+
+    let data=aggregatePortfolioPerformance(rows,dimension);
+
+    const q=String(PORTFOLIO_PERF_STATE.search||'').trim().toLowerCase();
+    if(q){
+      data=data.filter(r=>r.label.toLowerCase().includes(q));
+    }
+
+    data.sort((a,b)=>{
+      if(b.revenue!==a.revenue)return b.revenue-a.revenue;
+      if(b.bookings!==a.bookings)return b.bookings-a.bookings;
+      return a.label.localeCompare(b.label);
+    });
+
+    return {availability,data};
+  }
+
+  function renderPortfolioPerformance(rows){
+    const table=document.getElementById('portfolioPerformanceTable');
+    const pager=document.getElementById('portfolioPerformancePager');
+    const context=document.getElementById('portfolioPerformanceContext');
+    if(!table || !pager || !context)return;
+
+    const {availability,data}=portfolioFilteredRows(rows);
+    const dimension=PORTFOLIO_PERF_STATE.dimension;
+    const meta=PORTFOLIO_DIMENSIONS[dimension];
+
+    document.querySelectorAll('#portfolioDimensionToggle [data-portfolio-dimension]').forEach(btn=>{
+      const key=btn.dataset.portfolioDimension;
+      const available=Boolean(availability[key]?.available);
+
+      btn.hidden=!available;
+      btn.disabled=!available;
+      btn.classList.toggle('active',key===dimension && available);
+    });
+
+    const anyAvailable=Object.values(availability).some(v=>v.available);
+
+    if(!anyAvailable){
+      context.innerHTML=`
+        <div class="portfolio-empty-note">
+          No Hotel / Brand / Destination field is available in the current booking dataset.
+          Supported column names include Hotel or Property, Brand, and Destination.
+        </div>`;
+
+      table.innerHTML='';
+      pager.innerHTML='';
+      return;
+    }
+
+    context.innerHTML=`
+      <div>
+        <strong>${meta.plural}</strong>
+        <span>${data.length.toLocaleString('en-US')} ${data.length===1?meta.singular.toLowerCase():meta.plural.toLowerCase()} in the selected Booking Period</span>
+      </div>
+      <div class="portfolio-sort-note">Sorted by Revenue</div>
+    `;
+
+    const pageSize=PORTFOLIO_PERF_STATE.pageSize;
+    const totalPages=Math.max(1,Math.ceil(data.length/pageSize));
+
+    if(PORTFOLIO_PERF_STATE.page>totalPages){
+      PORTFOLIO_PERF_STATE.page=totalPages;
+    }
+
+    const start=(PORTFOLIO_PERF_STATE.page-1)*pageSize;
+    const pageRows=data.slice(start,start+pageSize);
+
+    const totals=data.reduce((acc,r)=>{
+      acc.bookings+=r.bookings;
+      acc.revenue+=r.revenue;
+      acc.nights+=r.nights;
+      acc.bltSum+=r.bltSum;
+      acc.bltCount+=r.bltCount;
+      return acc;
+    },{
+      bookings:0,
+      revenue:0,
+      nights:0,
+      bltSum:0,
+      bltCount:0
+    });
+
+    const totalAbv=totals.bookings?totals.revenue/totals.bookings:0;
+    const totalAlos=totals.bookings?totals.nights/totals.bookings:0;
+    const totalBlt=totals.bltCount?totals.bltSum/totals.bltCount:0;
+
+    const body=pageRows.length
+      ? pageRows.map(r=>`
+          <tr>
+            <td class="detail-primary">${esc(r.label)}</td>
+            <td class="num">${r.bookings.toLocaleString('en-US')}</td>
+            <td class="num">${money(r.revenue)}</td>
+            <td class="num">${money(r.abv)}</td>
+            <td class="num">${r.alos.toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1})} nights</td>
+            <td class="num">${r.blt.toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1})} days</td>
+          </tr>
+        `).join('')
+      : `<tr><td colspan="6" class="detail-empty">No matching ${meta.plural.toLowerCase()}.</td></tr>`;
+
+    table.innerHTML=`
+      <colgroup>
+        <col style="width:25%">
+        <col style="width:15%">
+        <col style="width:15%">
+        <col style="width:15%">
+        <col style="width:15%">
+        <col style="width:15%">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>${meta.singular.toUpperCase()}</th>
+          <th class="num">BOOKINGS</th>
+          <th class="num">REVENUE</th>
+          <th class="num">ABV</th>
+          <th class="num">ALOS</th>
+          <th class="num">BLT</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${body}
+        <tr class="portfolio-total-row">
+          <td><strong>GRAND TOTAL</strong></td>
+          <td class="num"><strong>${totals.bookings.toLocaleString('en-US')}</strong></td>
+          <td class="num"><strong>${money(totals.revenue)}</strong></td>
+          <td class="num"><strong>${money(totalAbv)}</strong></td>
+          <td class="num"><strong>${totalAlos.toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1})} nights</strong></td>
+          <td class="num"><strong>${totalBlt.toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1})} days</strong></td>
+        </tr>
+      </tbody>
+    `;
+
+    const seq=pagerSequence(PORTFOLIO_PERF_STATE.page,totalPages);
+
+    pager.innerHTML=data.length
+      ? `
+        <div class="pager-info">
+          Showing ${(start+1).toLocaleString('en-US')}–${Math.min(start+pageSize,data.length).toLocaleString('en-US')}
+          of ${data.length.toLocaleString('en-US')}
+        </div>
+
+        <div class="pager-controls">
+          <button type="button" data-portfolio-page="${Math.max(1,PORTFOLIO_PERF_STATE.page-1)}" ${PORTFOLIO_PERF_STATE.page===1?'disabled':''}>‹</button>
+          ${seq.map(p=>
+            p==='…'
+              ? '<span class="pager-ellipsis">…</span>'
+              : `<button type="button" data-portfolio-page="${p}" class="${p===PORTFOLIO_PERF_STATE.page?'active':''}">${p}</button>`
+          ).join('')}
+          <button type="button" data-portfolio-page="${Math.min(totalPages,PORTFOLIO_PERF_STATE.page+1)}" ${PORTFOLIO_PERF_STATE.page===totalPages?'disabled':''}>›</button>
+        </div>
+      `
+      : '';
+
+    pager.querySelectorAll('[data-portfolio-page]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const next=Number(btn.dataset.portfolioPage);
+        if(!Number.isFinite(next))return;
+
+        PORTFOLIO_PERF_STATE.page=next;
+        renderPortfolioPerformance(currentPeriodRows());
+      });
+    });
+  }
+
+  function exportPortfolioPerformance(){
+    const rows=currentPeriodRows();
+    const {availability,data}=portfolioFilteredRows(rows);
+
+    const dimension=PORTFOLIO_PERF_STATE.dimension;
+    const meta=PORTFOLIO_DIMENSIONS[dimension];
+
+    if(!availability[dimension]?.available || !data.length){
+      alert('No Portfolio Performance data is available to export.');
+      return;
+    }
+
+    if(typeof XLSX==='undefined'){
+      alert('Excel export library is still loading. Please refresh the page and try again.');
+      return;
+    }
+
+    const aoa=[
+      [meta.singular,'Bookings','Revenue','ABV','ALOS','BLT'],
+      ...data.map(r=>[
+        r.label,
+        r.bookings,
+        r.revenue,
+        r.abv,
+        r.alos,
+        r.blt
+      ])
+    ];
+
+    const ws=XLSX.utils.aoa_to_sheet(aoa);
+    const wb=XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(
+      wb,
+      ws,
+      `${meta.plural}`.slice(0,31)
+    );
+
+    const filename=[
+      safeExportPart(DASHBOARD_CONFIG.clientName),
+      'Portfolio_Performance',
+      meta.plural
+    ].join('_')+'.xlsx';
+
+    XLSX.writeFile(wb,filename,{compression:true});
+  }
+
+  function bindPortfolioPerformanceControls(){
+    document.querySelectorAll('#portfolioDimensionToggle [data-portfolio-dimension]').forEach(btn=>{
+      if(btn.dataset.bound==='1')return;
+      btn.dataset.bound='1';
+
+      btn.addEventListener('click',()=>{
+        PORTFOLIO_PERF_STATE.dimension=btn.dataset.portfolioDimension;
+        PORTFOLIO_PERF_STATE.page=1;
+        PORTFOLIO_PERF_STATE.search='';
+
+        const search=document.getElementById('portfolioPerformanceSearch');
+        if(search)search.value='';
+
+        renderPortfolioPerformance(currentPeriodRows());
+      });
+    });
+
+    const search=document.getElementById('portfolioPerformanceSearch');
+    if(search && search.dataset.bound!=='1'){
+      search.dataset.bound='1';
+
+      search.addEventListener('input',()=>{
+        PORTFOLIO_PERF_STATE.search=search.value||'';
+        PORTFOLIO_PERF_STATE.page=1;
+        renderPortfolioPerformance(currentPeriodRows());
+      });
+    }
+
+    const pageSize=document.getElementById('portfolioPerformancePageSize');
+    if(pageSize && pageSize.dataset.bound!=='1'){
+      pageSize.dataset.bound='1';
+
+      pageSize.addEventListener('change',()=>{
+        PORTFOLIO_PERF_STATE.pageSize=Number(pageSize.value)||10;
+        PORTFOLIO_PERF_STATE.page=1;
+        renderPortfolioPerformance(currentPeriodRows());
+      });
+    }
+
+    const exportBtn=document.getElementById('exportPortfolioPerformanceBtn');
+    if(exportBtn && exportBtn.dataset.bound!=='1'){
+      exportBtn.dataset.bound='1';
+      exportBtn.addEventListener('click',exportPortfolioPerformance);
+    }
+  }
+
   function renderBookingSectionsForPeriod(rows){
     // Single source of truth for every Bookings Report section.
     // `rows` is ALWAYS filtered by the selected Booking Date period.
@@ -14711,6 +15538,7 @@
     renderStayDemand(rows);
     renderMarketPerformance(rows);
     renderFuturePipeline(rows);
+    renderPortfolioPerformance(rows);
 
     // Keep stable XPO loading independent from supplemental client-detail tables.
     renderXpoOverviewSpend();
@@ -14740,6 +15568,7 @@
     MARKET_PERF_STATE.page=1;
     BOOKING_MARKET_TABLE_STATE.page=1;
     pipelinePage=1;
+    PORTFOLIO_PERF_STATE.page=1;
 
     // Prevent previous-period XPO data from appearing while the new period is loading.
     MARKET_COUNTRY_ADS = new Map();
@@ -15144,9 +15973,11 @@
   bindCollapseButton('marketPerformanceCollapseBtn','marketPerformanceBody');
   bindCollapseButton('bookingMarketCollapseBtn','bookingMarketBreakdownBody');
   bindCollapseButton('futurePipelineCollapseBtn','futurePipelineBody');
+  bindCollapseButton('portfolioPerformanceCollapseBtn','portfolioPerformanceBody');
   bindCollapseButton('compareMoversCollapseBtn','compareMoversBody');
 
   bindMarketPerformanceControls();
+  bindPortfolioPerformanceControls();
 
   function bindBookingsAppNavigation(){
     const nav=document.getElementById('bookingAppNav');
@@ -15301,8 +16132,8 @@
       bindBookingChartSeriesControls();
       scheduleBookingChartRender();
 
-      const rows=currentPeriodRows();
       requestAnimationFrame(()=>{
+        const rows=currentPeriodRows();
         renderABV(rows);
         renderLOS(rows);
         renderAverageBLT(rows);
