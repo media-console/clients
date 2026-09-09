@@ -10947,7 +10947,7 @@
         <div class="collapsible-head">
           <div>
             <div class="ititle">Monthly Performance</div>
-            <div class="idesc" id="monthlyPerformanceCount">Monthly summary for the selected period</div>
+            <div class="idesc" id="monthlyPerformanceCount">Monthly summary across all booking dates</div>
           </div>
 
           <div class="section-action-group">
@@ -11204,7 +11204,7 @@
         <div class="detail-breakdown-head compare-months-head">
           <div>
             <div class="ititle">Compare Months</div>
-            <div class="idesc">Compare booking performance and source-market movement between two booking months.</div>
+            <div class="idesc">Compare any two booking months across the full booking history.</div>
           </div>
           <button class="compare-clear-btn" id="compareMonthsClearBtn" type="button">
             Clear <span>×</span>
@@ -11790,7 +11790,7 @@
 
   function exportBookingDetails(){
     const rows=[...ALL_ROWS]
-      .sort((a,b)=>(b.bookingDate?.getTime()||0)-(a.bookingDate?.getTime()||0));
+      .sort((a,b)=>(a.bookingDate?.getTime()||0)-(b.bookingDate?.getTime()||0));
 
     const aoa=[
       ['Booking Date','Booking ID','Transaction Value','City','Region','Country','Check in date','Check out date','Nights','BLT','Channel'],
@@ -12001,7 +12001,7 @@
       return;
     }
 
-    const rows=currentPeriodRows();
+    const rows=ALL_ROWS;
     const totalsA=compareMonthTotals(rows,monthA);
     const totalsB=compareMonthTotals(rows,monthB);
     if(!totalsA || !totalsB){
@@ -12079,21 +12079,19 @@
   }
 
   function exportMonthlyPerformance(){
-    const data=monthlyPerformanceData(currentPeriodRows());
+    const data=monthlyPerformanceData(ALL_ROWS);
     const totalBookings=data.reduce((sum,r)=>sum+r.bookings,0);
     const totalRevenue=data.reduce((sum,r)=>sum+r.revenue,0);
     const totalRoomNights=data.reduce((sum,r)=>sum+Number(r.roomNights||0),0);
     const dailySpendTotal=data.reduce((sum,r)=>sum+r.spend,0);
-    const totalSpend=Number.isFinite(XPO_OVERVIEW_SPEND)
-      ? XPO_OVERVIEW_SPEND
-      : dailySpendTotal;
+    const totalSpend=dailySpendTotal;
     const totalAbv=totalBookings ? totalRevenue/totalBookings : 0;
 
     const aoa=[
       ['Month','Spend','Bookings','Revenue','ABV','Room Nights'],
       ...data.map(r=>[
         monthlyPerformanceMonthLabel(r.date),
-        XPO_DAILY_SPEND.size ? r.spend : '',
+        XPO_MONTHLY_ALL_DAILY_SPEND.size ? r.spend : '',
         r.bookings,
         r.revenue,
         r.bookings ? r.abv : '',
@@ -12111,7 +12109,7 @@
     const filename=[
       safeExportPart(DASHBOARD_CONFIG.clientName),
       'Monthly_Performance',
-      currentPeriodExportLabel()
+      'All_Booking_Dates'
     ].join('_')+'.xlsx';
 
     writeExcelWorkbook(filename,'Monthly Performance',aoa);
@@ -12141,7 +12139,7 @@
       return;
     }
 
-    const ordered = [...rows].sort((a,b)=>(b.bookingDate?.getTime()||0)-(a.bookingDate?.getTime()||0));
+    const ordered = [...rows].sort((a,b)=>(a.bookingDate?.getTime()||0)-(b.bookingDate?.getTime()||0));
     const totalPages=Math.max(1,Math.ceil(ordered.length/bookingPageSize));
     bookingPage=Math.min(Math.max(1,bookingPage),totalPages);
 
@@ -12654,14 +12652,15 @@
   }
 
 
-  function monthlyPerformanceData(rows){
-    const {start,end}=integratedPeriodRange();
+  function monthlyPerformanceData(_rowsIgnored){
+    const start=DATA_MIN_DATE;
+    const end=DATA_MAX_DATE;
     if(!start || !end || end<start)return [];
 
     const byMonth=new Map();
 
-    // Build every calendar month in the selected period so months with Spend
-    // but no attributed bookings still remain visible.
+    // Monthly Performance intentionally shows the complete timeline,
+    // regardless of the global Booking Period filter.
     let cursor=monthStartUTC(start);
     const last=monthStartUTC(end);
 
@@ -12679,7 +12678,7 @@
       cursor=addMonthsUTC(cursor,1);
     }
 
-    rows.forEach(r=>{
+    ALL_ROWS.forEach(r=>{
       if(!r.bookingDate)return;
 
       const key=`${r.bookingDate.getUTCFullYear()}-${String(r.bookingDate.getUTCMonth()+1).padStart(2,'0')}`;
@@ -12693,9 +12692,9 @@
       }
     });
 
-    // Daily XPO Spend is already filtered to exactly the selected date range,
-    // so partial first/last months remain partial here as intended.
-    XPO_DAILY_SPEND.forEach((spend,dateKey)=>{
+    // Full-history XPO Daily Spend is loaded separately from the selected-period
+    // Daily Performance spend, so changing Booking Period cannot alter this table.
+    XPO_MONTHLY_ALL_DAILY_SPEND.forEach((spend,dateKey)=>{
       const d=parseXpoDailyDate(dateKey);
       if(!d || d<start || d>end)return;
 
@@ -12723,17 +12722,17 @@
     });
   }
 
-  function renderMonthlyPerformance(rows){
+  function renderMonthlyPerformance(_rowsIgnored){
     const tbody=document.getElementById('monthlyPerformanceTbody');
     const countEl=document.getElementById('monthlyPerformanceCount');
     if(!tbody)return;
 
-    const data=monthlyPerformanceData(rows);
+    const data=monthlyPerformanceData(ALL_ROWS);
 
     if(countEl){
       countEl.textContent=data.length
-        ? `${data.length.toLocaleString('en-US')} month${data.length===1?'':'s'} · selected period`
-        : 'No monthly data for the selected period';
+        ? `${data.length.toLocaleString('en-US')} month${data.length===1?'':'s'} · all booking dates`
+        : 'No monthly data available';
     }
 
     if(!data.length){
@@ -12741,8 +12740,8 @@
       return;
     }
 
-    const spendPending=XPO_DAILY_SPEND_LOADING && !XPO_DAILY_SPEND.size;
-    const spendUnavailable=XPO_DAILY_SPEND_ERROR && !XPO_DAILY_SPEND.size;
+    const spendPending=XPO_MONTHLY_ALL_LOADING && !XPO_MONTHLY_ALL_DAILY_SPEND.size;
+    const spendUnavailable=XPO_MONTHLY_ALL_ERROR && !XPO_MONTHLY_ALL_DAILY_SPEND.size;
 
     const monthRows=data.map(item=>{
       const spendText=spendPending
@@ -12773,7 +12772,7 @@
 
     const totalSpendText=spendPending
       ? 'Loading…'
-      : spendUnavailable && !Number.isFinite(XPO_OVERVIEW_SPEND)
+      : spendUnavailable
         ? '—'
         : money(totalSpend);
 
@@ -14121,7 +14120,7 @@
         }
 
         COMPARE_MONTHS_STATE.manualSort=true;
-        renderCompareMonths(currentPeriodRows());
+        renderCompareMonths(ALL_ROWS)
       });
     });
   }
@@ -14182,7 +14181,7 @@
     if(a)a.value='';
     if(b)b.value='';
 
-    renderCompareMonths(currentPeriodRows());
+    renderCompareMonths(ALL_ROWS)
   }
 
   function bindCompareMonthControls(){
@@ -14195,7 +14194,7 @@
       a.addEventListener('change',()=>{
         COMPARE_MONTHS_STATE.monthA=a.value;
         COMPARE_MONTHS_STATE.manualSort=false;
-        renderCompareMonths(currentPeriodRows());
+        renderCompareMonths(ALL_ROWS)
       });
     }
 
@@ -14204,7 +14203,7 @@
       b.addEventListener('change',()=>{
         COMPARE_MONTHS_STATE.monthB=b.value;
         COMPARE_MONTHS_STATE.manualSort=false;
-        renderCompareMonths(currentPeriodRows());
+        renderCompareMonths(ALL_ROWS)
       });
     }
 
@@ -14334,6 +14333,14 @@
   let XPO_DAILY_SPEND=new Map();
   let XPO_DAILY_SPEND_LOADING=false;
   let XPO_DAILY_SPEND_ERROR=false;
+
+  // Dedicated full-history spend map for Monthly Performance.
+  // It is intentionally independent from the selected Booking Period.
+  let XPO_MONTHLY_ALL_DAILY_SPEND=new Map();
+  let XPO_MONTHLY_ALL_LOADING=false;
+  let XPO_MONTHLY_ALL_ERROR=false;
+  let XPO_MONTHLY_ALL_READY=false;
+
   let BOOKING_CHART_SERIES={spent:true,revenue:true};
 
   let bookingChartRenderRaf=0;
@@ -14343,6 +14350,7 @@
 
   let overviewSpendRequestSeq=0;
   let dailySpendRequestSeq=0;
+  let monthlyAllSpendRequestSeq=0;
 
   function marketLevelLabel(level){
     return level==='region'?'Regions':level==='city'?'Cities':'Geos';
@@ -14757,7 +14765,7 @@
       : Number(v).toLocaleString('en-US',{maximumFractionDigits:1});
   }
 
-  function renderFuturePipeline(rows){
+  function renderFuturePipeline(_rowsIgnored){
     const wrap=document.getElementById('pipelineWrap');
     const pager=document.getElementById('pipelinePager');
     const summaryPeriod=document.getElementById('pipelineSummaryPeriod');
@@ -15299,6 +15307,71 @@
     }
   }
 
+
+  async function renderMonthlyAllSpend(){
+    if(XPO_MONTHLY_ALL_READY || XPO_MONTHLY_ALL_LOADING)return;
+
+    XPO_MONTHLY_ALL_LOADING=true;
+    XPO_MONTHLY_ALL_ERROR=false;
+    renderMonthlyPerformance(ALL_ROWS);
+
+    const gasUrl=String(DASHBOARD_CONFIG.ads.gasBridgeUrl||'').trim();
+    const token=extractXpoToken();
+    const start=DATA_MIN_DATE;
+    const end=DATA_MAX_DATE;
+
+    if(!gasUrl || gasUrl.includes('PASTE_SHARED_MC_XPO_GAS_WEB_APP_URL_HERE') || !token || !start || !end){
+      XPO_MONTHLY_ALL_DAILY_SPEND=new Map();
+      XPO_MONTHLY_ALL_LOADING=false;
+      XPO_MONTHLY_ALL_ERROR=true;
+      renderMonthlyPerformance(ALL_ROWS);
+      return;
+    }
+
+    const seq=++monthlyAllSpendRequestSeq;
+
+    try{
+      const base=gasUrl.replace(/\?+$/,'');
+      const qs=new URLSearchParams({
+        action:'daily',
+        token,
+        start:fmtDate(start),
+        end:fmtDate(end)
+      });
+
+      const data=await loadJsonp(`${base}${base.includes('?')?'&':'?'}${qs.toString()}`);
+      if(seq!==monthlyAllSpendRequestSeq)return;
+
+      if(!data || data.ok===false){
+        throw new Error(data?.error || 'Shared GAS returned an error');
+      }
+
+      const normalized=normalizeDailySpendRows(data);
+      const map=new Map();
+
+      normalized.forEach(r=>{
+        const key=bookingDateKey(r.date);
+        map.set(key,(map.get(key)||0)+Number(r.spend||0));
+      });
+
+      XPO_MONTHLY_ALL_DAILY_SPEND=map;
+      XPO_MONTHLY_ALL_LOADING=false;
+      XPO_MONTHLY_ALL_ERROR=!map.size;
+      XPO_MONTHLY_ALL_READY=true;
+      renderMonthlyPerformance(ALL_ROWS);
+
+    }catch(err){
+      if(seq!==monthlyAllSpendRequestSeq)return;
+
+      XPO_MONTHLY_ALL_DAILY_SPEND=new Map();
+      XPO_MONTHLY_ALL_LOADING=false;
+      XPO_MONTHLY_ALL_ERROR=true;
+      XPO_MONTHLY_ALL_READY=true;
+      renderMonthlyPerformance(ALL_ROWS);
+      console.warn('XPO full-history Monthly Spend unavailable:',err);
+    }
+  }
+
   async function renderIntegratedMarketPerformance(bookingRows){
     const gasUrl=String(DASHBOARD_CONFIG.ads.gasBridgeUrl||'').trim();
     const token=extractXpoToken();
@@ -15758,13 +15831,11 @@
   }
 
   function renderBookingSectionsForPeriod(rows){
-    // Global Booking Period applies to the performance / insights sections.
-    // Future Pipeline and Attribution Report intentionally use ALL_ROWS.
+    // ONLY sections that follow the global Booking Period are rendered here.
+    // Monthly Performance, Compare Months, Future Pipeline and Attribution are excluded.
     CURRENT_PERIOD_ROWS = rows;
 
-    renderTable(ALL_ROWS);
     renderKPIs(rows);
-    renderMonthlyPerformance(rows);
     renderChannelPerformance(rows);
     renderMarkets(rows);
     renderABV(rows);
@@ -15772,7 +15843,6 @@
     renderAverageBLT(rows);
     renderStayDemand(rows);
     renderMarketPerformance(rows);
-    renderFuturePipeline(ALL_ROWS);
     renderPortfolioPerformance(rows);
 
     // Keep stable XPO loading independent from supplemental client-detail tables.
@@ -15787,11 +15857,23 @@
       console.error('Booking Market Breakdown render failed:',err);
     }
 
-    try{
-      renderCompareMonths(rows);
-    }catch(err){
-      console.error('Compare Months render failed:',err);
-    }
+
+  }
+
+
+  let UNFILTERED_BOOKING_SECTIONS_READY=false;
+
+  function renderUnfilteredBookingSections(){
+    // These sections are intentionally independent from the Booking Period.
+    renderMonthlyPerformance(ALL_ROWS);
+    renderCompareMonths(ALL_ROWS);
+    renderFuturePipeline(ALL_ROWS);
+    renderTable(ALL_ROWS); // Attribution Report
+
+    // Load full-history XPO spend once for Monthly Performance.
+    renderMonthlyAllSpend();
+
+    UNFILTERED_BOOKING_SECTIONS_READY=true;
   }
 
   function renderDashboard(){
@@ -15802,6 +15884,12 @@
     MARKET_PERF_STATE.page=1;
     BOOKING_MARKET_TABLE_STATE.page=1;
     PORTFOLIO_PERF_STATE.page=1;
+
+    // Initialize unfiltered sections once from the complete dataset.
+    // Changing Booking Period must not re-render or reset them.
+    if(!UNFILTERED_BOOKING_SECTIONS_READY){
+      renderUnfilteredBookingSections();
+    }
 
     // Prevent previous-period XPO data from appearing while the new period is loading.
     MARKET_COUNTRY_ADS = new Map();
