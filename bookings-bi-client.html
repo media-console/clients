@@ -589,7 +589,7 @@
 
 <script>
 // ─── CONFIG ───────────────────────────────────────────────────────────────────
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwuW5-gB4N8UVQ0VOJkmcEQN5cA5SrPIVuseuXE_TlijZ3zAK4GBHwfwx8VgGiCZcnpXA/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwuW5-gB4N8UVQ0VOJkmcEQN5cA5SrPIVuseuXE_TlijZ3zAK4GBHwfwx8VgGiCZcnpXA/exec?authuser=0';
 const DESTINATIONS_SHEET_ID = '1Z4qP0a4ljYughZiVV0FslXgFU4O0HGzJg4T9B24ngYE';
 const DESTINATIONS_SHEET_GID = '0';
 const ALL_DESTINATIONS_VALUE = '__ALL_ALLOWED__';
@@ -679,7 +679,7 @@ function loadViaJsonp() {
     showLoadError('Failed to load data. Please try again.');
   };
 
-  script.src = GAS_URL + '?action=getClientPayload&callback=' + callbackName;
+  script.src = GAS_URL + '&action=getClientPayload&callback=' + callbackName;
   document.body.appendChild(script);
 }
 
@@ -1783,7 +1783,7 @@ function submitLeadForm(){
     if(btn){btn.disabled=false;btn.textContent='Unlock Benchmark';}
     setTimeout(function(){closeLeadModal();renderManualBenchmark();},350);
   };
-  script.src = GAS_URL + '?' + qs + '&callback=' + cbName;
+  script.src = GAS_URL + '&' + qs + '&callback=' + cbName;
   document.body.appendChild(script);
 }
 
