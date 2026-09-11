@@ -11023,6 +11023,375 @@
     #bookingsInsightsSection .compare-movers-search-wrap{width:100%;}
     #bookingsTab .bookings-page-title{align-items:flex-start!important;}
   }
+
+
+  /* ================= MASTER V2: TABLET + MOBILE RESPONSIVE FIX ================= */
+  /* Final overrides: these intentionally sit at the end of the stylesheet so
+     later desktop-polish rules cannot force the Bookings layout back to five
+     squeezed KPI columns on iPad or phones. */
+  @media(max-width:1400px){
+    .page{
+      width:100%!important;
+      max-width:100%!important;
+    }
+
+    #bookingsTab .booking-report-scroll .section{
+      padding-left:28px!important;
+      padding-right:28px!important;
+    }
+
+    #bookingsTab .booking-kpi-strip{
+      grid-template-columns:repeat(3,minmax(0,1fr))!important;
+      overflow:visible!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi{
+      min-width:0!important;
+      padding:17px 18px 16px!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi:nth-child(3)::after,
+    #bookingsTab .booking-kpi-strip .kpi:last-child::after{
+      display:none!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi:nth-child(n+4){
+      border-top:1px solid #e4e1e6!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kvalue{
+      white-space:normal!important;
+      overflow:visible!important;
+      text-overflow:clip!important;
+      overflow-wrap:anywhere!important;
+      font-size:21px!important;
+      line-height:1.12!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .trend{
+      overflow-wrap:anywhere!important;
+    }
+
+    #bookingsTab .booking-performance-panel{
+      grid-template-columns:1fr!important;
+      min-height:auto!important;
+    }
+
+    #bookingsTab .booking-performance-chart-pane{
+      border-right:0!important;
+      border-bottom:1px solid #e4e1e6!important;
+    }
+
+    #bookingsTab .booking-performance-overview{
+      display:grid!important;
+      grid-template-columns:repeat(3,minmax(0,1fr))!important;
+      gap:18px!important;
+    }
+
+    #bookingsTab .booking-performance-overview .booking-performance-title{
+      grid-column:1/-1!important;
+      margin-bottom:0!important;
+    }
+
+    #bookingsTab .booking-overview-metric{
+      min-width:0!important;
+      margin-bottom:0!important;
+    }
+
+    #bookingsTab .booking-overview-metric strong{
+      overflow-wrap:anywhere!important;
+    }
+  }
+
+  @media(max-width:900px){
+    .shell{
+      overflow-x:hidden!important;
+    }
+
+    .page{
+      padding-left:18px!important;
+      padding-right:18px!important;
+    }
+
+    .report-switch-row{
+      align-items:stretch!important;
+      flex-direction:column!important;
+      gap:14px!important;
+    }
+
+    .report-switch-row .tabs{
+      width:100%!important;
+      max-width:100%!important;
+      overflow-x:auto!important;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    .report-switch-row .tab-btn{
+      flex:1 0 auto!important;
+      min-width:128px!important;
+    }
+
+    .report-switch-meta{
+      width:100%!important;
+      justify-content:flex-start!important;
+      flex-wrap:wrap!important;
+    }
+
+    #bookingsTab .booking-app-nav{
+      overflow-x:auto!important;
+      overflow-y:hidden!important;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:thin;
+    }
+
+    #bookingsTab .booking-app-nav a{
+      flex:0 0 auto!important;
+      white-space:nowrap!important;
+    }
+
+    #bookingsTab .booking-kpi-strip{
+      grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi:nth-child(2n)::after{
+      display:none!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi:nth-child(3)::after{
+      display:block!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi:nth-child(n+3){
+      border-top:1px solid #e4e1e6!important;
+    }
+
+    #bookingsTab .booking-performance-chart{
+      height:330px!important;
+      min-height:330px!important;
+    }
+
+    #bookingsTab .booking-report-scroll :is(.table-wrap,.market-xpo-table-wrap,.portfolio-performance-table-wrap,.booking-details-table-wrap){
+      max-width:100%!important;
+      overflow-x:auto!important;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    #bookingsTab .booking-report-scroll table{
+      min-width:720px;
+    }
+  }
+
+  @media(max-width:760px){
+    .page{
+      padding-left:12px!important;
+      padding-right:12px!important;
+    }
+
+    .section{
+      padding-left:0!important;
+      padding-right:0!important;
+    }
+
+    .report-page-heading .section-title{
+      font-size:34px!important;
+      line-height:1.08!important;
+    }
+
+    #bookingsTab .booking-report-insights-head{
+      padding:14px 16px!important;
+    }
+
+    #bookingsTab .booking-report-scroll .section{
+      padding-left:16px!important;
+      padding-right:16px!important;
+    }
+
+    #bookingsTab .booking-app-header{
+      min-width:0!important;
+    }
+
+    #bookingsTab .booking-app-brand{
+      width:100%!important;
+      min-width:0!important;
+    }
+
+    #bookingsTab .booking-app-nav{
+      width:100%!important;
+    }
+
+    #bookingsTab .booking-kpi-strip{
+      grid-template-columns:1fr!important;
+      overflow:hidden!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi{
+      min-height:auto!important;
+      padding:16px 18px!important;
+      border-top:1px solid #e4e1e6!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi:first-child{
+      border-top:0!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi::after{
+      display:none!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kvalue{
+      font-size:24px!important;
+      overflow-wrap:normal!important;
+    }
+
+    #bookingsTab .booking-performance-chart-pane{
+      padding:18px 10px 12px!important;
+    }
+
+    #bookingsTab .booking-performance-title{
+      font-size:18px!important;
+      white-space:normal!important;
+    }
+
+    #bookingsTab .booking-performance-chart{
+      height:300px!important;
+      min-height:300px!important;
+    }
+
+    #bookingsTab .booking-performance-overview{
+      grid-template-columns:1fr!important;
+      padding:18px!important;
+    }
+
+    #bookingsTab .booking-performance-overview .booking-performance-title{
+      grid-column:auto!important;
+    }
+
+    #bookingsTab .booking-overview-metric strong{
+      font-size:24px!important;
+    }
+
+    #bookingsTab .period-button,
+    #bookingsTab #bookingPeriodBtn{
+      width:100%!important;
+      max-width:100%!important;
+      white-space:normal!important;
+    }
+
+    #bookingsTab .insights-grid,
+    #bookingsTab .market-grid,
+    #bookingsTab .behavior-grid{
+      grid-template-columns:1fr!important;
+    }
+
+    #bookingsTab #portfolioPerformancePager .xpo-pager-controls{
+      width:100%!important;
+      grid-template-columns:1fr!important;
+      row-gap:8px!important;
+    }
+
+    #bookingsTab #portfolioPerformancePager .xpo-pages{
+      justify-self:start!important;
+      max-width:100%!important;
+      overflow-x:auto!important;
+    }
+  }
+
+  @media(max-width:430px){
+    .report-page-heading .section-title{
+      font-size:30px!important;
+    }
+
+    #bookingsTab .booking-report-scroll .section{
+      padding-left:12px!important;
+      padding-right:12px!important;
+    }
+
+    #bookingsTab .booking-performance-chart{
+      height:280px!important;
+      min-height:280px!important;
+    }
+
+    #bookingsTab .booking-chart-axis,
+    #bookingsTab .booking-chart-xlabel,
+    #bookingsTab .booking-chart-axis-title{
+      font-size:10px!important;
+    }
+  }
+
+
+  /* ================= MASTER V2: XPO-LIKE SWIPEABLE KPI STRIP ================= */
+  @media(max-width:1400px){
+    #bookingsTab .booking-kpi-strip{
+      display:flex!important;
+      flex-wrap:nowrap!important;
+      grid-template-columns:none!important;
+      gap:0!important;
+      overflow-x:auto!important;
+      overflow-y:hidden!important;
+      scroll-snap-type:x mandatory;
+      scroll-padding-left:0;
+      overscroll-behavior-x:contain;
+      -webkit-overflow-scrolling:touch;
+      scrollbar-width:thin;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi{
+      flex:0 0 33.333333%!important;
+      width:33.333333%!important;
+      min-width:230px!important;
+      border-top:0!important;
+      scroll-snap-align:start;
+      scroll-snap-stop:always;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi::after{
+      display:block!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi:last-child::after{
+      display:none!important;
+    }
+  }
+
+  @media(max-width:900px){
+    #bookingsTab .booking-kpi-strip .kpi{
+      flex-basis:50%!important;
+      width:50%!important;
+      min-width:210px!important;
+    }
+  }
+
+  @media(max-width:760px){
+    #bookingsTab .booking-kpi-strip{
+      scroll-padding-left:0;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi{
+      flex:0 0 82%!important;
+      width:82%!important;
+      min-width:220px!important;
+      max-width:290px!important;
+      border-top:0!important;
+      scroll-snap-align:start;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi::after{
+      display:block!important;
+    }
+
+    #bookingsTab .booking-kpi-strip .kpi:last-child::after{
+      display:none!important;
+    }
+  }
+
+  @media(max-width:430px){
+    #bookingsTab .booking-kpi-strip .kpi{
+      flex-basis:84%!important;
+      width:84%!important;
+      min-width:214px!important;
+      max-width:270px!important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -12848,7 +13217,9 @@
     const W=Math.round(svg.clientWidth||0);
     const H=Math.round(svg.clientHeight||0);
 
-    if(W<500 || H<220){
+    // Mobile/tablet panes are legitimately narrower than desktop. Keep only a
+    // small safety floor so iOS Safari can render after the tab becomes visible.
+    if(W<240 || H<220){
       svg.dataset.pendingRender='1';
       return;
     }
