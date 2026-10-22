@@ -639,10 +639,14 @@ let currentSourceRows = [];
 let currentView = null;
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
+let destReady = null;
 document.addEventListener('DOMContentLoaded', function () {
   buildGeoTable();
-  withRetry(loadAllowedDestinations,3,[0,1500,4000]).then(function(names){ALLOWED_DESTINATIONS=names;loadViaJsonp();}).catch(function(err){showLoadError('Destination list unavailable: '+err.message);});
+  destReady = withRetry(loadAllowedDestinations,3,[0,1500,4000]).then(function(names){ALLOWED_DESTINATIONS=names;});
+  destReady.catch(function(err){showLoadError('Destination list unavailable: '+err.message);});
+  loadViaJsonp();   // runs in parallel with the destination list
 });
+function startWhenReady(){ destReady.then(startDashboard, function(){}); }
 
 function withRetry(fn,attempts,delays){
   return new Promise(function(resolve,reject){
@@ -672,9 +676,11 @@ function initCoverVisibility(){
   if(el)el.style.display=hidden?'none':'';
   if(btn)btn.textContent=hidden?'Show Cover':'Hide Cover';
 }
-const PAYLOAD_CACHE_KEY = 'mc_client_payload_packed_v1';
+const PAYLOAD_CACHE_KEY = 'mc_client_payload_packed_v2';
+const PAYLOAD_VER_KEY   = 'mc_client_payload_ver_v2';
 
-function fetchPayloadOnce(timeoutMs) {
+// One small JSONP request. Resolves with the response when res.ok, rejects otherwise.
+function jsonpOnce(params, timeoutMs) {
   return new Promise(function(resolve, reject) {
     const cb = 'gasCallback_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
     const script = document.createElement('script');
@@ -684,40 +690,58 @@ function fetchPayloadOnce(timeoutMs) {
       if (done) return;
       done = true;
       clearTimeout(timer);
-      window[cb] = function(){};            // ignore a late response
+      window[cb] = function(){};
       if (script.parentNode) script.parentNode.removeChild(script);
       if (err) reject(err); else resolve(res);
     }
     window[cb] = function(res) {
-      if (!res || !res.ok) return finish(new Error('Backend error: ' + (res && res.message ? res.message : 'Unknown error')));
+      if (!res || !res.ok) return finish(new Error((res && res.message) ? res.message : 'Backend error'));
       finish(null, res);
     };
     script.onerror = function() { finish(new Error('Network error')); };
-    script.src = GAS_URL + '?action=getClientPayload&callback=' + cb;
+    script.src = GAS_URL + '?' + params + '&callback=' + cb;
     document.body.appendChild(script);
   });
 }
+function jsonpRetry(params, timeoutMs) {
+  return withRetry(function(){ return jsonpOnce(params, timeoutMs); }, 3, [0, 1200, 3000]);
+}
 
-function fetchPayload() {
-  return withRetry(function(){ return fetchPayloadOnce(45000); }, 3, [0, 2000, 5000]);
+// Ask for the tiny meta, then download all parts IN PARALLEL.
+function loadPackedFresh() {
+  return jsonpRetry('action=getClientMeta', 30000).then(function(meta) {
+    const jobs = [];
+    for (let i = 0; i < meta.parts; i++) {
+      jobs.push(jsonpRetry('action=getClientPart&i=' + i + '&v=' + encodeURIComponent(meta.version), 30000)
+        .then(function(r){ return r.data; }));
+    }
+    return Promise.all(jobs).then(function(parts){ return { data: parts.join(''), version: meta.version }; });
+  });
+}
+function loadAndUnpack() {
+  return loadPackedFresh().then(function(r) {
+    return unpackPayload(r.data).then(function(p){ return { p: p, r: r }; });
+  });
+}
+function saveCache(r) {
+  try { localStorage.setItem(PAYLOAD_CACHE_KEY, r.data); localStorage.setItem(PAYLOAD_VER_KEY, r.version); } catch (e) {}
 }
 
 function loadViaJsonp() {
-  // 1) Show the last good copy instantly (if any), refresh quietly in the background.
-  let cached = null;
-  try { cached = localStorage.getItem(PAYLOAD_CACHE_KEY); } catch (e) {}
-  if (cached) {
+  let cached = null, ver = null;
+  try { cached = localStorage.getItem(PAYLOAD_CACHE_KEY); ver = localStorage.getItem(PAYLOAD_VER_KEY); } catch (e) {}
+  if (cached && ver) {
+    // Show last good copy instantly; check quietly (tiny request) whether newer data exists.
     unpackPayload(cached).then(function(p) {
       payload = p || {};
-      startDashboard();
-      fetchPayload().then(function(res) {
-        if (res.encoding === 'gzip-base64' && res.data !== cached) {
-          try { localStorage.setItem(PAYLOAD_CACHE_KEY, res.data); } catch (e) {}
-          showNewDataBanner();
+      startWhenReady();
+      jsonpRetry('action=getClientMeta', 20000).then(function(meta) {
+        if (meta.version !== ver) {
+          return withRetry(loadAndUnpack, 2, [0, 1500]).then(function(x){ saveCache(x.r); showNewDataBanner(); });
         }
-      }).catch(function(){ /* keep showing cached data */ });
+      }).catch(function(){ /* keep cached data */ });
     }).catch(function() {
-      try { localStorage.removeItem(PAYLOAD_CACHE_KEY); } catch (e) {}
+      try { localStorage.removeItem(PAYLOAD_CACHE_KEY); localStorage.removeItem(PAYLOAD_VER_KEY); } catch (e) {}
       loadFresh();
     });
     return;
@@ -726,13 +750,10 @@ function loadViaJsonp() {
 }
 
 function loadFresh() {
-  fetchPayload().then(function(res) {
-    if (res.encoding === 'gzip-base64') {
-      try { localStorage.setItem(PAYLOAD_CACHE_KEY, res.data); } catch (e) {}
-      return unpackPayload(res.data).then(function(p){ payload = p || {}; startDashboard(); });
-    }
-    payload = res.payload || {};
-    startDashboard();
+  withRetry(loadAndUnpack, 2, [0, 1500]).then(function(x) {
+    saveCache(x.r);
+    payload = x.p || {};
+    startWhenReady();
   }).catch(function(err) {
     showLoadError('Failed to load data (' + err.message + ').', true);
   });
