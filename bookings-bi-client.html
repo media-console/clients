@@ -610,7 +610,7 @@ function loadAllowedDestinations(){
     window.google.visualization=window.google.visualization||{};
     window.google.visualization.Query=window.google.visualization.Query||{};
     let settled=false;
-    const timeoutId=setTimeout(function(){if(!settled){settled=true;reject(new Error('Timed out loading destination list.'));}},12000);
+    const timeoutId=setTimeout(function(){if(!settled){settled=true;reject(new Error('Timed out loading destination list.'));}},20000);
     window.google.visualization.Query.setResponse=function(response){
       if(settled)return;settled=true;clearTimeout(timeoutId);
       try{
@@ -642,11 +642,24 @@ let currentView = null;
 let destReady = null;
 document.addEventListener('DOMContentLoaded', function () {
   buildGeoTable();
-  destReady = withRetry(loadAllowedDestinations,3,[0,1500,4000]).then(function(names){ALLOWED_DESTINATIONS=names;});
-  destReady.catch(function(err){showLoadError('Destination list unavailable: '+err.message);});
+  loadDestinations();
   loadViaJsonp();   // runs in parallel with the destination list
 });
-function startWhenReady(){ destReady.then(startDashboard, function(){}); }
+function loadDestinations(){
+  destReady = withRetry(loadAllowedDestinations,4,[0,1500,4000,8000]).then(function(names){ALLOWED_DESTINATIONS=names;});
+  destReady.catch(function(err){showLoadError('Destination list unavailable: '+err.message, true, 'retryDestinations');});
+}
+let dashboardStarted = false, startRequested = false;
+function startWhenReady(){
+  startRequested = true;
+  destReady.then(function(){ if(!dashboardStarted){ dashboardStarted = true; startDashboard(); } }, function(){});
+}
+function retryDestinations(){
+  setProgress(3, 'Retrying\u2026');
+  loadDestinations();
+  // if the data already finished loading while the list was failing, open the dashboard now
+  destReady.then(function(){ if(startRequested && !dashboardStarted){ dashboardStarted = true; startDashboard(); } }, function(){});
+}
 
 function withRetry(fn,attempts,delays){
   return new Promise(function(resolve,reject){
@@ -889,9 +902,9 @@ function unpackPayload(b64) {
   return new Response(stream).text().then(function(text){ return JSON.parse(text); });
 }
 
-function showLoadError(message, canRetry) {
+function showLoadError(message, canRetry, retryFn) {
   document.getElementById('loading').innerHTML = '<div class="error">' + escapeHtml(message) +
-    (canRetry ? '<div style="margin-top:12px"><button type="button" class="btn primary" onclick="retryLoad()">Try again</button></div>' : '') + '</div>';
+    (canRetry ? '<div style="margin-top:12px"><button type="button" class="btn primary" onclick="' + (retryFn || 'retryLoad') + '()">Try again</button></div>' : '') + '</div>';
 }
 function retryLoad() {
   setProgress(3, 'Retrying\u2026');
