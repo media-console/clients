@@ -641,8 +641,21 @@ let currentView = null;
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function () {
   buildGeoTable();
-  loadAllowedDestinations().then(function(names){ALLOWED_DESTINATIONS=names;loadViaJsonp();}).catch(function(err){showLoadError('Destination list unavailable: '+err.message);});
+  withRetry(loadAllowedDestinations,3,[0,1500,4000]).then(function(names){ALLOWED_DESTINATIONS=names;loadViaJsonp();}).catch(function(err){showLoadError('Destination list unavailable: '+err.message);});
 });
+
+function withRetry(fn,attempts,delays){
+  return new Promise(function(resolve,reject){
+    let i=0;
+    (function run(){
+      fn().then(resolve).catch(function(err){
+        i++;
+        if(i>=attempts)return reject(err);
+        setTimeout(run,(delays&&delays[i])||2000);
+      });
+    })();
+  });
+}
 
 function toggleCoverSection(){
   const el=document.getElementById('coverSection'),btn=document.getElementById('coverToggleBtn');
@@ -659,36 +672,79 @@ function initCoverVisibility(){
   if(el)el.style.display=hidden?'none':'';
   if(btn)btn.textContent=hidden?'Show Cover':'Hide Cover';
 }
-function loadViaJsonp() {
-  const callbackName = 'gasCallback_' + Date.now();
-  const script = document.createElement('script');
+const PAYLOAD_CACHE_KEY = 'mc_client_payload_packed_v1';
 
-  window[callbackName] = function(res) {
-    delete window[callbackName];
-    document.body.removeChild(script);
-    try {
-      if (!res || !res.ok) {
-        showLoadError('Backend error: ' + (res && res.message ? res.message : 'Unknown error'));
-        return;
-      }
-      if (res.encoding === 'gzip-base64') {
-        unpackPayload(res.data).then(function(p){ payload = p || {}; startDashboard(); })
-          .catch(function(err){ showLoadError('Data error: ' + err.message); });
-        return;
-      }
-      payload = res.payload || {};
-      startDashboard();
-    } catch (err) {
-      showLoadError('Render error: ' + err.message);
+function fetchPayloadOnce(timeoutMs) {
+  return new Promise(function(resolve, reject) {
+    const cb = 'gasCallback_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
+    const script = document.createElement('script');
+    let done = false;
+    const timer = setTimeout(function(){ finish(new Error('Request timed out')); }, timeoutMs);
+    function finish(err, res) {
+      if (done) return;
+      done = true;
+      clearTimeout(timer);
+      window[cb] = function(){};            // ignore a late response
+      if (script.parentNode) script.parentNode.removeChild(script);
+      if (err) reject(err); else resolve(res);
     }
-  };
+    window[cb] = function(res) {
+      if (!res || !res.ok) return finish(new Error('Backend error: ' + (res && res.message ? res.message : 'Unknown error')));
+      finish(null, res);
+    };
+    script.onerror = function() { finish(new Error('Network error')); };
+    script.src = GAS_URL + '?action=getClientPayload&callback=' + cb;
+    document.body.appendChild(script);
+  });
+}
 
-  script.onerror = function() {
-    showLoadError('Failed to load data. Please try again.');
-  };
+function fetchPayload() {
+  return withRetry(function(){ return fetchPayloadOnce(45000); }, 3, [0, 2000, 5000]);
+}
 
-  script.src = GAS_URL + '?action=getClientPayload&callback=' + callbackName;
-  document.body.appendChild(script);
+function loadViaJsonp() {
+  // 1) Show the last good copy instantly (if any), refresh quietly in the background.
+  let cached = null;
+  try { cached = localStorage.getItem(PAYLOAD_CACHE_KEY); } catch (e) {}
+  if (cached) {
+    unpackPayload(cached).then(function(p) {
+      payload = p || {};
+      startDashboard();
+      fetchPayload().then(function(res) {
+        if (res.encoding === 'gzip-base64' && res.data !== cached) {
+          try { localStorage.setItem(PAYLOAD_CACHE_KEY, res.data); } catch (e) {}
+          showNewDataBanner();
+        }
+      }).catch(function(){ /* keep showing cached data */ });
+    }).catch(function() {
+      try { localStorage.removeItem(PAYLOAD_CACHE_KEY); } catch (e) {}
+      loadFresh();
+    });
+    return;
+  }
+  loadFresh();
+}
+
+function loadFresh() {
+  fetchPayload().then(function(res) {
+    if (res.encoding === 'gzip-base64') {
+      try { localStorage.setItem(PAYLOAD_CACHE_KEY, res.data); } catch (e) {}
+      return unpackPayload(res.data).then(function(p){ payload = p || {}; startDashboard(); });
+    }
+    payload = res.payload || {};
+    startDashboard();
+  }).catch(function(err) {
+    showLoadError('Failed to load data (' + err.message + ').', true);
+  });
+}
+
+function showNewDataBanner() {
+  if (document.getElementById('newDataBanner')) return;
+  const b = document.createElement('div');
+  b.id = 'newDataBanner';
+  b.style.cssText = 'position:fixed;left:50%;bottom:20px;transform:translateX(-50%);z-index:10000;background:#10213f;color:#fff;padding:12px 18px;border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.25);font:600 13px system-ui,sans-serif;display:flex;gap:14px;align-items:center';
+  b.innerHTML = '<span>New data available</span><button type="button" style="background:#3d5afe;color:#fff;border:0;border-radius:8px;padding:7px 14px;font-weight:700;cursor:pointer" onclick="location.reload()">Refresh</button>';
+  document.body.appendChild(b);
 }
 
 function startDashboard() {
@@ -715,8 +771,13 @@ function unpackPayload(b64) {
   return new Response(stream).text().then(function(text){ return JSON.parse(text); });
 }
 
-function showLoadError(message) {
-  document.getElementById('loading').innerHTML = '<div class="error">' + escapeHtml(message) + '</div>';
+function showLoadError(message, canRetry) {
+  document.getElementById('loading').innerHTML = '<div class="error">' + escapeHtml(message) +
+    (canRetry ? '<div style="margin-top:12px"><button type="button" class="btn primary" onclick="retryLoad()">Try again</button></div>' : '') + '</div>';
+}
+function retryLoad() {
+  document.getElementById('loading').innerHTML = 'Loading dashboard...';
+  loadFresh();
 }
 
 // ─── BUILD GEO TABLE ──────────────────────────────────────────────────────────
