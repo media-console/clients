@@ -676,16 +676,67 @@ function initCoverVisibility(){
   if(el)el.style.display=hidden?'none':'';
   if(btn)btn.textContent=hidden?'Show Cover':'Hide Cover';
 }
-const PAYLOAD_CACHE_KEY = 'mc_client_payload_packed_v2';
-const PAYLOAD_VER_KEY   = 'mc_client_payload_ver_v2';
+// ---- progress bar (like internal) ----
+function setProgress(pct, label) {
+  const el = document.getElementById('loading');
+  if (!el) return;
+  pct = Math.max(0, Math.min(100, Math.round(pct)));
+  el.innerHTML = '<div style="text-align:center">' +
+    '<div style="font-weight:800;margin-bottom:12px">Loading dashboard\u2026 ' + pct + '%</div>' +
+    '<div style="width:260px;height:6px;background:#e3e8f2;border-radius:99px;overflow:hidden;margin:0 auto">' +
+    '<div style="width:' + pct + '%;height:100%;background:#3d5afe;transition:width .3s"></div></div>' +
+    '<div style="margin-top:10px;font-size:12px;color:#7b8798;font-weight:600">' + escapeHtml(label || '') + '</div></div>';
+}
 
-// One small JSONP request. Resolves with the response when res.ok, rejects otherwise.
+// ---- browser cache in IndexedDB (localStorage is too small and shared with other pages) ----
+function idbOpen() {
+  return new Promise(function(res, rej) {
+    if (!window.indexedDB) return rej(new Error('no indexedDB'));
+    const r = indexedDB.open('mc_bi_client', 1);
+    r.onupgradeneeded = function(){ r.result.createObjectStore('kv'); };
+    r.onsuccess = function(){ res(r.result); };
+    r.onerror = function(){ rej(r.error); };
+  });
+}
+function idbGet(k) {
+  return idbOpen().then(function(db) {
+    return new Promise(function(res, rej) {
+      const q = db.transaction('kv').objectStore('kv').get(k);
+      q.onsuccess = function(){ res(q.result); };
+      q.onerror = function(){ rej(q.error); };
+    });
+  }).catch(function(){ return null; });
+}
+function idbSet(k, v) {
+  return idbOpen().then(function(db) {
+    return new Promise(function(res, rej) {
+      const tx = db.transaction('kv', 'readwrite');
+      tx.objectStore('kv').put(v, k);
+      tx.oncomplete = function(){ res(true); };
+      tx.onerror = function(){ rej(tx.error); };
+    });
+  }).catch(function(){ return false; });
+}
+function idbDel(k) {
+  return idbOpen().then(function(db) {
+    return new Promise(function(res) {
+      const tx = db.transaction('kv', 'readwrite');
+      tx.objectStore('kv').delete(k);
+      tx.oncomplete = function(){ res(true); };
+      tx.onerror = function(){ res(false); };
+    });
+  }).catch(function(){ return false; });
+}
+// free space used by the earlier localStorage-based cache
+try { ['mc_client_payload_packed_v1','mc_client_payload_packed_v2','mc_client_payload_ver_v2'].forEach(function(k){ localStorage.removeItem(k); }); } catch (e) {}
+
+// ---- one small JSONP request ----
 function jsonpOnce(params, timeoutMs) {
   return new Promise(function(resolve, reject) {
     const cb = 'gasCallback_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
     const script = document.createElement('script');
     let done = false;
-    const timer = setTimeout(function(){ finish(new Error('Request timed out')); }, timeoutMs);
+    const timer = setTimeout(function(){ finish(new Error('timed out')); }, timeoutMs);
     function finish(err, res) {
       if (done) return;
       done = true;
@@ -695,64 +746,110 @@ function jsonpOnce(params, timeoutMs) {
       if (err) reject(err); else resolve(res);
     }
     window[cb] = function(res) {
-      if (!res || !res.ok) return finish(new Error((res && res.message) ? res.message : 'Backend error'));
+      if (!res || !res.ok) return finish(new Error((res && res.message) ? res.message : 'backend error'));
       finish(null, res);
     };
-    script.onerror = function() { finish(new Error('Network error')); };
+    script.onerror = function() { finish(new Error('network error')); };
     script.src = GAS_URL + '?' + params + '&callback=' + cb;
     document.body.appendChild(script);
   });
 }
-function jsonpRetry(params, timeoutMs) {
-  return withRetry(function(){ return jsonpOnce(params, timeoutMs); }, 3, [0, 1200, 3000]);
+function jsonpRetry(params, timeoutMs, label) {
+  return withRetry(function(){ return jsonpOnce(params, timeoutMs); }, 4, [0, 1500, 4000, 8000])
+    .catch(function(err){ throw new Error(label + ': ' + err.message); });
 }
 
-// Ask for the tiny meta, then download all parts IN PARALLEL.
-function loadPackedFresh() {
-  return jsonpRetry('action=getClientMeta', 30000).then(function(meta) {
-    const jobs = [];
-    for (let i = 0; i < meta.parts; i++) {
-      jobs.push(jsonpRetry('action=getClientPart&i=' + i + '&v=' + encodeURIComponent(meta.version), 30000)
-        .then(function(r){ return r.data; }));
+// run tasks with at most `limit` in flight (Google throttles bursts of parallel requests)
+function runPool(tasks, limit, onDone) {
+  return new Promise(function(resolve, reject) {
+    const results = new Array(tasks.length);
+    let next = 0, active = 0, finished = 0, failed = false;
+    if (!tasks.length) return resolve(results);
+    function launch() {
+      while (!failed && active < limit && next < tasks.length) {
+        const i = next++; active++;
+        tasks[i]().then(function(r) {
+          results[i] = r; active--; finished++;
+          if (onDone) onDone(finished, tasks.length);
+          if (finished === tasks.length) resolve(results); else launch();
+        }).catch(function(e){ failed = true; reject(e); });
+      }
     }
-    return Promise.all(jobs).then(function(parts){ return { data: parts.join(''), version: meta.version }; });
+    launch();
   });
 }
-function loadAndUnpack() {
-  return loadPackedFresh().then(function(r) {
-    return unpackPayload(r.data).then(function(p){ return { p: p, r: r }; });
+
+// manifest (tiny) -> batches (<= ~900 KB each, 4 at a time) -> join -> JSON.parse   (same protocol as internal)
+function loadPayloadText(onProgress) {
+  if (onProgress) onProgress(5, 'Connecting\u2026');
+  return jsonpRetry('action=getClientPayloadManifest', 40000, 'manifest').then(function(m) {
+    const PER = 20, total = Math.ceil(m.chunkCount / PER), tasks = [];
+    for (let k = 0; k < total; k++) {
+      (function(idx) {
+        tasks.push(function() {
+          return jsonpRetry('action=getClientPayloadBatch&start=' + (idx * PER) + '&count=' + PER, 45000, 'batch ' + (idx + 1) + '/' + total)
+            .then(function(r) {
+              if (r.totalChunks !== m.chunkCount) throw new Error('data was just refreshed');
+              return r.data;
+            });
+        });
+      })(k);
+    }
+    if (onProgress) onProgress(10, 'Downloading data');
+    return runPool(tasks, 4, function(done, all) {
+      if (onProgress) onProgress(10 + 80 * done / all, 'Downloading data ' + done + '/' + all);
+    }).then(function(parts) {
+      const text = parts.join('');
+      if (m.expectedLength && text.length !== m.expectedLength) throw new Error('data incomplete');
+      return { text: text, version: m.generatedAt + '|' + m.expectedLength };
+    });
   });
 }
-function saveCache(r) {
-  try { localStorage.setItem(PAYLOAD_CACHE_KEY, r.data); localStorage.setItem(PAYLOAD_VER_KEY, r.version); } catch (e) {}
+function loadAndParse(onProgress) {
+  return loadPayloadText(onProgress).then(function(r) {
+    if (onProgress) onProgress(94, 'Preparing dashboard\u2026');
+    return new Promise(function(res, rej) {
+      setTimeout(function() {   // let the progress bar paint before the heavy parse
+        try { res({ p: JSON.parse(r.text), r: r }); } catch (e) { rej(new Error('data parse error')); }
+      }, 30);
+    });
+  });
 }
 
 function loadViaJsonp() {
-  let cached = null, ver = null;
-  try { cached = localStorage.getItem(PAYLOAD_CACHE_KEY); ver = localStorage.getItem(PAYLOAD_VER_KEY); } catch (e) {}
-  if (cached && ver) {
-    // Show last good copy instantly; check quietly (tiny request) whether newer data exists.
-    unpackPayload(cached).then(function(p) {
-      payload = p || {};
-      startWhenReady();
-      jsonpRetry('action=getClientMeta', 20000).then(function(meta) {
-        if (meta.version !== ver) {
-          return withRetry(loadAndUnpack, 2, [0, 1500]).then(function(x){ saveCache(x.r); showNewDataBanner(); });
-        }
-      }).catch(function(){ /* keep cached data */ });
-    }).catch(function() {
-      try { localStorage.removeItem(PAYLOAD_CACHE_KEY); localStorage.removeItem(PAYLOAD_VER_KEY); } catch (e) {}
-      loadFresh();
+  setProgress(3, 'Starting\u2026');
+  idbDel('payload');   // old format from earlier versions
+  idbGet('payload_raw').then(function(rec) {
+    if (rec && rec.data && rec.version) {
+      // Show last good copy instantly; quietly check whether newer data exists.
+      let p = null;
+      try { p = JSON.parse(rec.data); } catch (e) {}
+      if (p) {
+        payload = p;
+        startWhenReady();
+        checkForUpdate(rec.version);
+        return;
+      }
+      idbDel('payload_raw');
+    }
+    loadFresh();
+  });
+}
+
+function checkForUpdate(ver) {
+  jsonpRetry('action=getClientPayloadManifest', 30000, 'manifest').then(function(m) {
+    if ((m.generatedAt + '|' + m.expectedLength) === ver) return;
+    return withRetry(function(){ return loadAndParse(null); }, 2, [0, 2000]).then(function(x) {
+      return idbSet('payload_raw', { version: x.r.version, data: x.r.text }).then(showNewDataBanner);
     });
-    return;
-  }
-  loadFresh();
+  }).catch(function(){ /* keep showing cached data */ });
 }
 
 function loadFresh() {
-  withRetry(loadAndUnpack, 2, [0, 1500]).then(function(x) {
-    saveCache(x.r);
+  withRetry(function(){ return loadAndParse(setProgress); }, 2, [0, 2000]).then(function(x) {
+    idbSet('payload_raw', { version: x.r.version, data: x.r.text });
     payload = x.p || {};
+    setProgress(100, 'Done');
     startWhenReady();
   }).catch(function(err) {
     showLoadError('Failed to load data (' + err.message + ').', true);
@@ -797,7 +894,7 @@ function showLoadError(message, canRetry) {
     (canRetry ? '<div style="margin-top:12px"><button type="button" class="btn primary" onclick="retryLoad()">Try again</button></div>' : '') + '</div>';
 }
 function retryLoad() {
-  document.getElementById('loading').innerHTML = 'Loading dashboard...';
+  setProgress(3, 'Retrying\u2026');
   loadFresh();
 }
 
